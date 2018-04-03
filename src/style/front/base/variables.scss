@@ -1,0 +1,53 @@
+
+/*******
+ color
+ *******
+ */
+// 主题色
+$themeColor: #2d8cf0;
+$themeBg: #fff;
+// app背景颜色
+$appBgColor: #f9f9f9;
+$borderColor: #eee;
+
+$whiteColor: #fff;
+$blackColor: #495060;
+
+/*******
+ layout
+ *******
+ */
+// 窗体边距
+$bodySidePadding: 40px;
+
+// 区块边距
+$blockMargin: 20px;
+
+/*************
+ font family
+ *************
+ */
+
+
+/*************
+ 通用样式
+ *************
+ */
+// @minx transi
+@mixin transition($value: 0.2s) {
+  transition: all $value ease-in-out;
+}
+
+@keyframes bulrIn {
+  from {
+    filter: blur(0px);
+  }
+  to {
+    filter: blur(10px);
+  }
+}
+// 延迟聚焦
+@mixin filterBlur () {
+  animation: bulrIn 2s ease-in 1s;
+  animation-fill-mode: forwards;
+}
