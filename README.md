@@ -1,4 +1,4 @@
-# fe-website
+# fe-website and fe-admin
 
 > show demo and api of plugins, and something more, by et-fe-team
 
