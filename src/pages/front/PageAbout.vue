@@ -41,6 +41,10 @@
 </template>
 
 <script>
+import katteAvater from '../../assets/img/team-avaters/katte-avater.jpg'
+import ClAvater from '../../assets/img/team-avaters/cl-avater.jpg'
+import SimonAvater from '../../assets/img/team-avaters/simon-avater.jpg'
+
 const repositories = [
     { name: '组件仓库', github: 'https://github.com/etFE/Plugins' },
     { name: '网站仓库', github: 'https://github.com/etFE/fe-website' },
@@ -50,26 +54,26 @@ const repositories = [
 const teamMsg = [
     {
         name: 'Katte',
-        avatar: '',
-        description: 'Front-end engineer',
+        avatar: katteAvater,
+        description: 'Restify for Restful Api, Front-End, mongodb',
         location: 'Harbin,China',
-        stack: '',
+        stack: 'Node.js',
         github: 'https://github.com/17603606331',
     },
     {
         name: 'Cl',
-        avatar: '',
-        description: 'Front-end engineer',
+        avatar: ClAvater,
+        description: 'Vue for Admin website',
         location: 'Wuhan,China',
-        stack: '',
+        stack: 'Vue',
         github: 'https://github.com/dumuchenglin123',
     },
     {
         name: 'Simon',
-        avatar: '',
-        description: 'Handsome',
+        avatar: SimonAvater,
+        description: 'Vue for Front website',
         location: 'Zhejiang,China',
-        stack: 'React, Vue',
+        stack: 'React',
         github: 'https://github.com/simonjayw',
     },
 ]

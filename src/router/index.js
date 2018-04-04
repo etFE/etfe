@@ -10,8 +10,6 @@ Vue.use(Router)
 let routes = []
 routes = routes.concat(frontRoutes, adminRoutes)
 
-console.log(routes)
-
 export default new Router({
     mode: 'history',
     routes,
