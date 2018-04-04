@@ -62,7 +62,7 @@ instance.interceptors.request.use((config) => {
 // 响应拦截器 用于请求失败时，拦截触发错误通知？
 instance.interceptors.response.use((res) => {
     loading.cancle()
-    setNotice('success', res.status, res.statusText)
+    // setNotice('success', res.status, res.statusText)
     return res
 }, (error) => {
     const res = error.response

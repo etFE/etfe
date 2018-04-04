@@ -25,10 +25,10 @@ service.interceptors.response.use(
             message: response.data.message,
             type: 'success',
         })
-    return response.data
-  },
+        return response.data
+    },
     (error) => {
-        console.log(`err${  error}`, 'error2')// for debug
+        console.log(`err${error}`, 'error2')// for debug
         Message({
             message: error.message,
             type: 'error',

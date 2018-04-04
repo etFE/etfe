@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import IconSvgSprite from "@/components/IconSvgSprite";
+import IconSvgSprite from '@/components/IconSvgSprite'
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
-        IconSvgSprite
-    }
-};
+        IconSvgSprite,
+    },
+}
 </script>
 
 <style lang="scss">

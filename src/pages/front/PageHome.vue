@@ -1,69 +1,58 @@
 <template>
-  <div class="et-home-container">
-    <h1>ETFE</h1>
-    <div class="et-home-search">
-      <Select
-        filterable
-        remote
-        placeholder="搜索组件..."
-        :remote-method="remoteMethod"
-        :loading="isLoading"
-        @on-change="onSearchChange"
-      >
-        <Option
-          v-for="(option, index) in options"
-          :value="option.value"
-          :key="index"
-        >
-          {{ option.label }}
-        </Option>
-      </Select>
+    <div class="et-home-container">
+        <h1>ETFE</h1>
+        <div class="et-home-search">
+            <Select filterable remote placeholder="搜索组件..." :remote-method="remoteMethod" :loading="isLoading" @on-change="onSearchChange">
+                <Option v-for="(option, index) in options" :value="option.value" :key="index">
+                    {{ option.label }}
+                </Option>
+            </Select>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'PageHome',
-  data () {
-    return {
-      isLoading: false,
-      options: [],
-      pluginsList: [],
-    }
-  },
-  methods: {
-    remoteMethod (query) {
-      if (query) {
-        if (this.pluginsList.length > 0) {
-          this.filterOptions(this.pluginsList, query)
-        } else {
-          this.isLoading = true
-          this.$store.dispatch('plugins/GET_LIST').then(() => {
-            this.isLoading = false
-            this.pluginsList = this.$store.state.plugins.pluginsList
-            this.filterOptions(this.pluginsList, query)
-          })
+    name: 'PageHome',
+    data () {
+        return {
+            isLoading: false,
+            options: [],
+            pluginsList: [],
         }
-      } else {
-        this.options = []
-      }
     },
-    filterOptions (data, query) {
-      const options = data.map(item => ({
-        value: item.id,
-        label: item.text,
-      }))
+    methods: {
+        remoteMethod (query) {
+            if (query) {
+                if (this.pluginsList.length > 0) {
+                    this.filterOptions(this.pluginsList, query)
+                } else {
+                    this.isLoading = true
+                    this.$store.dispatch('plugins/GET_LIST').then(() => {
+                        this.isLoading = false
+                        this.pluginsList = this.$store.state.plugins.pluginsList
+                        this.filterOptions(this.pluginsList, query)
+                    })
+                }
+            } else {
+                this.options = []
+            }
+        },
+        filterOptions (data, query) {
+            const options = data.map(item => ({
+                value: item.id,
+                label: item.text,
+            }))
 
-      this.options = options.filter(item => (
-        item.label.toLowerCase().replace(/\s/g, '')
-          .indexOf(query.toLowerCase().replace(/\s/g, '')) > -1
-      ))
+            this.options = options.filter(item => (
+                item.label.toLowerCase().replace(/\s/g, '')
+                .indexOf(query.toLowerCase().replace(/\s/g, '')) > -1
+            ))
+        },
+        onSearchChange (value) {
+            this.$router.push({ path: `/plugins/${value}` })
+        },
     },
-    onSearchChange (value) {
-      this.$router.push({ path: `/plugins/${value}` })
-    },
-  },
 }
 </script>
 
@@ -89,7 +78,7 @@ export default {
   }
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -97,7 +86,7 @@ export default {
     right: 0;
     @include filterBlur;
     margin: -10px;
-    background: url('../../assets/img/home-bg.webp') 0 / cover no-repeat;
+    background: url("../../assets/img/home-bg.webp") 0 / cover no-repeat;
     z-index: -1;
   }
 }

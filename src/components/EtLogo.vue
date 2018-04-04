@@ -1,27 +1,24 @@
 <template>
-  <div
-    class="et-header-logo"
-    @click="handleLogoClick"
-  >
-    <svg class="et-header-logo-icon">
-      <use xlink:href='#icon-logo'></use>
-    </svg>
-    <span class="et-header-logo-name">ETFE</span>
-  </div>
+    <div class="et-header-logo" @click="handleLogoClick">
+        <svg class="et-header-logo-icon">
+            <use xlink:href='#icon-logo'></use>
+        </svg>
+        <span class="et-header-logo-name">ETFE</span>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "HeaderNavLogo",
-  // porps: {
-  //   theme: 'string',
-  // },
-  methods: {
-    handleLogoClick() {
-      this.$router.push({ path: "/" });
-    }
-  }
-};
+    name: 'HeaderNavLogo',
+    // porps: {
+    //   theme: 'string',
+    // },
+    methods: {
+        handleLogoClick () {
+            this.$router.push({ path: '/' })
+        },
+    },
+}
 </script>
 
 <style lang="scss">

@@ -1,17 +1,17 @@
 <template>
-  <div class="et-footer-copyright">
-    <p>{{ msg }}</p>
-  </div>
+    <div class="et-footer-copyright">
+        <p>{{ msg }}</p>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'FooterCopyright',
-  data () {
-    return {
-      msg: '© 2018 | ETFT 亦童前端团队',
-    }
-  },
+    name: 'FooterCopyright',
+    data () {
+        return {
+            msg: '© 2018 | ETFT 亦童前端团队',
+        }
+    },
 }
 </script>
 
@@ -20,10 +20,10 @@ export default {
 $footerFont: #b9b9b9;
 
 .et-footer-copyright {
-    text-align: center;
-    color: $footerFont;
-    height: 30px;
-    line-height: 30px;
-    background: transparent;
+  text-align: center;
+  color: $footerFont;
+  height: 30px;
+  line-height: 30px;
+  background: transparent;
 }
 </style>

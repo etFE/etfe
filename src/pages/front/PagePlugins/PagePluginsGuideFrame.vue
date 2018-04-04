@@ -1,63 +1,48 @@
 <template>
-  <ul class="et-pluginsdemo-container">
-    <li
-      class="et-demo-item"
-      v-for="(item, index) in demosData"
-      :key="index"
-    >
-      <iframe
-        class="et-demo-iframe"
-        frameborder="0"
-        scrolling="no"
-        ref="iframe"
-        :height="item.curHeight"
-        :src="item.url"
-      ></iframe>
-      <div
-        class="et-demo-more"
-        v-show="item.height > 280"
-        @click="() => { showMore(index) }"
-      >
-        <Icon class="et-demomore-arrow" :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'" />
-      </div>
-      <Spin size="large" fix v-if="spinShow"></Spin>
-    </li>
-  </ul>
+    <ul class="et-pluginsdemo-container">
+        <li class="et-demo-item" v-for="(item, index) in demosData" :key="index">
+            <iframe class="et-demo-iframe" frameborder="0" scrolling="no" ref="iframe" :height="item.curHeight" :src="item.url"></iframe>
+            <div class="et-demo-more" v-show="item.height > 280" @click="() => { showMore(index) }">
+                <Icon class="et-demomore-arrow" :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'" />
+            </div>
+            <Spin size="large" fix v-if="spinShow"></Spin>
+        </li>
+    </ul>
 
 </template>
 
 <script>
 export default {
-  name: 'GuideFrame',
-  props: {
-    demo: Array,
-  },
-  data () {
-    return {
-      spinShow: true,
-    }
-  },
-  computed: {
-    demosData () {
-      return this.demo
+    name: 'GuideFrame',
+    props: {
+        demo: Array,
     },
-  },
-  watch: {
-    $route () {
-      this.spinShow = true
+    data () {
+        return {
+            spinShow: true,
+        }
     },
-    demosData () {
-      setTimeout(() => {
-        // TODO:这里关闭时机优化
-        this.spinShow = false
-      }, 10)
+    computed: {
+        demosData () {
+            return this.demo
+        },
     },
-  },
-  methods: {
-    showMore (index) {
-      this.$store.commit('front/plugins/SHOW_MORE', index)
+    watch: {
+        $route () {
+            this.spinShow = true
+        },
+        demosData () {
+            setTimeout(() => {
+                // TODO:这里关闭时机优化
+                this.spinShow = false
+            }, 10)
+        },
     },
-  },
+    methods: {
+        showMore (index) {
+            this.$store.commit('front/plugins/SHOW_MORE', index)
+        },
+    },
 }
 </script>
 
@@ -73,7 +58,7 @@ export default {
   margin-bottom: 20px;
 
   &:hover {
-    box-shadow: 0 2px 7px rgba(0, 0, 0, .15);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
     border-color: transparent;
     @include transition;
   }

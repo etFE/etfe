@@ -1,41 +1,41 @@
 <template>
-  <Affix :offset-top="0">
-    <div class="et-guidecatalogue-container">
-      <h4>目录</h4>
-      <ul>
-        <li v-for="item in catalogues" :key="item.name">
-          <a :href="`#${item.name}`">{{ item.title }}</a>
-          <ul v-if="item.second">
-            <li v-for="secondItem in item.second" :key="secondItem.name">
-              <a :href="`#${secondItem.name}`">{{ secondItem.title }}</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </Affix>
+    <Affix :offset-top="0">
+        <div class="et-guidecatalogue-container">
+            <h4>目录</h4>
+            <ul>
+                <li v-for="item in catalogues" :key="item.name">
+                    <a :href="`#${item.name}`">{{ item.title }}</a>
+                    <ul v-if="item.second">
+                        <li v-for="secondItem in item.second" :key="secondItem.name">
+                            <a :href="`#${secondItem.name}`">{{ secondItem.title }}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </Affix>
 </template>
 
 <script>
 export default {
-  name: 'articleCatalogue',
-  data () {
-    return {
-      catalogues: [
-        { title: '概述', name: 'overview' },
-        { title: '代码示例', name: 'demo' },
-        {
-          title: 'API',
-          name: 'api',
-          second: [
-            { title: 'props', name: 'props' },
-            { title: 'event', name: 'event' },
-            { title: 'methods', name: 'methods' },
-          ],
-        },
-      ],
-    }
-  },
+    name: 'articleCatalogue',
+    data () {
+        return {
+            catalogues: [
+                { title: '概述', name: 'overview' },
+                { title: '代码示例', name: 'demo' },
+                {
+                    title: 'API',
+                    name: 'api',
+                    second: [
+                        { title: 'props', name: 'props' },
+                        { title: 'event', name: 'event' },
+                        { title: 'methods', name: 'methods' },
+                    ],
+                },
+            ],
+        }
+    },
 }
 </script>
 

@@ -13,17 +13,17 @@ routes = routes.concat(frontRoutes, adminRoutes)
 console.log(routes)
 
 export default new Router({
-  mode: 'history',
-  routes,
-  scrollBehavior (to, from, savedPosition) {
-    // if (to.hash) {
-    //   return {
-    //     selector: to.hash,
-    //   }
-    // }
-    if (savedPosition) {
-      return savedPosition
-    }
-    return { x: 0, y: 0 }
-  },
+    mode: 'history',
+    routes,
+    scrollBehavior (to, from, savedPosition) {
+        // if (to.hash) {
+        //   return {
+        //     selector: to.hash,
+        //   }
+        // }
+        if (savedPosition) {
+            return savedPosition
+        }
+        return { x: 0, y: 0 }
+    },
 })
