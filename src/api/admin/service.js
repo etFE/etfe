@@ -36,4 +36,23 @@ service.interceptors.response.use(
         })
         return Promise.reject(error)
 })
-export default service
+
+const createAPI = (url, method, config) => {
+    const cfg = config || {}
+    let u = url
+    // 增加匹配restful格式url的参数，url中用:name表示动态参数
+    // param中传递{ name: 'something' }
+    if (cfg.param) {
+        Object.keys(cfg.param).forEach((key) => {
+            u = u.replace(`:${key}`, cfg.param[key])
+        })
+    }
+
+    return service({
+        url: u,
+        method,
+        ...cfg,
+    })
+}
+
+export default createAPI

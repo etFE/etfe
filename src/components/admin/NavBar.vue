@@ -30,42 +30,43 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-export default {
-  name: "NavBar",
-  data() {
-    return {
-      hamActive: true,
-      title: "后台管理系统",
-      user: "测试",
-      BreadcrumbList: []
-    };
-  },
-  props: ["isShow"],
-  mounted() {
-    this.getBreadcrumb();
-  },
-  watch: {
-    $route() {
-      this.getBreadcrumb();
-    }
-  },
-  computed: {
-    ...mapGetters(["sideBarShow"])
-  },
-  methods: {
-    ...mapActions(["toggleSideBar"]),
-    getBreadcrumb() {
-      let BreadcrumbList = this.$route.matched;
-      this.BreadcrumbList = BreadcrumbList;
+import { mapActions, mapGetters } from 'vuex'
 
-      // this.BreadcrumbList = this.$route.matched.map((item, index) => {
-      //   return item.meta.title;
-      // });
-      // console.log(this.BreadcrumbList,222)
-    }
-  }
-};
+export default {
+    name: 'NavBar',
+    data () {
+        return {
+            hamActive: true,
+            title: '后台管理系统',
+            user: '测试',
+            BreadcrumbList: [],
+        }
+    },
+    props: ['isShow'],
+    mounted () {
+        this.getBreadcrumb()
+    },
+    watch: {
+        $route () {
+            this.getBreadcrumb()
+        },
+    },
+    computed: {
+        ...mapGetters(['sideBarShow']),
+    },
+    methods: {
+        ...mapActions(['toggleSideBar']),
+        getBreadcrumb () {
+            const BreadcrumbList = this.$route.matched
+            this.BreadcrumbList = BreadcrumbList
+
+            // this.BreadcrumbList = this.$route.matched.map((item, index) => {
+            //   return item.meta.title;
+            // });
+            // console.log(this.BreadcrumbList,222)
+        },
+    },
+}
 </script>
 
 <style lang="scss">

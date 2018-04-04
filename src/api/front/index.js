@@ -77,7 +77,6 @@ instance.interceptors.response.use((res) => {
 const createAPI = (url, method, config) => {
     const cfg = config || {}
     let u = url
-
     // 增加匹配restful格式url的参数，url中用:name表示动态参数
     // param中传递{ name: 'something' }
     if (cfg.param) {

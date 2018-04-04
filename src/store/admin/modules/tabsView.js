@@ -13,14 +13,21 @@ const tabsView = {
                 })
             }
         },
-        // DEL_VISITED_VIEWS: (state, view) => {
-        //     for (const [i, v] of state.visitedViews.entries()) {
-        //         if (v.path === view.path) {
-        //             state.visitedViews.splice(i, 1)
-        //             break
-        //         }
-        //     }
-        // },
+        DEL_VISITED_VIEWS: (state, view) => {
+            const arr = state.visitedViews.entries()
+            for (let i = 0, l = arr.length; i < l; i += 1) {
+                if (arr[i].path === view.path) {
+                    arr.splice(i, 1)
+                    break
+                }
+            }
+            // for (const [i, v] of state.visitedViews.entries()) {
+            //     if (v.path === view.path) {
+            //         state.visitedViews.splice(i, 1)
+            //         break
+            //     }
+            // }
+        },
         DEL_OTHER_VIEWS: (state, view) => {
             if (view.title !== '首页') {
                 state.visitedViews = [{
@@ -59,6 +66,18 @@ const tabsView = {
             })
         },
     },
+    // getters: {
+    //     tabViews: (state) => {
+    //         console.log(state, 'tabviews')
+    //         if (!state.tabsView.visitedViews.length) {
+    //             state.tabsView.visitedViews.push({
+    //                 path: '/admin',
+    //                 title: '首页',
+    //             })
+    //         }
+    //         return state.tabsView.visitedViews
+    //     },
+    // },
 }
 
 export default tabsView
