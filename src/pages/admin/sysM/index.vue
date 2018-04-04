@@ -31,68 +31,68 @@
 </template>
 
 <script>
-import UpdateAddDailog from "./update-add";
-import { querySysData } from "@/api/admin/sysManage";
+import UpdateAddDailog from './update-add'
+import { querySysData } from '@/api/admin/sysManage'
 
 export default {
-  data() {
-    return {
-      tableData: [],
-      listQuery: {
-        filename: ""
-        // curPage: 1,
-        // pageSize: 20,
-        // importance: undefined,
-        // title: undefined,
-        // type: undefined,
-      },
-      tabLoading: false,
-      showDialog: false,
-      operate: "", // 决定弹出窗口是添加也还是修改页的变量
-      rowData: null //切换修改页时传过来的行数据
-    };
-  },
-  components: {
-    UpdateAddDailog
-  },
-  methods: {
-    openDialog(scope) {
-      if (!scope) {
-        this.operate = "add";
-      } else {
-        this.operate = "update";
-        this.rowData = scope;
-      }
-      this.showDialog = true;
+    data () {
+        return {
+            tableData: [],
+            listQuery: {
+                filename: '',
+                // curPage: 1,
+                // pageSize: 20,
+                // importance: undefined,
+                // title: undefined,
+                // type: undefined,
+            },
+            tabLoading: false,
+            showDialog: false,
+            operate: '', // 决定弹出窗口是添加也还是修改页的变量
+            rowData: null, // 切换修改页时传过来的行数据
+        }
     },
-    // 查询表格数据
-    queryList() {
-      this.tabLoading = true;
-      querySysData()
-        .then(response => {
-          this.tableData = response.data;
-          this.tabLoading = false;
-        })
-        .catch(error => {
-          this.tabLoading = false;
-        });
+    components: {
+        UpdateAddDailog,
     },
-    deleteData(index, data) {
-      this.tabLoading = true;
-      DelData(data._id, data)
-        .then(res => {
-          this.tableData.splice(index, 1);
-          this.tabLoading = false;
-        })
-        .catch(error => {
-          this.tabLoading = false;
-        });
+    methods: {
+        openDialog (scope) {
+            if (!scope) {
+                this.operate = 'add'
+            } else {
+                this.operate = 'update'
+                this.rowData = scope
+            }
+            this.showDialog = true
+        },
+        // 查询表格数据
+        queryList () {
+            this.tabLoading = true
+            querySysData()
+                .then((response) => {
+                    this.tableData = response.data
+                    this.tabLoading = false
+                })
+                .catch((error) => {
+                    this.tabLoading = false
+                })
+        },
+        deleteData (index, data) {
+            this.tabLoading = true
+            DelData(data._id, data)
+                .then((res) => {
+                    this.tableData.splice(index, 1)
+                    this.tabLoading = false
+                })
+                .catch((error) => {
+                    this.tabLoading = false
+                })
+        },
+        changeDialogState () {
+            this.showDialog = false
+        },
     },
-    changeDialogState() {
-      this.showDialog = false;
-    }
-  }
-};
+}
 </script>
 
 <style lang="scss">

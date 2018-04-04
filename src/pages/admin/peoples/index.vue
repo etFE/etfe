@@ -1,9 +1,9 @@
 <template>
-  <h1>人员管理</h1>
+    <h1>人员管理</h1>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style>

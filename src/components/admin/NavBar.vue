@@ -1,32 +1,36 @@
 <template>
-  <section class="header">
-    <div class="navicon-con">
-      <a class="hamburger" :class="{'is-active':sideBarShow}" @click="toggleSideBar">
-        <i class="iconfont">&#xe604;</i>
-      </a>
-    </div>
-    <div class="header-middle">
-        <el-breadcrumb separator-class="el-icon-arrow-right" class="admin-breadcrumb">
-          <transition-group name="breadcrumb">
-            <el-breadcrumb-item v-for="breItem in BreadcrumbList" :key="breItem.path" :to="{ path: breItem.path }"> {{ breItem.meta.title }} </el-breadcrumb-item>
-          </transition-group>
-        </el-breadcrumb>
-    </div>
-    <div class="header-right">
-      <a class="user">{{ user }}</a>
+    <section class="header">
+        <div class="navicon-con">
+            <a class="hamburger" :class="{'is-active':sideBarShow}" @click="toggleSideBar">
+                <i class="iconfont">&#xe604;</i>
+            </a>
+        </div>
+        <div class="header-middle">
+            <el-breadcrumb separator-class="el-icon-arrow-right" class="admin-breadcrumb">
+                <transition-group name="breadcrumb">
+                    <el-breadcrumb-item
+                        v-for="breItem in BreadcrumbList"
+                        :key="breItem.path"
+                        :to="{ path: breItem.path }"
+                    > {{ breItem.meta.title }} </el-breadcrumb-item>
+                </transition-group>
+            </el-breadcrumb>
+        </div>
+        <div class="header-right">
+            <a class="user">{{ user }}</a>
 
-      <el-dropdown trigger="click">
-        <span class="el-dropdown-link ">
-          <div class="userimg"></div>
-        </span>
-        <el-dropdown-menu slot="dropdown" class="dropdown-menu">
-          <el-dropdown-item>个人信息</el-dropdown-item>
-          <el-dropdown-item>设置</el-dropdown-item>
-          <el-dropdown-item>安全退出</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
-  </section>
+            <el-dropdown trigger="click">
+                <span class="el-dropdown-link ">
+                    <div class="userimg"></div>
+                </span>
+                <el-dropdown-menu slot="dropdown" class="dropdown-menu">
+                    <el-dropdown-item>个人信息</el-dropdown-item>
+                    <el-dropdown-item>设置</el-dropdown-item>
+                    <el-dropdown-item>安全退出</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
+    </section>
 </template>
 
 <script>

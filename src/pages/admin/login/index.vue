@@ -1,7 +1,7 @@
 <template>
-  <div>dfsfds</div>
+    <div>dfsfds</div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>

@@ -11,13 +11,13 @@
 
 <script>
 export default {
-  methods: {
-    submit() {
-      console.log(787878);
-      return false;
-    }
-  }
-};
+    methods: {
+        submit () {
+            console.log(787878)
+            return false
+        },
+    },
+}
 </script>
 
 <style>

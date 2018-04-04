@@ -17,96 +17,93 @@
 </template>
 
 <script>
-import { addSysData, updateSysData } from "@/api/admin/sysManage";
+import { addSysData, updateSysData } from '@/api/admin/sysManage'
 
 export default {
-  name: "Update-add",
-  props: ["isShow", "operation", "rowData"],
-  data() {
-    return {
-      formLabelWidth: "95px",
-      formDataloading: false,
-      form: {},
-      rules: {
-        name: { required: true, message: "请输入文件名称", trigger: "blur" },
-        descript: [
-          { required: true, message: "请输入描述信息",trigger: "blur" },
-          { min: 2, max: 30, message: "长度在 2 到 30 个字符" }
-        ]
-      }
-    };
-  },
-  computed: {
-    title() {
-      if (this.operation === "add") {
-        return "添加页";
-      } else {
-        return "修改页";
-      }
-    },
-    disabled() {
-      if (this.operation === "add") {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  },
-  methods: {
-    dialogOpened() {
-      if (this.rowData) {
-        this.form = { ...this.form, ...this.rowData.row };
-      } else {
-        this.form = {};
-      }
-    },
-    dialogClosed() {
-      // 关闭前重置表单
-      this.$emit("toggleShow");
-      this.$parent.rowData = null;
-      this.$refs.Form.resetFields();
-    },
-    submitDailog() {
-      this.formDataloading = true;
-      // 提交前先验证
-      this.submitForm();
-      const newData = { ...this.form };
-
-      if (this.formDataloading) {
-        if (this.operation === "add") {
-          addSysData(newData)
-            .then(res => {
-              this.formDataloading = false;
-              this.$parent.tableData.push(newData);
-              this.dialogClosed();
-            })
-            .catch(error => {
-              this.formDataloading = false;
-            });
-        } else {
-
-          updateSysData(newData._id, newData)
-            .then(res => {
-              let index = this.rowData.$index;
-              this.$parent.$set(this.$parent.tableData, index, newData);
-              this.formDataloading = false;
-              this.dialogClosed();
-            })
-            .catch(error => {
-              this.formDataloading = false;
-            });
+    name: 'Update-add',
+    props: ['isShow', 'operation', 'rowData'],
+    data () {
+        return {
+            formLabelWidth: '95px',
+            formDataloading: false,
+            form: {},
+            rules: {
+                name: { required: true, message: '请输入文件名称', trigger: 'blur' },
+                descript: [
+                    { required: true, message: '请输入描述信息', trigger: 'blur' },
+                    { min: 2, max: 30, message: '长度在 2 到 30 个字符' },
+                ],
+            },
         }
-      }
     },
-    submitForm() {
-      this.$refs.Form.validate(valid => {
-        if (!valid) {
-          this.formDataloading = false;
-        }
-      });
-    }
-  }
-};
+    computed: {
+        title () {
+            if (this.operation === 'add') {
+                return '添加页'
+            }
+            return '修改页'
+        },
+        disabled () {
+            if (this.operation === 'add') {
+                return false
+            }
+            return true
+        },
+    },
+    methods: {
+        dialogOpened () {
+            if (this.rowData) {
+                this.form = { ...this.form, ...this.rowData.row }
+            } else {
+                this.form = {}
+            }
+        },
+        dialogClosed () {
+            // 关闭前重置表单
+            this.$emit('toggleShow')
+            this.$parent.rowData = null
+            this.$refs.Form.resetFields()
+        },
+        submitDailog () {
+            this.formDataloading = true
+            // 提交前先验证
+            this.submitForm()
+            const newData = { ...this.form }
+
+            if (this.formDataloading) {
+                if (this.operation === 'add') {
+                    addSysData(newData)
+                        .then((res) => {
+                            this.formDataloading = false
+                            this.$parent.tableData.push(newData)
+                            this.dialogClosed()
+                        })
+                        .catch((error) => {
+                            this.formDataloading = false
+                        })
+                } else {
+                    updateSysData(newData._id, newData)
+                        .then((res) => {
+                            const index = this.rowData.$index
+                            this.$parent.$set(this.$parent.tableData, index, newData)
+                            this.formDataloading = false
+                            this.dialogClosed()
+                        })
+                        .catch((error) => {
+                            this.formDataloading = false
+                        })
+                }
+            }
+        },
+        submitForm () {
+            this.$refs.Form.validate((valid) => {
+                if (!valid) {
+                    this.formDataloading = false
+                }
+            })
+        },
+    },
+}
 </script>
 
 <style>

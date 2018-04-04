@@ -1,11 +1,11 @@
 <template>
-  <section>
-    <router-view class="content"></router-view>
-  </section>
+    <section>
+        <router-view class="content"></router-view>
+    </section>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style>

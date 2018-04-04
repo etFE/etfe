@@ -1,33 +1,42 @@
 <template>
-    <div id="page" style="border-style:dashed;border-color:#e4e4e4;line-height:30px;background:url(sorry.png) no-repeat right;">
-        <h1>抱歉，找不到此页面~</h1>
-        <h2>Sorry, the site now can not be accessed. </h2>
-        <font color="#666666">你请求访问的页面，暂时找不到，我们建议你返回首页官网进行浏览，谢谢！</font><br /><br />
-        <el-button type="primary" @click="back">退回前页</el-button>
-        <el-button type="primary" @click="goHome">进入首页</el-button>
-    </div>
+  <div
+    id="page"
+    style="border-style:dashed;
+        border-color:#e4e4e4;
+        line-height:30px;background:url(sorry.png) no-repeat right;"
+  >
+    <h1>抱歉，找不到此页面~</h1>
+    <h2>Sorry, the site now can not be accessed. </h2>
+    <font color="#666666">你请求访问的页面，暂时找不到，我们建议你返回首页官网进行浏览，谢谢！</font><br ><br >
+    <el-button
+      type="primary"
+      @click="back">退回前页</el-button>
+    <el-button
+      type="primary"
+      @click="goHome">进入首页</el-button>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'noPage',
-        watch: {
-            $route () {
-                console.log(arguments)
-            },
+export default {
+    name: 'NoPage',
+    watch: {
+        $route () {
+            console.log(arguments)
         },
-        mounted () {
-            console.log('mounted', this)
+    },
+    mounted () {
+        console.log('mounted', this)
+    },
+    methods: {
+        back () {
+            this.$router.go(-1)
         },
-        methods: {
-            back () {
-                this.$router.go(-1)
-            },
-            goHome () {
-                this.$router.push('/admin')
-            },
+        goHome () {
+            this.$router.push('/admin')
         },
-    }
+    },
+}
 </script>
 
 <style scoped>

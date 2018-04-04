@@ -1,11 +1,32 @@
 <template>
     <ul class="et-pluginsdemo-container">
-        <li class="et-demo-item" v-for="(item, index) in demosData" :key="index">
-            <iframe class="et-demo-iframe" frameborder="0" scrolling="no" ref="iframe" :height="item.curHeight" :src="item.url"></iframe>
-            <div class="et-demo-more" v-show="item.height > 280" @click="() => { showMore(index) }">
-                <Icon class="et-demomore-arrow" :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'" />
+        <li
+
+            v-for="(item, index) in demosData"
+            :key="index"
+            class="et-demo-item"
+        >
+            <iframe
+                ref="iframe"
+                :src="item.url"
+                :height="item.curHeight"
+                class="et-demo-iframe"
+                frameborder="0"
+                scrolling="no"
+
+            />
+            <div
+                class="et-demo-more"
+                v-show="item.height > 280"
+                @click="() => { showMore(index) }">
+                <Icon
+                    class="et-demomore-arrow"
+                    :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'" />
             </div>
-            <Spin size="large" fix v-if="spinShow"></Spin>
+            <Spin
+                size="large"
+                fix
+                v-if="spinShow"/>
         </li>
     </ul>
 
@@ -35,7 +56,7 @@ export default {
             setTimeout(() => {
                 // TODO:这里关闭时机优化
                 this.spinShow = false
-            }, 10)
+            }, 1000)
         },
     },
     methods: {
