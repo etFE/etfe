@@ -9,9 +9,17 @@
         </p>
         <h2>团队成员</h2>
         <ul class="et-team-member-container">
-            <li class="et-team-member-list" v-for="msg in teamMsg" :key="msg.name">
+            <li
+                class="et-team-member-list"
+                v-for="msg in teamMsg"
+                :key="msg.name"
+            >
                 <div class="et-member-avatar">
-                    <Avatar :src="msg.avatar" :icon="msg.avatar ? '' : 'person'" :style="{width: '70px', height: '70px', borderRadius: '50%'}" size="large" />
+                    <Avatar
+                        :src="msg.avatar" :icon="msg.avatar ? '' : 'person'"
+                        :style="{width: '70px', height: '70px', borderRadius: '50%'}"
+                        size="large"
+                    />
                 </div>
                 <div class="et-member-profile">
                     <h3>{{ msg.name }}</h3>
