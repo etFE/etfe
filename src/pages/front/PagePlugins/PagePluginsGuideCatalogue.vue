@@ -24,23 +24,12 @@
 
 <script>
 export default {
-    name: 'ArticleCatalogue',
-    data () {
-        return {
-            catalogues: [
-                { title: '概述', name: 'overview' },
-                { title: '代码示例', name: 'demo' },
-                {
-                    title: 'API',
-                    name: 'api',
-                    second: [
-                        { title: 'props', name: 'props' },
-                        { title: 'event', name: 'event' },
-                        { title: 'methods', name: 'methods' },
-                    ],
-                },
-            ],
-        }
+    name: 'GuideCatalogue',
+    props: {
+        catalogues: {
+            type: Array,
+            required: true,
+        },
     },
 }
 </script>

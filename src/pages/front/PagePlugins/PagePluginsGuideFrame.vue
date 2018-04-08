@@ -1,7 +1,6 @@
 <template>
     <ul class="et-pluginsdemo-container">
         <li
-
             v-for="(item, index) in demosData"
             :key="index"
             class="et-demo-item"
@@ -13,7 +12,6 @@
                 class="et-demo-iframe"
                 frameborder="0"
                 scrolling="no"
-
             />
             <div
                 v-show="item.height > 280"
@@ -30,6 +28,7 @@
                 fix
             />
         </li>
+        <li v-if="demosData && demosData.length === 0">待续...</li>
     </ul>
 
 </template>
@@ -40,7 +39,7 @@ export default {
     props: {
         demo: {
             type: Array,
-            required: true,
+            default: undefined,
         },
     },
     data () {
@@ -80,8 +79,8 @@ export default {
   position: relative;
   border: 1px solid $borderColor;
   border-radius: 5px;
-  @include transition;
   margin-bottom: 20px;
+  @include transition;
 
   &:hover {
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);

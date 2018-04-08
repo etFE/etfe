@@ -109,7 +109,7 @@ const guide = {
     getList: config => createAPI('/plugin/demo/:name', 'get', config),
 }
 
-export {
+export default {
     // u,
     plugin,
     guide,

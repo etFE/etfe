@@ -3,68 +3,91 @@
         <article class="et-plugin-article">
             <h1>{{ pluginsGuide.title }}</h1>
 
-            <h2 class="et-anchor">概述
+            <h2 class="et-anchor">
+                {{ catalogues[0].title }}
                 <a
-                    href="#overview"
-                    name="overview"
+                    :href="`#${catalogues[0].name}`"
+                    :name="catalogues[0].name"
                 >#</a>
             </h2>
             <p>{{ pluginsGuide.description }}</p>
 
-            <h2 class="et-anchor">代码示例
+            <h2 class="et-anchor">
+                {{ catalogues[1].title }}
                 <a
-                    href="#demo"
-                    name="demo"
+                    :href="`#${catalogues[1].name}`"
+                    :name="catalogues[1].name"
                 >#</a>
             </h2>
 
             <guide-frame :demo="pluginsGuide.demo" />
-            <div v-if="pluginsGuide.demo && pluginsGuide.demo.length === 0">待续...</div>
 
-            <h2 class="et-anchor">API
+            <h2 class="et-anchor">
+                {{ catalogues[2].title }}
                 <a
-                    href="#api"
-                    name="api"
+                    :href="`#${catalogues[2].name}`"
+                    :name="catalogues[2].name"
                 >#</a>
             </h2>
-
-            <h3 class="et-anchor">props
+            <guide-api :api="pluginsGuide.api"/>
+            <!-- <h3 class="et-anchor">
+                {{ catalogues[2].second[0].title }}
                 <a
-                    href="#props"
-                    name="props"
+                    :href="`#${catalogues[2].second[0].name}`"
+                    :name="catalogues[2].second[0].name"
                 >#</a>
             </h3>
-            <h3 class="et-anchor">event
+            <h3 class="et-anchor">
+                {{ catalogues[2].second[1].title }}
                 <a
-                    href="#event"
-                    name="event"
+                    :href="`#${catalogues[2].second[1].name}`"
+                    :name="catalogues[2].second[1].name"
                 >#</a>
             </h3>
-            <h3 class="et-anchor">methods
+            <h3 class="et-anchor">
+                {{ catalogues[2].second[2].title }}
                 <a
-                    href="#methods"
-                    name="methods"
+                    :href="`#${catalogues[2].second[2].name}`"
+                    :name="catalogues[2].second[2].name"
                 >#</a>
-            </h3>
+            </h3> -->
         </article>
         <div class="et-plugin-article-side">
-            <guide-catalogue />
+            <guide-catalogue :catalogues="catalogues"/>
         </div>
     </div>
 </template>
 
 <script>
 import GuideFrame from './PagePluginsGuideFrame'
+import GuideApi from './PagePluginsGuideApi'
 import GuideCatalogue from './PagePluginsGuideCatalogue'
+
+// 锚链接
+const catalogues = [
+    { title: '概述', name: 'overview' },
+    { title: '代码示例', name: 'demo' },
+    {
+        title: 'API',
+        name: 'api',
+        // second: [
+        //     { title: 'props', name: 'props' },
+        //     { title: 'event', name: 'event' },
+        //     { title: 'methods', name: 'methods' },
+        // ],
+    },
+]
 
 export default {
     name: 'PluginsGuide',
     components: {
         GuideFrame,
+        GuideApi,
         GuideCatalogue,
     },
     data () {
         return {
+            catalogues,
         }
     },
     computed: {
