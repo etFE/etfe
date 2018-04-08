@@ -1,9 +1,16 @@
 <template>
     <div class="et-PagePlugins-container">
         <div class="et-plugins-tree">
-            <plugins-list :avtiveMenu="avtiveMenu" :pluginsList="pluginsList" v-on:changeMenu="changeMenu" />
+            <plugins-list
+                :plugins-list="pluginsList"
+                :avtive-menu="avtiveMenu"
+                @:changeMenu="changeMenu"
+            />
         </div>
-        <transition name="fade" mode="out-in">
+        <transition
+            name="fade"
+            mode="out-in"
+        >
             <router-view v-show="isRouterShow" />
         </transition>
     </div>
@@ -15,10 +22,21 @@ import PluginsList from './PagePluginsList'
 
 export default {
     name: 'PagePlugins',
+    components: {
+        PluginsList,
+    },
     data () {
         return {
             avtiveMenu: '',
         }
+    },
+    computed: {
+        pluginsList () {
+            return this.$store.state.front.plugins.pluginsList
+        },
+        isRouterShow () {
+            return this.$store.state.front.plugins.isRouterShow
+        },
     },
     mounted () {
         this.$store.dispatch('front/plugins/GET_LIST').then(() => {
@@ -34,17 +52,6 @@ export default {
             }
             this.setActive(currentName)
         })
-    },
-    components: {
-        PluginsList,
-    },
-    computed: {
-        pluginsList () {
-            return this.$store.state.front.plugins.pluginsList
-        },
-        isRouterShow () {
-            return this.$store.state.front.plugins.isRouterShow
-        },
     },
     methods: {
         changeMenu (name) {

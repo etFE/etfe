@@ -16,17 +16,19 @@
 
             />
             <div
-                class="et-demo-more"
                 v-show="item.height > 280"
+                class="et-demo-more"
                 @click="() => { showMore(index) }">
                 <Icon
+                    :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'"
                     class="et-demomore-arrow"
-                    :type="item.isMore ? 'ios-arrow-up' : 'ios-arrow-down'" />
+                />
             </div>
             <Spin
+                v-if="spinShow"
                 size="large"
                 fix
-                v-if="spinShow"/>
+            />
         </li>
     </ul>
 
@@ -36,7 +38,10 @@
 export default {
     name: 'GuideFrame',
     props: {
-        demo: Array,
+        demo: {
+            type: Array,
+            required: true,
+        },
     },
     data () {
         return {

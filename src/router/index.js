@@ -10,7 +10,7 @@ Vue.use(Router)
 let routes = []
 routes = routes.concat(frontRoutes, adminRoutes)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     routes,
     scrollBehavior (to, from, savedPosition) {
@@ -25,3 +25,14 @@ export default new Router({
         return { x: 0, y: 0 }
     },
 })
+
+router.beforeEach((to, from, next) => {
+    // 动态设置title
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+
+    next()
+})
+
+export default router

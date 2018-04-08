@@ -3,10 +3,16 @@
         <div class="et-guidecatalogue-container">
             <h4>目录</h4>
             <ul>
-                <li v-for="item in catalogues" :key="item.name">
+                <li
+                    v-for="item in catalogues"
+                    :key="item.name"
+                >
                     <a :href="`#${item.name}`">{{ item.title }}</a>
                     <ul v-if="item.second">
-                        <li v-for="secondItem in item.second" :key="secondItem.name">
+                        <li
+                            v-for="secondItem in item.second"
+                            :key="secondItem.name"
+                        >
                             <a :href="`#${secondItem.name}`">{{ secondItem.title }}</a>
                         </li>
                     </ul>
@@ -18,7 +24,7 @@
 
 <script>
 export default {
-    name: 'articleCatalogue',
+    name: 'ArticleCatalogue',
     data () {
         return {
             catalogues: [

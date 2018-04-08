@@ -2,21 +2,29 @@
     <div class="et-about-container">
         <h1>关于ET组件文档，与技术分享</h1>
         <h2>公共仓库</h2>
-        <p v-for="repository in repositories" :key="repository.name">
+        <p
+            v-for="repository in repositories"
+            :key="repository.name">
             {{ repository.name }}：
-            <Icon size="20" type="social-github"></Icon>
-            <a target="_blank" :href="repository.github">{{ repository.github }}</a>
+            <Icon
+                size="20"
+                type="social-github"/>
+            <a
+                :href="repository.github"
+                target="_blank"
+            >{{ repository.github }}</a>
         </p>
         <h2>团队成员</h2>
         <ul class="et-team-member-container">
             <li
-                class="et-team-member-list"
                 v-for="msg in teamMsg"
                 :key="msg.name"
+                class="et-team-member-list"
             >
                 <div class="et-member-avatar">
                     <Avatar
-                        :src="msg.avatar" :icon="msg.avatar ? '' : 'person'"
+                        :src="msg.avatar"
+                        :icon="msg.avatar ? '' : 'person'"
                         :style="{width: '70px', height: '70px', borderRadius: '50%'}"
                         size="large"
                     />
@@ -26,20 +34,32 @@
                     <p>{{ msg.description }}</p>
                     <dl class="et-member-profile-dl">
                         <dt v-if="msg.location">
-                            <Icon style="{marginTop: '1px'}" size="20" type="location"></Icon>
+                            <Icon
+                                style="{marginTop: '1px'}"
+                                size="20"
+                                type="location"
+                            />
                         </dt>
                         <dd v-if="msg.location">{{ msg.location }}</dd>
 
                         <dt v-if="msg.stack">
-                            <Icon size="18" type="pricetags"></Icon>
+                            <Icon
+                                size="18"
+                                type="pricetags"
+                            />
                         </dt>
                         <dd v-if="msg.stack">{{ msg.stack }}</dd>
 
                         <dt v-if="msg.github">
-                            <Icon size="20" type="social-github"></Icon>
+                            <Icon
+                                size="20"
+                                type="social-github"/>
                         </dt>
                         <dd v-if="msg.github">
-                            <a target="_blank" :href="msg.github">{{ msg.github }}</a>
+                            <a
+                                :href="msg.github"
+                                target="_blank"
+                            >{{ msg.github }}</a>
                         </dd>
                     </dl>
                 </div>

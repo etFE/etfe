@@ -1,7 +1,14 @@
 <template>
-    <i-menu :active-name="avtiveMenu" @on-select="selectPlugin">
-        <menu-item v-for="plugin in pluginsList" :key="plugin.id" :name="plugin.id">
-            <Icon :type="plugin.icon"></Icon>
+    <i-menu
+        :active-name="avtiveMenu"
+        @on-select="selectPlugin"
+    >
+        <menu-item
+            v-for="plugin in pluginsList"
+            :key="plugin.id"
+            :name="plugin.id"
+        >
+            <Icon :type="plugin.icon"/>
             {{ plugin.text }}
         </menu-item>
     </i-menu>
@@ -11,8 +18,14 @@
 export default {
     name: 'PluginsList',
     props: {
-        avtiveMenu: String,
-        pluginsList: Array,
+        avtiveMenu: {
+            type: String,
+            required: true,
+        },
+        pluginsList: {
+            type: Array,
+            required: true,
+        },
     },
     data () {
         return {

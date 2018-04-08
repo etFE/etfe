@@ -2,8 +2,19 @@
     <div class="et-home-container">
         <h1>ETFE</h1>
         <div class="et-home-search">
-            <Select filterable remote placeholder="搜索组件..." :remote-method="remoteMethod" :loading="isLoading" @on-change="onSearchChange">
-                <Option v-for="(option, index) in options" :value="option.value" :key="index">
+            <Select
+                :remote-method="remoteMethod"
+                :loading="isLoading"
+                filterable
+                remote
+                placeholder="搜索组件..."
+                @on-change="onSearchChange"
+            >
+                <Option
+                    v-for="(option, index) in options"
+                    :value="option.value"
+                    :key="index"
+                >
                     {{ option.label }}
                 </Option>
             </Select>
@@ -28,9 +39,9 @@ export default {
                     this.filterOptions(this.pluginsList, query)
                 } else {
                     this.isLoading = true
-                    this.$store.dispatch('plugins/GET_LIST').then(() => {
+                    this.$store.dispatch('front/plugins/GET_LIST').then(() => {
                         this.isLoading = false
-                        this.pluginsList = this.$store.state.plugins.pluginsList
+                        this.pluginsList = this.$store.state.front.plugins.pluginsList
                         this.filterOptions(this.pluginsList, query)
                     })
                 }

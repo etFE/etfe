@@ -1,7 +1,10 @@
 <template>
-    <div class="et-header-logo" @click="handleLogoClick">
+    <div
+        class="et-header-logo"
+        @click="handleLogoClick"
+    >
         <svg class="et-header-logo-icon">
-            <use xlink:href='#icon-logo'></use>
+            <use xlink:href="#icon-logo"/>
         </svg>
         <span class="et-header-logo-name">ETFE</span>
     </div>

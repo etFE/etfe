@@ -1,12 +1,15 @@
 <template>
     <div id="front-app">
         <header-nav />
-        <transition name="fade" mode="out-in">
-            <router-view class="et-router-view"></router-view>
+        <transition
+            name="fade"
+            mode="out-in"
+        >
+            <router-view class="et-router-view"/>
         </transition>
         <footer-copyright />
         <icon-svg-sprite />
-        <BackTop></BackTop>
+        <BackTop/>
     </div>
 </template>
 

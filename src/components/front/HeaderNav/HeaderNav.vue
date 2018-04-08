@@ -1,12 +1,18 @@
 <template>
-    <i-menu mode="horizontal" class="et-header-container" :theme="theme" :active-name="avtiveMenu" @on-select="menuSelect">
+    <i-menu
+        :theme="theme"
+        :active-name="avtiveMenu"
+        mode="horizontal"
+        class="et-header-container"
+        @on-select="menuSelect"
+    >
         <div class="et-header-left">
             <et-logo />
         </div>
         <menu-item name="plugins">
-            <Icon type="cube"></Icon>组件</menu-item>
+        <Icon type="cube"/>组件</menu-item>
         <menu-item name="about">
-            <Icon type="radio-waves"></Icon>关于</menu-item>
+        <Icon type="radio-waves"/>关于</menu-item>
         <div class="et-header-right">
             <header-nav-avater />
         </div>
@@ -20,6 +26,10 @@ import HeaderNavAvater from './HeaderNavAvater'
 
 export default {
     name: 'HeaderNav',
+    components: {
+        EtLogo,
+        HeaderNavAvater,
+    },
     data () {
         return {
             theme: 'light',
@@ -29,10 +39,6 @@ export default {
         avtiveMenu () {
             return this.$route.path.split('/')[1]
         },
-    },
-    components: {
-        EtLogo,
-        HeaderNavAvater,
     },
     methods: {
         menuSelect (name) {

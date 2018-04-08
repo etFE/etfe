@@ -4,29 +4,47 @@
             <h1>{{ pluginsGuide.title }}</h1>
 
             <h2 class="et-anchor">概述
-                <a href="#overview" name="overview">#</a>
+                <a
+                    href="#overview"
+                    name="overview"
+                >#</a>
             </h2>
             <p>{{ pluginsGuide.description }}</p>
 
             <h2 class="et-anchor">代码示例
-                <a href="#demo" name="demo">#</a>
+                <a
+                    href="#demo"
+                    name="demo"
+                >#</a>
             </h2>
 
             <guide-frame :demo="pluginsGuide.demo" />
-            <div v-if="pluginsGuide.demo && pluginsGuide.demo.length === 0">待续 。。。</div>
+            <div v-if="pluginsGuide.demo && pluginsGuide.demo.length === 0">待续...</div>
 
             <h2 class="et-anchor">API
-                <a href="#api" name="api">#</a>
+                <a
+                    href="#api"
+                    name="api"
+                >#</a>
             </h2>
 
             <h3 class="et-anchor">props
-                <a href="#props" name="props">#</a>
+                <a
+                    href="#props"
+                    name="props"
+                >#</a>
             </h3>
             <h3 class="et-anchor">event
-                <a href="#event" name="event">#</a>
+                <a
+                    href="#event"
+                    name="event"
+                >#</a>
             </h3>
             <h3 class="et-anchor">methods
-                <a href="#methods" name="methods">#</a>
+                <a
+                    href="#methods"
+                    name="methods"
+                >#</a>
             </h3>
         </article>
         <div class="et-plugin-article-side">
@@ -41,21 +59,21 @@ import GuideCatalogue from './PagePluginsGuideCatalogue'
 
 export default {
     name: 'PluginsGuide',
-    data () {
-        return {
-        }
-    },
     components: {
         GuideFrame,
         GuideCatalogue,
     },
-    mounted () {
-        this.dispatchPluginGuide()
+    data () {
+        return {
+        }
     },
     computed: {
         pluginsGuide () {
             return this.$store.state.front.plugins.pluginsGuide
         },
+    },
+    mounted () {
+        this.dispatchPluginGuide()
     },
     methods: {
         dispatchPluginGuide (name) {

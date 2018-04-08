@@ -4,7 +4,7 @@
             NotFound
         </p>
         <p class="et-notfound-tip">
-            {{lastTime}} 秒后返回主页...
+            {{ lastTime }} 秒后返回主页...
         </p>
     </div>
 </template>
