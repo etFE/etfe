@@ -8,13 +8,28 @@
             :key="plugin.id"
             :name="plugin.id"
         >
-            <Icon :type="plugin.icon"/>
+            <Icon :type="icons[plugin.id]"/>
             {{ plugin.text }}
         </menu-item>
     </i-menu>
 </template>
 
 <script>
+
+const icons = {
+    etGrid: 'grid',
+    etTree: 'usb',
+    etDialog: 'ios-chatbubble',
+    etSelect: 'ios-arrow-down',
+    etDatepicker: 'calendar',
+    etCheck: 'android-checkbox',
+    etTab: 'social-windows',
+    etValidate: 'help',
+    etUpload: 'ios-cloud-upload',
+    etForm: 'ios-list',
+    common: 'ios-grid-view',
+}
+
 export default {
     name: 'PluginsList',
     props: {
@@ -29,6 +44,7 @@ export default {
     },
     data () {
         return {
+            icons,
         }
     },
     methods: {

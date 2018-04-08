@@ -16,36 +16,16 @@ export default {
             default: '',
         },
     },
-    data () {
-        return {
-            mockApi: `# 标题
-## 副标题一
-
-- 列表一\`String.split()\`
-- 列表二\`Object.keys()\`
-- 列表三\`Array.filter()\`
-
-\`\`\`javascript
-const a = 1;
-let b = 2;
-function fun() {
-    console.log(a, b)
-}
-\`\`\`
-
-> 说明文一
-`,
-        }
-    },
     computed: {
         markdownApi () {
             let apiHtml
 
-            if (this.mockApi) {
-                apiHtml = marked(this.mockApi)
+            if (this.api) {
+                apiHtml = marked(this.api)
             } else {
                 apiHtml = '待续...'
             }
+            console.log(apiHtml, this.api)
             return apiHtml
         },
     },

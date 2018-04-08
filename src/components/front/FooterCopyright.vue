@@ -9,7 +9,7 @@ export default {
     name: 'FooterCopyright',
     data () {
         return {
-            msg: '© 2018 | ETFT 亦童前端团队',
+            msg: 'Copyright © 2018 ETFT 亦童前端团队',
         }
     },
 }
