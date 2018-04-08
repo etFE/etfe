@@ -14,19 +14,13 @@ const tabsView = {
             }
         },
         DEL_VISITED_VIEWS: (state, view) => {
-            const arr = state.visitedViews.entries()
+            const arr = state.visitedViews
             for (let i = 0, l = arr.length; i < l; i += 1) {
                 if (arr[i].path === view.path) {
                     arr.splice(i, 1)
                     break
                 }
             }
-            // for (const [i, v] of state.visitedViews.entries()) {
-            //     if (v.path === view.path) {
-            //         state.visitedViews.splice(i, 1)
-            //         break
-            //     }
-            // }
         },
         DEL_OTHER_VIEWS: (state, view) => {
             if (view.title !== '首页') {

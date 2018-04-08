@@ -1,126 +1,152 @@
 <template>
   <section class="tabs-container">
-    <div class="tabs-wrapper" ref="tabsWrapper" @wheel.prevent="handleScroll">
-      <ul class="tabsList" ref="tabsList" :style="{left: left + 'px'}">
-        <router-link class="tab-item" v-for=" tab in tabViews" :class=" isActive(tab)? 'item-select':'' " :key="tab.path" :to="tab.path" tag="li" @click="isActive" @contextmenu.prevent.native="showMenu(tab, $event)"> {{ tab.title }}
-          <i class="el-icon-close" @click.prevent.stop='closeSelectedTab(tab)'></i>
+    <div
+      class="tabs-wrapper"
+      ref="tabsWrapper"
+      @wheel.prevent="handleScroll">
+      <ul
+        class="tabsList"
+        ref="tabsList"
+        :style="{left: left + 'px'}">
+        <router-link
+          class="tab-item"
+          v-for=" tab in tabViews"
+          :class=" isActive(tab)? 'item-select':'' "
+          :key="tab.path"
+          :to="tab.path"
+          tag="li"
+          @click="isActive"
+          @contextmenu.prevent.native="showMenu(tab, $event)"> {{ tab.title }}
+          <i
+            class="el-icon-close"
+            @click.prevent.stop="closeSelectedTab(tab)"/>
         </router-link>
       </ul>
     </div>
-    <ul class="tabs-menu" v-show="visible" :style="{left: menuLeft + 'px', top: top + 'px'}">
-      <li class="menu-item" @click="closeSelectedTab(selectTab)">关闭自己</li>
-      <li class="menu-item" @click="closeOtherTabs()">关闭其他</li>
-      <li class="menu-item" @click="closeAllTabs()">关闭所有</li>
+    <ul
+      class="tabs-menu"
+      v-show="visible"
+      :style="{left: menuLeft + 'px', top: top + 'px'}">
+      <li
+        class="menu-item"
+        @click="closeSelectedTab(selectTab)">关闭自己</li>
+      <li
+        class="menu-item"
+        @click="closeOtherTabs()">关闭其他</li>
+      <li
+        class="menu-item"
+        @click="closeAllTabs()">关闭所有</li>
     </ul>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: "TabsView",
-  data() {
-    return {
-      left: 0,
-      menuLeft: 0,
-      top: 0,
-      visible: false,
-      selectTab: {}
-    };
-  },
-  mounted() {
-    const route = this.generateRoute(this.$route);
-    this.addVisitedViews(route);
-  },
-  watch: {
-    $route() {
-      const route = this.generateRoute(this.$route);
-      this.addVisitedViews(route);
-    },
-    visible(value) {
-      if (value) {
-        document.body.addEventListener("click", this.closeMenu);
-      } else {
-        document.body.removeEventListener("click", this.closeMenu);
-      }
-    }
-  },
-  computed: {
-    ...mapGetters(["tabViews"])
-  },
-  methods: {
-    ...mapActions([
-      "addVisitedViews",
-      "delVisitedViews",
-      "delOtherViews",
-      "delAllViews"
-    ]),
-    handleScroll(evt) {
-      const eventDelta = evt.wheelDelta;
-      const $containerWidth = this.$refs.tabsWrapper.offsetWidth;
-      const $tabsListWidth = this.$refs.tabsList.offsetWidth;
-      this.left += eventDelta;
-      if (this.left > 0) {
-        this.left = 0;
-      } else {
-        // 页签总宽度大于外部容器宽度时，left值重新计算
-        if ($tabsListWidth > $containerWidth) {
-          if ($tabsListWidth + this.left < $containerWidth) {
-            this.left = $containerWidth - $tabsListWidth;
-          }
-          // 小于总宽度时 left为0
-        } else {
-          this.left = 0;
+    name: 'TabsView',
+    data () {
+        return {
+            left: 0,
+            menuLeft: 0,
+            top: 0,
+            visible: false,
+            selectTab: {},
         }
-      }
     },
-    isActive(tab) {
-      return tab.path === this.$route.path;
+    computed: {
+        ...mapGetters(['tabViews']),
     },
-    generateRoute(route) {
-      /* if (route.name) {
+    watch: {
+        $route () {
+            const route = this.generateRoute(this.$route)
+            this.addVisitedViews(route)
+        },
+        visible (value) {
+            if (value) {
+                document.body.addEventListener('click', this.closeMenu)
+            } else {
+                document.body.removeEventListener('click', this.closeMenu)
+            }
+        },
+    },
+    mounted () {
+        const route = this.generateRoute(this.$route)
+        this.addVisitedViews(route)
+    },
+
+    methods: {
+        ...mapActions([
+            'addVisitedViews',
+            'delVisitedViews',
+            'delOtherViews',
+            'delAllViews',
+        ]),
+        handleScroll (evt) {
+            const eventDelta = evt.wheelDelta
+            const $containerWidth = this.$refs.tabsWrapper.offsetWidth
+            const $tabsListWidth = this.$refs.tabsList.offsetWidth
+            this.left += eventDelta
+            if (this.left > 0) {
+                this.left = 0
+            } else {
+                // 页签总宽度大于外部容器宽度时，left值重新计算
+                if ($tabsListWidth > $containerWidth) {
+                    if ($tabsListWidth + this.left < $containerWidth) {
+                        this.left = $containerWidth - $tabsListWidth
+                    }
+                    // 小于总宽度时 left为0
+                } else {
+                    this.left = 0
+                }
+            }
+        },
+        isActive (tab) {
+            return tab.path === this.$route.path
+        },
+        generateRoute (route) {
+            /* if (route.name) {
         return route;
       } */
-      return route;
+            return route
+        },
+        closeSelectedTab (tab) {
+            if (tab.path === '/admin') {
+                return false
+            }
+            this.delVisitedViews(tab).then((views) => {
+                if (this.isActive(tab)) {
+                    const latestView = views.slice(-1)[0]
+                    if (latestView) {
+                        this.$router.push(latestView.path)
+                    } else {
+                        this.$router.push('/admin')
+                    }
+                }
+            })
+        },
+        closeOtherTabs () {
+            this.delOtherViews(this.selectTab).then((tab) => {
+                this.$router.push(tab.path)
+            })
+        },
+        closeAllTabs () {
+            this.delAllViews().then(() => {
+                this.$router.push('/admin')
+                this.isActive(this.tabViews)
+            })
+        },
+        showMenu (tab, evt) {
+            this.menuLeft = evt.clientX - 220
+            this.top = evt.clientY
+            this.visible = true
+            this.selectTab = tab
+        },
+        closeMenu () {
+            this.visible = false
+        },
     },
-    closeSelectedTab(tab) {
-      if (tab.path === "/admin") {
-        return false;
-      }
-      this.delVisitedViews(tab).then(views => {
-        if (this.isActive(tab)) {
-          const latestView = views.slice(-1)[0];
-          if (latestView) {
-            this.$router.push(latestView.path);
-          } else {
-            this.$router.push("/admin");
-          }
-        }
-      });
-    },
-    closeOtherTabs() {
-      this.delOtherViews(this.selectTab).then(tab => {
-        this.$router.push(tab.path);
-      });
-    },
-    closeAllTabs() {
-      this.delAllViews().then(() => {
-        this.$router.push("/admin");
-        this.isActive(this.tabViews);
-      });
-    },
-    showMenu(tab, evt) {
-      this.menuLeft = evt.clientX - 220;
-      this.top = evt.clientY;
-      this.visible = true;
-      this.selectTab = tab;
-    },
-    closeMenu() {
-      this.visible = false;
-    }
-  }
-};
+}
 </script>
 
 <style lang="scss">

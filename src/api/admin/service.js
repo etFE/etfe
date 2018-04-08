@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 
 const service = axios.create({
-    baseURL: 'http://192.168.1.127:3000/manage', // api的base_url
+    baseURL: 'http://localhost:3000/manage', // api的base_url
     timeout: 5000, // request timeout
 })
 
