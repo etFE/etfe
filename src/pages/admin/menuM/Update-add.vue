@@ -1,45 +1,96 @@
 <template>
-    <el-dialog :visible.sync="isShow" :before-close='dialogClosed' @open="dialogOpened" width="1000px" :close-on-click-modal='false'>
-        <span slot="title">{{title}}</span>
-        <el-form :model="form" v-loading="formDataloading" ref="Form" :rules="rules" status-icon>
+    <el-dialog
+        :visible.sync="isShow"
+        :before-close="dialogClosed"
+        :close-on-click-modal="false"
+        width="1000px"
+        @open="dialogOpened">
+        <span slot="title">{{ title }}</span>
+        <el-form
+            v-loading="formDataloading"
+            ref="Form"
+            :model="form"
+            :rules="rules"
+            status-icon>
             <el-row :gutter="10">
                 <el-col :span="10">
-                    <el-form-item label="菜单名称：" :label-width="formLabelWidth" class="form-item" prop="name">
-                        <el-input v-model="form.name" auto-complete="off" size="medium" :disabled='disabled'></el-input>
+                    <el-form-item
+                        :label-width="formLabelWidth"
+                        label="菜单名称："
+                        class="form-item"
+                        prop="name">
+                        <el-input
+                            v-model="form.name"
+                            :disabled="disabled"
+                            auto-complete="off"
+                            size="medium" />
                     </el-form-item>
-                    <el-form-item label="系统模块：" :label-width="formLabelWidth" class="form-item" prop="system">
-                        <el-select v-model="form.system" filterable default-first-option placeholder="请输入关键词" size="medium">
-                            <el-option v-for="item in sysOptions" :key="item._id" :label="item.descript" :value="item._id" auto-complete='true'>
-                            </el-option>
+                    <el-form-item
+                        :label-width="formLabelWidth"
+                        label="系统模块："
+                        class="form-item"
+                        prop="system">
+                        <el-select
+                            v-model="form.system"
+                            filterable
+                            default-first-option
+                            placeholder="请输入关键词"
+                            size="medium">
+                            <el-option
+                                v-for="item in sysOptions"
+                                :key="item._id"
+                                :label="item.descript"
+                                :value="item._id"
+                                auto-complete="true" />
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="文件描述：" :label-width="formLabelWidth" style="width: 350px;height: 68px" prop="descript">
-                        <el-input type="textarea" v-model="form.descript" size="medium"></el-input>
+                    <el-form-item
+                        :label-width="formLabelWidth"
+                        label="文件描述："
+                        style="width: 350px;height: 68px"
+                        prop="descript">
+                        <el-input
+                            v-model="form.descript"
+                            type="textarea"
+                            size="medium" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="14">
                     <el-form-item prop="file">
-                        <el-transfer v-loading='transLoading' v-model="form.file" filterable :titles="['所有文件', '所选文件']" :button-texts="['到左边', '到右边']" :data="filesList" />
+                        <el-transfer
+                            v-loading="transLoading"
+                            v-model="form.file"
+                            :titles="['所有文件', '所选文件']"
+                            :button-texts="['到左边', '到右边']"
+                            :data="filesList"
+                            filterable />
                     </el-form-item>
                 </el-col>
             </el-row>
 
         </el-form>
-        <div slot="footer" class="dialog-footer" style="text-align: center">
+        <div
+            slot="footer"
+            class="dialog-footer"
+            style="text-align: center">
             <el-button @click="dialogClosed">取 消</el-button>
-            <el-button type="primary" @click="submitDailog">确 定</el-button>
+            <el-button
+                type="primary"
+                @click="submitDailog">确 定</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script>
-import { queryFileData } from '@/api/admin/filesManage';
-import { addMenuData, updateMenuData } from '@/api/admin/menuManage'
-import { querySysData } from '@/api/admin/sysManage'
+import api from '@/api/admin'
 
 export default {
-    name: 'Update-add',
-    props: ['isShow', 'operation', 'rowData'],
+    name: 'UpdateAdd',
+    props: {
+        isShow: Boolean,
+        operation: String,
+        rowData: Object,
+    },
     data () {
         return {
             transLoading: false,
@@ -64,25 +115,23 @@ export default {
             },
         }
     },
-    mounted () {
-        this.initSysData()
-    },
     computed: {
         title () {
-            if (this.operation === "add") {
-                return "添加页";
-            } 
-                return "修改页";
-            
+            if (this.operation === 'add') {
+                return '添加页'
+            }
+            return '修改页'
         },
 
         disabled () {
-            if (this.operation === "add") {
-                return false;
-            } 
-                return true;
-            
+            if (this.operation === 'add') {
+                return false
+            }
+            return true
         },
+    },
+    mounted () {
+        this.initSysData()
     },
     methods: {
         dialogOpened () {
@@ -94,7 +143,6 @@ export default {
                     enable: 1,
                 }
             }
-            console.log(11111, this.form)
         },
         dialogClosed () {
             this.$refs.Form.resetFields()
@@ -107,29 +155,28 @@ export default {
             // 提交前先验证
             this.submitForm()
             const newData = { ...this.form }
-            console.log(newData, 'submit')
 
             if (this.formDataloading) {
                 if (this.operation === 'add') {
-                    addMenuData(newData)
+                    api.menu.add({ data: newData })
                         .then((res) => {
                             this.formDataloading = false
                             console.log('res', res)
-                            // this.$parent.tableData.push(res.data);
+                            this.$parent.tableData.push(res.data)
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 } else {
-                    updateMenuData(newData._id, newData)
-                        .then((res) => {
+                    api.menu.update({ param: { id: newData._id }, data: newData })
+                        .then(() => {
                             const index = this.rowData.$index
                             this.$parent.$set(this.$parent.tableData, index, newData)
                             this.formDataloading = false
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 }
@@ -143,14 +190,13 @@ export default {
             })
         },
         queryAllFiles () {
-            const data = []
             this.transLoading = true
-            queryFileData().then((res) => {
+            api.file.query().then((res) => {
                 const { data } = res
-                const result = data.map((item, index) => ({ key: item._id, label: item.name }))
+                const result = data.map(item => ({ key: item._id, label: item.name }))
                 this.filesList = result
                 this.transLoading = false
-            }).catch((error) => {
+            }).catch(() => {
                 this.transLoading = false
             })
 
@@ -169,7 +215,7 @@ export default {
             // this.filesList = data;
         },
         initSysData () {
-            querySysData().then((res) => {
+            api.system.query().then((res) => {
                 this.sysOptions = res.data
             })
         },

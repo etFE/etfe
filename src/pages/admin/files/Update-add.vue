@@ -1,69 +1,57 @@
 <template>
     <el-dialog
+        :close-on-click-modal="false"
         :visible.sync="isShow"
         :before-close="dialogClosed"
-        @open="dialogOpened"
         width="450px"
-        :close-on-click-modal="false">
+        @open="dialogOpened">
         <span slot="title">{{ title }}</span>
         <el-form
-            :model="form"
             v-loading="formDataloading"
             ref="Form"
+            :model="form"
             :rules="rules"
             status-icon>
             <el-form-item
-                label="文件名称："
                 :label-width="formLabelWidth"
+                label="文件名称："
                 class="form-item"
                 prop="name">
                 <el-input
                     v-model="form.name"
+                    :disabled="disabled"
                     auto-complete="off"
-                    size="medium"
-                    :disabled="disabled"/>
+                    size="medium" />
             </el-form-item>
-            <!-- <el-form-item label="文件菜单：" :label-width="formLabelWidth" class="form-item">
-        <el-select v-model="form.menus" filterable default-first-option remote placeholder="请输入关键词" size="medium">
-          <el-option v-for="item in typeOptions" :key="item.value" :label="item.text" :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item> -->
             <el-form-item
-                label="过期日期："
                 :label-width="formLabelWidth"
+                label="过期日期："
                 class="form-item"
                 prop="expireDate">
                 <el-date-picker
                     v-model="form.expireDate"
                     type="datetime"
                     placeholder="选择过期日期时间"
-                    size="medium"/>
+                    size="medium" />
             </el-form-item>
             <el-form-item
-                label="是否可用："
-                :label-width="formLabelWidth">
+                :label-width="formLabelWidth"
+                label="是否可用：">
                 <el-radio-group v-model="form.enable">
                     <el-radio :label="1">是</el-radio>
                     <el-radio :label="0">否</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item
-                label="文件描述："
                 :label-width="formLabelWidth"
+                label="文件描述："
                 style="width: 350px;height: 68px"
                 prop="descript">
                 <el-input
-                    type="textarea"
                     v-model="form.descript"
-                    size="medium"/>
+                    type="textarea"
+                    size="medium" />
             </el-form-item>
-            <!-- <el-form-item prop="path">
-        <el-upload class="upload-demo" ref="upload"  :on-success="filesUpLoaded" :on-error="filesUnloaded" action="http://192.168.1.127:3000/manage/file/upload" :file-list="fileList" :show-file-list='true'  :auto-upload="true" :multiple='false'>
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
-      </el-form-item> -->
         </el-form>
         <div
             slot="footer"
@@ -77,11 +65,15 @@
 </template>
 
 <script>
-import { addFileData, updateFileData } from '@/api/admin/filesManage'
+import api from '@/api/admin'
 
 export default {
     name: 'UpdateAdd',
-    props: ['isShow', 'operation', 'rowData'],
+    props: {
+        isShow: Boolean,
+        operation: String,
+        rowData: Object,
+    },
     data () {
         return {
             formLabelWidth: '95px',
@@ -160,24 +152,24 @@ export default {
 
             if (this.formDataloading) {
                 if (this.operation === 'add') {
-                    addFileData(newData)
+                    api.file.add({ data: newData })
                         .then((res) => {
                             this.formDataloading = false
                             this.$parent.tableData.push(res.data)
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 } else {
-                    updateFileData(newData._id, newData)
-                        .then((res) => {
+                    api.file.update({ param: { id: newData._id }, data: newData })
+                        .then(() => {
                             const index = this.rowData.$index
                             this.$parent.$set(this.$parent.tableData, index, newData)
                             this.formDataloading = false
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 }

@@ -1,27 +1,61 @@
 <template>
-  <el-dialog :visible.sync="isShow" :before-close='dialogClosed' width="450px" @open="dialogOpened" :close-on-click-modal='false'>
-    <span slot="title">{{title}}</span>
-    <el-form :model="form" v-loading="formDataloading" ref="Form" :rules="rules" status-icon>
-      <el-form-item label="系统名称：" :label-width="formLabelWidth" class="form-item" prop="name">
-        <el-input v-model="form.name" auto-complete="off" size="medium" :disabled='disabled'></el-input>
-      </el-form-item>
-      <el-form-item label="系统描述：" :label-width="formLabelWidth" style="width: 350px;height: 68px" prop="descript">
-        <el-input type="textarea" v-model="form.descript" size="medium"></el-input>
-      </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogClosed">取 消</el-button>
-      <el-button type="primary" @click="submitDailog">确 定</el-button>
-    </div>
-  </el-dialog>
+    <el-dialog
+        :close-on-click-modal="false"
+        :visible.sync="isShow"
+        :before-close="dialogClosed"
+        width="450px"
+        @open="dialogOpened">
+        <span slot="title">{{ title }}</span>
+        <el-form
+            v-loading="formDataloading"
+            ref="Form"
+            :model="form"
+            :rules="rules"
+            status-icon>
+            <el-form-item
+                :label-width="formLabelWidth"
+                label="系统名称："
+                class="form-item"
+                prop="name">
+                <el-input
+                    v-model="form.name"
+                    :disabled="disabled"
+                    auto-complete="off"
+                    size="medium" />
+            </el-form-item>
+            <el-form-item
+                :label-width="formLabelWidth"
+                label="系统描述："
+                style="width: 350px;height: 68px"
+                prop="descript">
+                <el-input
+                    v-model="form.descript"
+                    type="textarea"
+                    size="medium" />
+            </el-form-item>
+        </el-form>
+        <div
+            slot="footer"
+            class="dialog-footer">
+            <el-button @click="dialogClosed">取 消</el-button>
+            <el-button
+                type="primary"
+                @click="submitDailog">确 定</el-button>
+        </div>
+    </el-dialog>
 </template>
 
 <script>
-import { addSysData, updateSysData } from '@/api/admin/sysManage'
+import api from '@/api/admin'
+
 
 export default {
-    name: 'Update-add',
-    props: ['isShow', 'operation', 'rowData'],
+    name: 'UpdateAdd',
+    props: {
+        isShow: Boolean,
+        operation: String,
+        rowData: Object,
+    },
     data () {
         return {
             formLabelWidth: '95px',
@@ -72,24 +106,24 @@ export default {
 
             if (this.formDataloading) {
                 if (this.operation === 'add') {
-                    addSysData(newData)
+                    api.system.add({ data: newData })
                         .then((res) => {
                             this.formDataloading = false
-                            this.$parent.tableData.push(newData)
+                            this.$parent.tableData.push(res.data)
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 } else {
-                    updateSysData(newData._id, newData)
-                        .then((res) => {
+                    api.system.update({ param: { id: newData._id }, data: newData })
+                        .then(() => {
                             const index = this.rowData.$index
                             this.$parent.$set(this.$parent.tableData, index, newData)
                             this.formDataloading = false
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 }

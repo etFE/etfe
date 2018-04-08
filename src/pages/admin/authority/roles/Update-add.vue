@@ -1,54 +1,47 @@
 <template>
     <el-dialog
         :visible.sync="isShow"
-        :before-close='dialogClosed'
+        :before-close="dialogClosed"
         @open="dialogOpened"
         width="1050px"
-        :close-on-click-modal='false'
-    >
-        <span slot="title">{{title}}</span>
+        :close-on-click-modal="false">
+        <span slot="title">{{ title }}</span>
         <el-form
             :model="form"
             v-loading="formDataloading"
             ref="Form"
             :rules="rules"
-            status-icon inline
-        >
+            status-icon
+            inline>
             <el-row>
                 <el-form-item
                     label="角色名称："
                     :label-width="formLabelWidth"
                     class="form-item"
-                    prop="name"
-                >
+                    prop="name">
                     <el-input
                         v-model="form.name"
                         auto-complete="off"
                         size="medium"
-                        :disabled='disabled'
-                    ></el-input>
+                        :disabled="disabled"/>
                 </el-form-item>
                 <el-form-item
                     label="系统模块："
                     :label-width="formLabelWidth"
                     class="form-item"
-                    prop="system"
-                >
+                    prop="system">
                     <el-select
                         v-model="form.system"
                         filterable
                         default-first-option
                         placeholder="请输入关键词"
-                        size="medium"
-                    >
+                        size="medium">
                         <el-option
                             v-for="item in sysOptions"
                             :key="item._id"
                             :label="item.descript"
                             :value="item._id"
-                            auto-complete='true'
-                        >
-                        </el-option>
+                            auto-complete="true"/>
                     </el-select>
                 </el-form-item>
                 <el-form-item
@@ -56,39 +49,47 @@
                     :label-width="formLabelWidth"
                     style="height: 48px"
                     class="form-item"
-                    prop="descript"
-                >
-                    <el-input type="textarea" v-model="form.descript" size="medium"></el-input>
+                    prop="descript">
+                    <el-input
+                        type="textarea"
+                        v-model="form.descript"
+                        size="medium"/>
                 </el-form-item>
             </el-row>
-            <el-row type="flex" justify="center">
+            <el-row
+                type="flex"
+                justify="center">
                 <el-form-item prop="menus">
                     <el-transfer
-                        v-loading='transLoading'
+                        v-loading="transLoading"
                         v-model="form.menus"
                         filterable
                         :titles="['所有菜单', '所选菜单']"
                         :button-texts="['到左边', '到右边']"
-                        :data="menusList"
-                    />
+                        :data="menusList" />
                 </el-form-item>
             </el-row>
 
         </el-form>
-        <div slot="footer" class="dialog-footer" style="text-align: center">
+        <div
+            slot="footer"
+            class="dialog-footer"
+            style="text-align: center">
             <el-button @click="dialogClosed">取 消</el-button>
-            <el-button type="primary" @click="submitDailog">确 定</el-button>
+            <el-button
+                type="primary"
+                @click="submitDailog">确 定</el-button>
         </div>
     </el-dialog>
 </template>
 
 <script>
-import { queryMenuBySys, queryMenuData } from '@/api/admin/menuManage'
-import { querySysData } from '@/api/admin/sysManage'
-import { addRoleData, updateRoleData } from '@/api/admin/rolesManage'
+// import { queryMenuBySys, queryMenuData } from '@/api/admin/menuManage';
+// import { querySysData  } from "@/api/admin/sysManage";
+// import {addRoleData, updateRoleData} from "@/api/admin/rolesManage";
 
 export default {
-    name: 'Update-add',
+    name: 'UpdateAdd',
     props: ['isShow', 'operation', 'rowData'],
     data () {
         return {

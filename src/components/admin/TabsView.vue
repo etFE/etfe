@@ -1,7 +1,13 @@
 <template>
     <section class="tabs-container">
-        <div class="tabs-wrapper" ref="tabsWrapper" @wheel.prevent="handleScroll">
-            <ul class="tabsList" ref="tabsList" :style="{left: left + 'px'}">
+        <div
+            class="tabs-wrapper"
+            ref="tabsWrapper"
+            @wheel.prevent="handleScroll">
+            <ul
+                class="tabsList"
+                ref="tabsList"
+                :style="{left: left + 'px'}">
                 <router-link
                     class="tab-item"
                     v-for=" tab in tabViews"
@@ -10,16 +16,26 @@
                     :to="tab.path"
                     tag="li"
                     @click="isActive"
-                    @contextmenu.prevent.native="showMenu(tab, $event)"
-                > {{ tab.title }}
-                    <i class="el-icon-close" @click.prevent.stop='closeSelectedTab(tab)'></i>
+                    @contextmenu.prevent.native="showMenu(tab, $event)"> {{ tab.title }}
+                    <i
+                        class="el-icon-close"
+                        @click.prevent.stop="closeSelectedTab(tab)"/>
                 </router-link>
             </ul>
         </div>
-        <ul class="tabs-menu" v-show="visible" :style="{left: menuLeft + 'px', top: top + 'px'}">
-            <li class="menu-item" @click="closeSelectedTab(selectTab)">关闭自己</li>
-            <li class="menu-item" @click="closeOtherTabs()">关闭其他</li>
-            <li class="menu-item" @click="closeAllTabs()">关闭所有</li>
+        <ul
+            class="tabs-menu"
+            v-show="visible"
+            :style="{left: menuLeft + 'px', top: top + 'px'}">
+            <li
+                class="menu-item"
+                @click="closeSelectedTab(selectTab)">关闭自己</li>
+            <li
+                class="menu-item"
+                @click="closeOtherTabs()">关闭其他</li>
+            <li
+                class="menu-item"
+                @click="closeAllTabs()">关闭所有</li>
         </ul>
     </section>
 </template>
@@ -38,9 +54,8 @@ export default {
             selectTab: {},
         }
     },
-    mounted () {
-        const route = this.generateRoute(this.$route)
-        this.addVisitedViews(route)
+    computed: {
+        ...mapGetters(['tabViews']),
     },
     watch: {
         $route () {
@@ -55,9 +70,11 @@ export default {
             }
         },
     },
-    computed: {
-        ...mapGetters(['tabViews']),
+    mounted () {
+        const route = this.generateRoute(this.$route)
+        this.addVisitedViews(route)
     },
+
     methods: {
         ...mapActions([
             'addVisitedViews',
@@ -89,8 +106,8 @@ export default {
         },
         generateRoute (route) {
             /* if (route.name) {
-              return route;
-            } */
+        return route;
+      } */
             return route
         },
         closeSelectedTab (tab) {
