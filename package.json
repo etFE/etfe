@@ -1,7 +1,7 @@
 {
     "name": "fe-website",
     "version": "1.0.0",
-    "description": "show demo and api of plugins, and something more, by et-fe-team",
+    "description": "show demo and api of plugins, and something more, include the admin, by et-fe-team",
     "author": "Simon <wsj_simon@163.com>",
     "private": true,
     "scripts": {
