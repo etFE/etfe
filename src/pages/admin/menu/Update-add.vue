@@ -199,20 +199,6 @@ export default {
             }).catch(() => {
                 this.transLoading = false
             })
-
-            // // 模拟数据
-            // setTimeout(() => {
-            //   for (let i = 1; i <= 15; i++) {
-            //     data.push({
-            //       key: i,
-            //       label: `备选项 ${ i }`,
-            //       disabled: i % 4 === 0
-            //     });
-            //   }
-            //    this.transLoading = false;
-            // }, 2000);
-
-            // this.filesList = data;
         },
         initSysData () {
             api.system.query().then((res) => {

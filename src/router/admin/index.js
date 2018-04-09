@@ -17,11 +17,16 @@ import peopleMangeComponent from '@/pages/admin/peoples'
 
 import filesManageComponent from '@/pages/admin/files'
 
-import menuManageComponent from '@/pages/admin/menuM'
+import menuManageComponent from '@/pages/admin/menu'
 
-import logsManageComponent from '@/pages/admin/logsM'
+import logsManageComponent from '@/pages/admin/logs'
 
-import sysManageComponent from '@/pages/admin/sysM'
+import sysManageComponent from '@/pages/admin/sys'
+
+import personComponent from '@/pages/admin/person'
+
+import apiManageComponent from '@/pages/admin/apiComponent'
+
 
 // import NProgress from 'nprogress' // progress bar
 // import 'nprogress/nprogress.css' // progress bar style
@@ -87,6 +92,18 @@ const adminRoutes = [
                 name: 'menuManage',
                 component: menuManageComponent,
                 meta: { title: '菜单管理' },
+            },
+            {
+                path: 'apiManage',
+                name: 'apiManage',
+                component: apiManageComponent,
+                meta: { title: '组件文档管理' },
+            },
+            {
+                path: 'person',
+                name: 'person',
+                component: personComponent,
+                meta: { title: '个人信息' },
             },
             {
                 path: 'logsManage',
