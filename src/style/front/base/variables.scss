@@ -40,14 +40,14 @@ $blockMargin: 20px;
 
 @keyframes bulrIn {
   from {
-    filter: blur(0px);
+    filter: blur(10px);
   }
   to {
-    filter: blur(10px);
+    filter: blur(0);
   }
 }
 // 延迟聚焦
 @mixin filterBlur () {
-  animation: bulrIn 2s ease-in 1s;
+  animation: bulrIn ease-in 1s;
   animation-fill-mode: forwards;
 }

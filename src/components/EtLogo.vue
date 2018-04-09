@@ -13,12 +13,9 @@
 <script>
 export default {
     name: 'HeaderNavLogo',
-    // porps: {
-    //   theme: 'string',
-    // },
     methods: {
         handleLogoClick () {
-            this.$router.push({ path: '/' })
+            this.$emit('logoclick')
         },
     },
 }

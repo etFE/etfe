@@ -25,7 +25,6 @@ export default {
             } else {
                 apiHtml = '待续...'
             }
-            console.log(apiHtml, this.api)
             return apiHtml
         },
     },

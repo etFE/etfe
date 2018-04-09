@@ -1,30 +1,47 @@
 <template>
     <section class="header">
         <div class="navicon-con">
-            <a class="hamburger" :class="{'is-active':sideBarShow}" @click="toggleSideBar">
+            <a
+                :class="{'is-active':sideBarShow}"
+                class="hamburger"
+                @click="toggleSideBar">
                 <i class="iconfont">&#xe604;</i>
             </a>
         </div>
         <div class="header-middle">
-            <el-breadcrumb separator-class="el-icon-arrow-right" class="admin-breadcrumb">
+            <el-breadcrumb
+                separator-class="el-icon-arrow-right"
+                class="admin-breadcrumb">
                 <transition-group name="breadcrumb">
                     <el-breadcrumb-item
                         v-for="breItem in BreadcrumbList"
                         :key="breItem.path"
-                        :to="{ path: breItem.path }"
-                    > {{ breItem.meta.title }} </el-breadcrumb-item>
+                        :to="{ path: breItem.path }"> {{ breItem.meta.title }} </el-breadcrumb-item>
                 </transition-group>
             </el-breadcrumb>
         </div>
         <div class="header-right">
+            <el-tooltip
+                effect="dark"
+                content="全屏">
+                <a class="screenfull">
+                    <i class="iconfont">&#xe600;</i>
+                </a>
+            </el-tooltip>
             <a class="user">{{ user }}</a>
 
             <el-dropdown trigger="click">
                 <span class="el-dropdown-link ">
-                    <div class="userimg"></div>
+                    <div class="userimg" />
                 </span>
-                <el-dropdown-menu slot="dropdown" class="dropdown-menu">
-                    <el-dropdown-item>个人信息</el-dropdown-item>
+                <el-dropdown-menu
+                    slot="dropdown"
+                    class="dropdown-menu">
+                    <router-link to="/admin/person">
+                        <el-dropdown-item>
+                            个人信息
+                        </el-dropdown-item>
+                    </router-link>
                     <el-dropdown-item>设置</el-dropdown-item>
                     <el-dropdown-item>安全退出</el-dropdown-item>
                 </el-dropdown-menu>
@@ -38,6 +55,9 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'NavBar',
+    props: {
+        isShow: Boolean,
+    },
     data () {
         return {
             hamActive: true,
@@ -46,17 +66,16 @@ export default {
             BreadcrumbList: [],
         }
     },
-    props: ['isShow'],
-    mounted () {
-        this.getBreadcrumb()
+    computed: {
+        ...mapGetters(['sideBarShow']),
     },
     watch: {
         $route () {
             this.getBreadcrumb()
         },
     },
-    computed: {
-        ...mapGetters(['sideBarShow']),
+    mounted () {
+        this.getBreadcrumb()
     },
     methods: {
         ...mapActions(['toggleSideBar']),
@@ -114,6 +133,13 @@ export default {
 .header-right {
   margin-right: 20px;
   height: 100%;
+  .screenfull {
+      display: inline-block;
+    // width: 20px;
+    padding: 0 10px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
   .user {
     padding: 10px;
     height: 100%;

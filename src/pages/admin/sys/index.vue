@@ -1,5 +1,5 @@
 <template>
-    <section class="user-manage">
+    <section>
         <div class="L-selects">
             <el-form
                 :inline="true"
@@ -128,6 +128,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
-</style>

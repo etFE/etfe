@@ -1,33 +1,33 @@
 <template>
     <el-dialog
+        :close-on-click-modal="false"
         :visible.sync="isShow"
         :before-close="dialogClosed"
-        @open="dialogOpened"
         width="1050px"
-        :close-on-click-modal="false">
+        @open="dialogOpened">
         <span slot="title">{{ title }}</span>
         <el-form
-            :model="form"
             v-loading="formDataloading"
             ref="Form"
+            :model="form"
             :rules="rules"
             status-icon
             inline>
             <el-row>
                 <el-form-item
-                    label="角色名称："
                     :label-width="formLabelWidth"
+                    label="角色名称："
                     class="form-item"
                     prop="name">
                     <el-input
                         v-model="form.name"
+                        :disabled="disabled"
                         auto-complete="off"
-                        size="medium"
-                        :disabled="disabled"/>
+                        size="medium" />
                 </el-form-item>
                 <el-form-item
-                    label="系统模块："
                     :label-width="formLabelWidth"
+                    label="系统模块："
                     class="form-item"
                     prop="system">
                     <el-select
@@ -41,19 +41,19 @@
                             :key="item._id"
                             :label="item.descript"
                             :value="item._id"
-                            auto-complete="true"/>
+                            auto-complete="true" />
                     </el-select>
                 </el-form-item>
                 <el-form-item
-                    label="角色描述："
                     :label-width="formLabelWidth"
+                    label="角色描述："
                     style="height: 48px"
                     class="form-item"
                     prop="descript">
                     <el-input
-                        type="textarea"
                         v-model="form.descript"
-                        size="medium"/>
+                        type="textarea"
+                        size="medium" />
                 </el-form-item>
             </el-row>
             <el-row
@@ -63,10 +63,10 @@
                     <el-transfer
                         v-loading="transLoading"
                         v-model="form.menus"
-                        filterable
                         :titles="['所有菜单', '所选菜单']"
                         :button-texts="['到左边', '到右边']"
-                        :data="menusList" />
+                        :data="menusList"
+                        filterable />
                 </el-form-item>
             </el-row>
 
@@ -84,13 +84,16 @@
 </template>
 
 <script>
-// import { queryMenuBySys, queryMenuData } from '@/api/admin/menuManage';
-// import { querySysData  } from "@/api/admin/sysManage";
-// import {addRoleData, updateRoleData} from "@/api/admin/rolesManage";
+import api from '@/api/admin'
+
 
 export default {
     name: 'UpdateAdd',
-    props: ['isShow', 'operation', 'rowData'],
+    props: {
+        isShow: Boolean,
+        operation: String,
+        rowData: Object,
+    },
     data () {
         return {
             transLoading: false,
@@ -138,7 +141,7 @@ export default {
     },
     watch: {
         system () {
-            console.log(this.form.system, 11112222)
+            // console.log(this.form.system, 11112222)
 
             this.form.system && this.queryMenu(this.form.system)
         },
@@ -154,7 +157,7 @@ export default {
                 this.form = { ...this.form, ...this.rowData.row }
                 this.form.system = this.rowData.row.system._id
                 this.form.menus = this.rowData.row.menus.map(item => item._id)
-                console.log(this.rowData, 4445555555554)
+                // console.log(this.rowData, 4445555555554)
             } else {
                 this.form = {
 
@@ -173,29 +176,29 @@ export default {
             this.submitForm()
 
             const newData = { ...this.form }
-            console.log(newData, 'submit')
+            // console.log(newData, 'submit')
 
             if (this.formDataloading) {
                 if (this.operation === 'add') {
-                    addRoleData(newData)
+                    api.role.add({ data: newData })
                         .then((res) => {
                             this.formDataloading = false
                             console.log('res', res)
                             // this.$parent.tableData.push(res.data);
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 } else {
-                    updateRoleData(newData._id, newData)
-                        .then((res) => {
+                    api.role.update({ param: { id: newData._id }, data: newData })
+                        .then(() => {
                             const index = this.rowData.$index
                             this.$parent.$set(this.$parent.tableData, index, newData)
                             this.formDataloading = false
                             this.dialogClosed()
                         })
-                        .catch((error) => {
+                        .catch(() => {
                             this.formDataloading = false
                         })
                 }
@@ -213,9 +216,8 @@ export default {
         queryMenu (id) {
             const data = []
             this.transLoading = true
-            let queryMethod
             if (!id) {
-                queryMenuData().then((res) => {
+                api.menu.query().then((res) => {
                     const { data } = res
 
                     const result = data.map((item, index) => ({
@@ -225,28 +227,28 @@ export default {
                     this.menusList = result
                     this.transLoading = false
                 })
-                    .catch((error) => {
+                    .catch(() => {
                         this.transLoading = false
                     })
             } else {
-                queryMenuBySys(id).then((res) => {
+                api.menu.queryBySys({ param: { id } }).then((res) => {
                     const { data } = res
-                    const result = data.map((item, index) => ({
+                    const result = data.map(item => ({
                         key: item._id,
                         label: item.name,
                     }))
                     this.menusList = result
-                    console.log(this.menusList, 4454545)
+                    // console.log(this.menusList, 4454545)
                     this.transLoading = false
                 })
-                    .catch((error) => {
+                    .catch(() => {
                         this.transLoading = false
                     })
             }
         },
         // 查询系统模块数据
         fetchSysData () {
-            querySysData().then((res) => {
+            api.system.query().then((res) => {
                 this.sysOptions = res.data
             })
         },

@@ -2,75 +2,75 @@
     <!-- <transition name="slide-fade" mode="out-in"> -->
     <div class="left-slide">
         <div
-            class="logo"
             :class="{'collageLogo': !sideBarShow}"
+            class="logo"
         >
             <et-logo />
-    </div>
-    <div class="side-menu">
-        <el-menu
-            router
-            :default-active="$route.path"
-            class="nav-menu"
-            background-color="#39435c"
-            text-color="#fff"
-            :collapse="!sideBarShow"
-            active-text-color="#ff0"
-        >
-            <div
-                v-for="(item, index) in nav_menu_data"
-                :key="index"
+        </div>
+        <div class="side-menu">
+            <el-menu
+                :collapse="!sideBarShow"
+                :default-active="$route.path"
+                router
+                class="nav-menu"
+                background-color="#39435c"
+                text-color="#fff"
+                active-text-color="#ff0"
             >
-                <el-menu-item
-                    class="menu-list"
-                    v-if="typeof item.child === 'undefined' "
-                    :index="item.path"
+                <div
+                    v-for="(item, index) in nav_menu_data"
+                    :key="index"
                 >
-                    <i
-                        class="iconfont"
-                        v-html="item.unicode"
-                    ></i>
+                    <el-menu-item
+                        v-if="typeof item.child === 'undefined' "
+                        :index="item.path"
+                        class="menu-list"
+                    >
+                        <i
+                            class="iconfont"
+                            v-html="item.unicode"
+                        />
                         <span
-                            class="nav-text"
                             slot="title"
+                            class="nav-text"
                         >{{ item.title }}</span>
-                            </el-menu-item>
-                            <el-submenu
-                                :index="item.path"
-                                v-else
-                            >
-                                <template
-                                    slot="title"
-                                    class="menu-list"
-                                >
-                                    <i
-                                        class="iconfont"
-                                        v-html="item.unicode"
-                                    ></i>
-                                        <span
-                                            class="nav-text"
-                                            slot="title"
-                                        >{{ item.title }}</span>
-</template>
-<el-menu-item
-    class="menu-list"
-    v-for="(sub_item, sub_index) in item.child"
-    :index="sub_item.path"
-    :key="sub_index"
->
-    <span
-        class="nav-text"
-        v-text="sub_item.title"
-    ></span>
-        </el-menu-item>
-        </el-submenu>
+                    </el-menu-item>
+                    <el-submenu
+                        v-else
+                        :index="item.path"
+                    >
+                        <template
+                            slot="title"
+                            class="menu-list"
+                        >
+                            <i
+                                class="iconfont"
+                                v-html="item.unicode"
+                            />
+                            <span
+                                slot="title"
+                                class="nav-text"
+                            >{{ item.title }}</span>
+                        </template>
+                        <el-menu-item
+                            v-for="(sub_item, sub_index) in item.child"
+                            :index="sub_item.path"
+                            :key="sub_index"
+                            class="menu-list"
+                        >
+                            <span
+                                class="nav-text"
+                                v-text="sub_item.title"
+                            />
+                        </el-menu-item>
+                    </el-submenu>
+                </div>
+            </el-menu>
         </div>
-        </el-menu>
-        </div>
-        </div>
-        <!-- </transition> -->
+    </div>
+    <!-- </transition> -->
 
-        </template>
+</template>
 
 <script>
 import EtLogo from '@/components/EtLogo'
@@ -78,6 +78,9 @@ import { mapGetters } from 'vuex'
 
 export default {
     name: 'LeftSlide',
+    components: {
+        EtLogo,
+    },
     data () {
         return {
             nav_menu_data: [
@@ -121,6 +124,11 @@ export default {
                     unicode: '&#xe7c0;',
                 },
                 {
+                    title: '组建文档管理',
+                    path: '/admin/apiManage',
+                    unicode: '&#xe646;',
+                },
+                {
                     title: '日志管理',
                     path: '/admin/logsManage',
                     unicode: '&#xe62f;',
@@ -128,13 +136,10 @@ export default {
                 {
                     title: '系统管理',
                     path: '/admin/sysManage',
-                    unicode: '&#xe62f;',
+                    unicode: '&#xe672;',
                 },
             ],
         }
-    },
-    components: {
-        EtLogo,
     },
     computed: {
         ...mapGetters(['sideBarShow']),
@@ -166,8 +171,9 @@ export default {
   flex-direction: column;
   color: #fff;
   .logo {
-    height: 30px;
+    height: 50px;
     padding: 10px 35px;
+    box-sizing: border-box;
     &.collageLogo {
       padding: 10px 7px;
       .et-header-logo {

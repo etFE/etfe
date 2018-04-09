@@ -1,5 +1,5 @@
 <template>
-    <section class="user-manage">
+    <section>
         <div class="L-selects">
             <el-form
                 :inline="true"
@@ -56,6 +56,9 @@
                 border
                 height="100%"
             >
+                <el-table-column
+                    type="index"
+                    width="50"/>
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-table
@@ -109,7 +112,7 @@
                 <el-table-column
                     label="操作"
                     align="center"
-                    min-width="180">
+                    width="280">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"

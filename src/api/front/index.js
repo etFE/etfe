@@ -109,8 +109,19 @@ const guide = {
     getList: config => createAPI('/plugin/demo/:name', 'get', config),
 }
 
+// 第三方api接口
+const thirdParty = {
+    getBackground: () => createAPI('/photos/random', 'get', {
+        baseURL: 'https://api.unsplash.com',
+        headers: {
+            Authorization: 'Client-ID bf61a02bc1dc338778d85863be7be225a2cd3a44233be5eb81f4fa051793c10c',
+        },
+    }),
+}
+
 export default {
     // u,
     plugin,
     guide,
+    thirdParty,
 }

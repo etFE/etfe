@@ -1,5 +1,5 @@
 import FrontApp from '@/pages/front/FrontApp'
-import PageHome from '@/pages/front/PageHome'
+import PageHome from '@/pages/front/PageHome/PageHome'
 import PageAbout from '@/pages/front/PageAbout'
 import PagePlugins from '@/pages/front/PagePlugins/PagePlugins'
 import PluginsGuide from '@/pages/front/PagePlugins/PagePluginsGuide'

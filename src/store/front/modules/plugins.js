@@ -1,4 +1,5 @@
-import api from '../../../api/front'
+import api from '@/api/front'
+
 
 export default {
     namespaced: true,
