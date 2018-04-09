@@ -28,9 +28,17 @@ const system = {
     update: config => createAPI('/sys/:id', 'put', config),
     delete: config => createAPI('/sys/:id', 'delete', config),
 }
+
+const person = {
+    query: config => createAPI('/person', 'get', config),
+    add: config => createAPI('/person', 'post', config),
+    update: config => createAPI('/person/:id', 'put', config),
+    delete: config => createAPI('/person/:id', 'delete', config),
+}
 export default {
     file,
     menu,
     role,
     system,
+    person,
 }
