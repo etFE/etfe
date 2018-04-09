@@ -6,7 +6,7 @@
                 :model="listQuery"
                 label-width="85px">
                 <el-row>
-                    <el-form-item label="角色名称：">
+                    <el-form-item label="文档名称：">
                         <el-input
                             v-model="listQuery.name"
                             size="medium" />
@@ -62,22 +62,20 @@
                 </el-table-column>
                 <el-table-column
                     prop="name"
-                    label="角色名称"
+                    label="文档名称"
                     width="180" />
                 <el-table-column
                     prop="descript"
-                    label="角色描述"
+                    label="文档描述"
                     width="180" />
                 <el-table-column
                     prop="createDate"
-                    label="角色创建日期"
+                    label="文档创建日期"
                     width="180">
                     <template slot-scope="scope">
                         <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
                     </template>
                 </el-table-column>
-                <!-- <el-table-column prop="system" label="相关管理菜单" width="180">
-        </el-table-column> -->
                 <el-table-column
                     prop="system.descript"
                     label="相关管理系统"
@@ -108,9 +106,6 @@
             background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange" />
-        <update-add-dailog
-            v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
-            @toggleShow="changeDialogState" />
     </section>
 </template>
 
@@ -118,14 +113,10 @@
 
 import api from '@/api/admin/'
 
-import UpdateAddDailog from './Update-add'
 // import { queryRoleData, delRoleData } from "@/api/admin/rolesManage";
 
 export default {
     name: 'Role',
-    components: {
-        UpdateAddDailog,
-    },
     data () {
         return {
             tableData: [
