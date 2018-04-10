@@ -1,9 +1,5 @@
 // home
 import homeComponent from '@/pages/admin/home'
-// 404
-import noPageComponent from '@/pages/admin/error/404'
-// login
-import loginComponent from '@/pages/admin/login'
 // view page warp component
 import viewPageComponent from '@/pages/admin/App'
 
@@ -36,12 +32,6 @@ import apiManageComponent from '@/pages/admin/apiComponent'
 // }) // NProgress Configuration
 
 const adminRoutes = [
-    {
-        path: '/login',
-        name: 'login',
-        component: loginComponent,
-        meta: { title: '登录' },
-    },
     {
         path: '/admin',
         component: viewPageComponent,
@@ -118,11 +108,6 @@ const adminRoutes = [
                 meta: { title: '系统管理' },
             },
         ],
-    },
-    {
-        path: '*',
-        name: 'notPage',
-        component: noPageComponent,
     },
 ]
 

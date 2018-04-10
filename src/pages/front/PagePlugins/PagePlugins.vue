@@ -43,7 +43,6 @@ export default {
             const pluginName = this.$route.params.name
             const hasNameInList = this.pluginsList.some(item => (item.id === pluginName))
             let currentName = ''
-
             // mounted 如果路径参数有，且组件列表中有，给赋予状态。否则默认给第一条
             if (pluginName && hasNameInList) {
                 currentName = pluginName

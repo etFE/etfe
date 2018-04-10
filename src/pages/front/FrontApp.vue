@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("../../style/front/index.scss");
+@import url('../../style/front/index.scss');
 
 html,
 body {

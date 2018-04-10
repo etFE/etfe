@@ -1,8 +1,8 @@
 <template>
     <i-menu
+        id="et-header-container"
         :theme="theme"
         :active-name="avtiveMenu"
-        :class="['et-header-container', isTransparent ]"
         mode="horizontal"
         @on-select="menuSelect"
     >
@@ -51,35 +51,15 @@ export default {
             this.$router.push({ path: '/' })
         },
     },
-    // beforeRouteUpdate (to, from, next) {
-    //     next((...a) => {
-    //         console.log(...a)
-    //         if (this.$route.fullPath === '/' && this.$store.state.front.home.backgroundUrl) {
-    //             this.isTransparent = 'et-header-transparent'
-    //         }
-    //     })
-    // },
 }
 </script>
 
 <style lang='scss'>
-.et-header-container {
+#et-header-container {
     display: flex;
     height: 60px;
     line-height: 60px;
     padding: 0 $bodySidePadding;
-
-    // &.et-header-transparent {
-    //     background: rgba(255, 255, 255, 0);
-
-    //     &:after {
-    //         height: 0;
-    //     }
-
-    //     li.ivu-menu-item {
-    //         color: #fff;
-    //     }
-    // }
 
     .et-header-left {
         flex: 1;

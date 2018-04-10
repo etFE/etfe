@@ -101,6 +101,7 @@ export default {
     methods: {
         dispatchPluginGuide (name) {
             const pluginName = name || this.$route.params.name
+
             return new Promise((resolve) => {
                 this.$store.dispatch('front/plugins/PLUGIN_GUIDE', pluginName).then(() => {
                     resolve()
