@@ -66,7 +66,8 @@ module.exports = {
         'indent': 'off',
         'vue/script-indent': ['error', 4 ],
         'vue/html-indent': ['error', 4 ],
-
+        // 属性名带有下划线
+        'no-underscore-dangle': [0]
         // 'vuefix/vuefix': ['error', {'auto': true}]
     }
 }

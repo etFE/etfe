@@ -87,9 +87,9 @@ import api from '@/api/admin'
 export default {
     name: 'UpdateAdd',
     props: {
-        isShow: Boolean,
-        operation: String,
-        rowData: Object,
+        isShow: { type: Boolean, default: false },
+        operation: { type: String, default: '' },
+        rowData: { type: Object, default: null },
     },
     data () {
         return {
@@ -147,7 +147,8 @@ export default {
         dialogClosed () {
             this.$refs.Form.resetFields()
             this.$parent.rowData = null
-            this.$emit('toggleShow')
+            this.$parent.showDialog = false
+            // this.$emit('toggleShow')
         },
         submitDailog () {
             this.formDataloading = true

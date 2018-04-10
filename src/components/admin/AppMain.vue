@@ -6,7 +6,7 @@
         <keep-alive>
             <router-view class="content" />
         </keep-alive>
-        </transition>
+    </transition>
 </template>
 
 <script>

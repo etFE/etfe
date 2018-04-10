@@ -136,7 +136,7 @@ export default {
         dialogClosed () {
             this.$refs.Form.resetFields()
             this.$parent.rowData = null
-            this.$emit('toggleShow')
+            this.$parent.showDialog = false
         },
         submitUpload () {
             this.$refs.upload.submit()

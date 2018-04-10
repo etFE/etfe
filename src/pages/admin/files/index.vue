@@ -191,10 +191,6 @@ export default {
         selectGetData (query) {
             if (query !== '') {
                 this.inputLoading = true
-                setTimeout(() => {
-                    this.inputLoading = false
-                    this.typeOptions = this.remoteSelectOptions.filter(item => item.text.toLowerCase().indexOf(query.toLowerCase()) > -1)
-                }, 200)
             } else {
                 this.typeOptions = this.remoteSelectOptions
             }
@@ -245,11 +241,8 @@ export default {
             this.showDialog = false
         },
         beforeUpload () {
-            console.log(arguments, 'beforwUpload')
-            // this.
         },
         progress () {
-            console.log(arguments, 'progress')
         },
         filesUpLoaded (res) {
             let newData = []
@@ -263,7 +256,6 @@ export default {
             newData = res.data
 
 
-            console.log('uploaded success', arguments, this.$refs.upload)
             this.tableData.push(newData)
             // this.form.path = path;
         },

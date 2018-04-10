@@ -1,15 +1,15 @@
 <template>
-  <div class="container">
-    <left-slide />
-    <div
-      :class="{ 'hideSidebar': !sideBarShow }"
-      class="right-container"
-    >
-      <navbar/>
-      <tabs-view/>
-      <app-main/>
+    <div class="container">
+        <left-slide />
+        <div
+            :class="{ 'hideSidebar': !sideBarShow }"
+            class="right-container"
+        >
+            <navbar/>
+            <tabs-view/>
+            <app-main/>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>

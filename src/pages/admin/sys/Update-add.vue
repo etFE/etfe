@@ -94,7 +94,7 @@ export default {
         },
         dialogClosed () {
             // 关闭前重置表单
-            this.$emit('toggleShow')
+            this.$parent.showDialog = false
             this.$parent.rowData = null
             this.$refs.Form.resetFields()
         },

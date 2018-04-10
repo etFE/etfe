@@ -166,10 +166,6 @@ export default {
         selectGetData (query) {
             if (query !== '') {
                 this.inputLoading = true
-                setTimeout(() => {
-                    this.inputLoading = false
-                    this.typeOptions = this.remoteOptions.filter(item => item.text.toLowerCase().indexOf(query.toLowerCase()) > -1)
-                }, 200)
             } else {
                 this.typeOptions = this.remoteOptions
             }
