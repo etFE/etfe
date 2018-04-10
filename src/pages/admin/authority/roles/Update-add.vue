@@ -157,7 +157,6 @@ export default {
                 this.form = { ...this.form, ...this.rowData.row }
                 this.form.system = this.rowData.row.system._id
                 this.form.menus = this.rowData.row.menus.map(item => item._id)
-                // console.log(this.rowData, 4445555555554)
             } else {
                 this.form = {
 
@@ -167,7 +166,7 @@ export default {
         dialogClosed () {
             this.$refs.Form.resetFields()
             this.$parent.rowData = null
-            this.$emit('toggleShow')
+            this.$parent.showDialog = false
         },
         submitDailog () {
             this.formDataloading = true

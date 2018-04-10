@@ -138,7 +138,7 @@
         />
         <update-add-dailog
             v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
-            @toggleShow="changeDialogState"/>
+        />
     </section>
 </template>
 
@@ -293,9 +293,9 @@ export default {
                 this.tabLoading = false
             })
         },
-        changeDialogState () {
-            this.showDialog = false
-        },
+        // changeDialogState () {
+        //     this.showDialog = false
+        // },
     },
 }
 </script>
