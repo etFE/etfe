@@ -90,9 +90,9 @@ import api from '@/api/admin'
 export default {
     name: 'UpdateAdd',
     props: {
-        isShow: Boolean,
-        operation: String,
-        rowData: Object,
+        isShow: { type: Boolean, default: false },
+        operation: { type: String, default: '' },
+        rowData: { type: Object, default: null },
     },
     data () {
         return {
@@ -142,8 +142,9 @@ export default {
     watch: {
         system () {
             // console.log(this.form.system, 11112222)
-
-            this.form.system && this.queryMenu(this.form.system)
+            if (this.form.system) {
+                this.queryMenu(this.form.system)
+            }
         },
     },
     methods: {
@@ -180,9 +181,8 @@ export default {
             if (this.formDataloading) {
                 if (this.operation === 'add') {
                     api.role.add({ data: newData })
-                        .then((res) => {
+                        .then(() => {
                             this.formDataloading = false
-                            console.log('res', res)
                             // this.$parent.tableData.push(res.data);
                             this.dialogClosed()
                         })
@@ -213,13 +213,12 @@ export default {
         },
         // 根据系统查询菜单
         queryMenu (id) {
-            const data = []
             this.transLoading = true
             if (!id) {
                 api.menu.query().then((res) => {
                     const { data } = res
 
-                    const result = data.map((item, index) => ({
+                    const result = data.map(item => ({
                         key: item._id,
                         label: item.name,
                     }))
@@ -237,7 +236,6 @@ export default {
                         label: item.name,
                     }))
                     this.menusList = result
-                    // console.log(this.menusList, 4454545)
                     this.transLoading = false
                 })
                     .catch(() => {

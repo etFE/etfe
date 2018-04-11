@@ -24,7 +24,10 @@
             <el-tooltip
                 effect="dark"
                 content="全屏">
-                <a class="screenfull">
+                <a
+                    class="screenfull"
+                    @click="toggleFull"
+                >
                     <i class="iconfont">&#xe600;</i>
                 </a>
             </el-tooltip>
@@ -52,11 +55,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import screenfull from 'screenfull'
 
 export default {
     name: 'NavBar',
     props: {
-        isShow: Boolean,
+        isShow: { type: Boolean, default: false },
     },
     data () {
         return {
@@ -87,6 +91,17 @@ export default {
             //   return item.meta.title;
             // });
             // console.log(this.BreadcrumbList,222)
+        },
+        toggleFull () {
+            if (!screenfull.enabled) {
+                this.$message({
+                    message: 'you browser can not work',
+                    type: 'warning',
+                })
+                return false
+            }
+            screenfull.toggle()
+            return true
         },
     },
 }

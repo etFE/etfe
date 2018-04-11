@@ -22,7 +22,7 @@
 export default {
     props: {
         value: { type: String, default: '' },
-        disabled: { type: String, default: '' },
+        disabled: { type: Boolean, default: false },
     },
     data () {
         return {

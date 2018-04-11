@@ -65,7 +65,7 @@
 
 <script>
 import api from '@/api/admin'
-import UpdateAddDailog from './Update-add'
+import UpdateAddDailog from './UpdateAdd'
 
 export default {
     components: {

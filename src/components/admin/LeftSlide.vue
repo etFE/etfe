@@ -1,5 +1,4 @@
 <template>
-    <!-- <transition name="slide-fade" mode="out-in"> -->
     <div class="left-slide">
         <div
             :class="{'collageLogo': !sideBarShow}"
@@ -68,7 +67,6 @@
             </el-menu>
         </div>
     </div>
-    <!-- </transition> -->
 
 </template>
 
