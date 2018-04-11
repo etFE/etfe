@@ -118,8 +118,8 @@
 
 import api from '@/api/admin/'
 
-import UpdateAddDailog from './Update-add'
-// import { queryRoleData, delRoleData } from "@/api/admin/rolesManage";
+import UpdateAddDailog from './UpdateAdd'
+
 
 export default {
     name: 'Role',
@@ -182,13 +182,11 @@ export default {
         },
         //  分页器 设置每页发送多少数据的方法
         handleSizeChange (val) {
-            console.log(val, 34343)
             this.listQuery.pageSize = val
             this.queryList()
         },
         // 分页器 设置当前第几页刷新
         handleCurrentChange (val) {
-            console.log(val, 322222)
             this.listQuery.curPage = val
             this.queryList()
         },

@@ -2,9 +2,10 @@
     <section>
         <div class="L-selects">
             <el-form
-                label-width="100px"
                 :inline="true"
-                :model="formData">
+                :model="formData"
+                label-width="100px"
+            >
                 <el-row>
                     <!-- <el-col :span="6"> -->
                     <el-form-item label="用户信息：">
@@ -17,12 +18,12 @@
                     <el-form-item label="用户类型：">
                         <el-select
                             v-model="typeValue"
+                            :remote-method="remoteMethod"
+                            :loading="loading"
                             filterable
                             default-first-option
                             remote
                             placeholder="请输入关键词"
-                            :remote-method="remoteMethod"
-                            :loading="loading"
                             size="medium">
                             <el-option
                                 v-for="item in typeOptions"
@@ -141,7 +142,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.user-manage {
-}
-</style>

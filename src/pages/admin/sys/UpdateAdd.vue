@@ -52,9 +52,9 @@ import api from '@/api/admin'
 export default {
     name: 'UpdateAdd',
     props: {
-        isShow: Boolean,
-        operation: String,
-        rowData: Object,
+        isShow: { type: Boolean, default: false },
+        operation: { type: String, default: '' },
+        rowData: { type: Object, default: null },
     },
     data () {
         return {

@@ -113,8 +113,6 @@
 
 import api from '@/api/admin/'
 
-// import { queryRoleData, delRoleData } from "@/api/admin/rolesManage";
-
 export default {
     name: 'Role',
     data () {

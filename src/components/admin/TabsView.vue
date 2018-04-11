@@ -1,32 +1,32 @@
 <template>
     <section class="tabs-container">
         <div
-            class="tabs-wrapper"
             ref="tabsWrapper"
+            class="tabs-wrapper"
             @wheel.prevent="handleScroll">
             <ul
-                class="tabsList"
                 ref="tabsList"
-                :style="{left: left + 'px'}">
+                :style="{left: left + 'px'}"
+                class="tabsList">
                 <router-link
-                    class="tab-item"
                     v-for=" tab in tabViews"
-                    :class=" isActive(tab)? 'item-select':'' "
                     :key="tab.path"
                     :to="tab.path"
+                    :class=" isActive(tab)? 'item-select':'' "
+                    class="tab-item"
                     tag="li"
                     @click="isActive"
                     @contextmenu.prevent.native="showMenu(tab, $event)"> {{ tab.title }}
                     <i
                         class="el-icon-close"
-                        @click.prevent.stop="closeSelectedTab(tab)"/>
+                        @click.prevent.stop="closeSelectedTab(tab)" />
                 </router-link>
             </ul>
         </div>
         <ul
-            class="tabs-menu"
             v-show="visible"
-            :style="{left: menuLeft + 'px', top: top + 'px'}">
+            :style="{left: menuLeft + 'px', top: top + 'px'}"
+            class="tabs-menu">
             <li
                 class="menu-item"
                 @click="closeSelectedTab(selectTab)">关闭自己</li>
@@ -105,9 +105,6 @@ export default {
             return tab.path === this.$route.path
         },
         generateRoute (route) {
-            /* if (route.name) {
-        return route;
-      } */
             return route
         },
         closeSelectedTab (tab) {
