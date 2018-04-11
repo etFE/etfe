@@ -224,8 +224,4 @@ export default {
     .head-imgList {
         overflow: hidden;
     }
-    .h-panel {
-        // padding: 10px;
-        // border: 1px solid #ddd
-    }
 </style>
