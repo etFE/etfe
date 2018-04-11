@@ -1,223 +1,104 @@
 <template>
-    <section>
-        <div class="L-selects">
-            <el-form
-                :inline="true"
-                :model="listQuery"
-                label-width="85px">
-                <el-row>
-                    <el-form-item label="文档名称：">
-                        <el-input
-                            v-model="listQuery.name"
-                            size="medium" />
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-search"
-                            size="small"
-                            @click="queryList">查询</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="small"
-                            @click="openDialog()">添加</el-button>
-                    </el-form-item>
-                </el-row>
-            </el-form>
-        </div>
-        <div class="L-grid">
-            <el-table
-                v-loading="tabLoading"
-                :data="tableData"
-                :header-cell-style="{textAlign: 'center'}"
-                stripe
-                border
-                height="100%">
-                <el-table-column
-                    type="index"
-                    width="50" />
-                <el-table-column type="expand">
-                    <template slot-scope="props">
-                        <el-table
-                            :data="props.row.menus"
-                            :header-cell-style="{textAlign: 'center'}"
-                            stripe
-                            border>
-                            <el-table-column
-                                prop="name"
-                                label="菜单名称"
-                                width="140" />
-                            <el-table-column
-                                prop="descript"
-                                label="菜单描述"
-                                width="120" />
-                            <el-table-column
-                                prop="system.descript"
-                                label="菜单所属系统" />
-                        </el-table>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="文档名称"
-                    width="180" />
-                <el-table-column
-                    prop="descript"
-                    label="文档描述"
-                    width="180" />
-                <el-table-column
-                    prop="createDate"
-                    label="文档创建日期"
-                    width="180">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="system.descript"
-                    label="相关管理系统"
-                    width="180" />
-                <el-table-column
-                    label="操作"
-                    align="center"
-                    width="280">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="openDialog(scope)">编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteData(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </div>
-        <el-pagination
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
-            :total="1000"
-            layout="sizes, prev, pager, next"
-            class="L-pag"
-            background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange" />
-    </section>
+    <el-container>
+        <el-table
+            :data="apiList"
+            border
+            size="mini">
+
+            <el-table-column
+                :resizable="false"
+                type="index"/>
+
+            <el-table-column
+                :resizable="false"
+                label="名称"
+                prop="name"/>
+
+            <el-table-column
+                :resizable="false"
+                label="描述"
+                prop="descript"/>
+
+            <el-table-column
+                :resizable="false"
+                label="创建日期"
+                prop="createDate"/>
+
+            <el-table-column label="文档信息">
+                <template slot-scope="scope">
+                    <a
+                        href="javascript:;"
+                        @click="openProp(scope.row)">属性</a>
+                    <a
+                        href="javascript:;"
+                        @click="openMethod(scope.row)">方法</a>
+                    <a
+                        href="javascript:;"
+                        @click="openEvent(scope.row)">事件</a>
+                </template>
+            </el-table-column>
+        </el-table>
+
+        <prop-dialog
+            v-if="showProp"
+            :plugin="plugin"
+            @close="showProp=false"/>
+
+        <method-dialog
+            v-if="showMethod"
+            :plugin="plugin"
+            @close="showMethod=false"/>
+
+        <event-dialog
+            v-if="showEvent"
+            :plugin="plugin"
+            @close="showEvent=false"/>
+    </el-container>
 </template>
-
 <script>
-
-import api from '@/api/admin/'
-
-// import { queryRoleData, delRoleData } from "@/api/admin/rolesManage";
+import api from '@/api/admin'
+import PropDialog from './prop-dialog'
+import MethodDialog from './method-dialog'
+import EventDialog from './event-dialog'
 
 export default {
-    name: 'Role',
+    components: { PropDialog, MethodDialog, EventDialog },
     data () {
         return {
-            tableData: [
-            ],
-            tabParam: {},
-            listQuery: {
-                name: '',
-                // curPage: 1,
-                // pageSize: 20,
-                // importance: undefined,
-                // title: undefined,
-                // type: undefined,
-            },
-            remoteOptions: [
-                {
-                    text: 'HTML',
-                    value: 'HTML',
-                },
-                {
-                    text: 'css',
-                    value: 'css',
-                },
-                {
-                    text: 'JavaScript',
-                    value: 'JavaScript',
-                },
-            ],
-            typeOptions: [],
-            typeValue: [],
-            tabLoading: false,
-            inputLoading: false,
-            showDialog: false,
-            operate: '', // 决定弹出窗口是添加也还是修改页的变量
-            rowData: null, // 切换修改页时传过来的行数据
+            apiList: [],
+            showProp: false,
+            showMethod: false,
+            showEvent: false,
+            plugin: {},
         }
     },
+
+    mounted () {
+        this.query()
+    },
     methods: {
-        selectGetData (query) {
-            if (query !== '') {
-                this.inputLoading = true
-                setTimeout(() => {
-                    this.inputLoading = false
-                    this.typeOptions = this.remoteOptions.filter(item => item.text.toLowerCase().indexOf(query.toLowerCase()) > -1)
-                }, 200)
-            } else {
-                this.typeOptions = this.remoteOptions
-            }
-        },
-        openDialog (scope) {
-            if (!scope) {
-                this.operate = 'add'
-            } else {
-                this.operate = 'update'
-                console.log('score', scope)
-                this.rowData = scope
-            }
-            this.showDialog = true
-        },
-        //  分页器 设置每页发送多少数据的方法
-        handleSizeChange (val) {
-            console.log(val, 34343)
-            this.listQuery.pageSize = val
-            this.queryList()
-        },
-        // 分页器 设置当前第几页刷新
-        handleCurrentChange (val) {
-            console.log(val, 322222)
-            this.listQuery.curPage = val
-            this.queryList()
-        },
-        deleteData (index, data) {
-            this.tabLoading = true
-            api.role.delete({ param: { id: data._id }, data })
-                .then(() => {
-                    this.tableData.splice(index, 1)
-                    this.tabLoading = false
-                })
-                .catch(() => {
-                    this.tabLoading = false
+        query () {
+            api.apiDoc.query()
+                .then((res) => {
+                    this.apiList = res.data
                 })
         },
-        queryList () {
-            // 查询表格数据
-            this.tabLoading = true
-            api.role.query()
-                .then((response) => {
-                    this.tableData = response.data
-                    // this.total = response.data.total;
-                    this.tabLoading = false
-                })
-                .catch(() => {
-                    this.tabLoading = false
-                })
+        openProp (plugin) {
+            this.showProp = true
+            this.plugin = plugin
         },
-        changeDialogState () {
-            this.showDialog = false
+        openMethod (plugin) {
+            this.showMethod = true
+            this.plugin = plugin
+        },
+        openEvent (plugin) {
+            this.showEvent = true
+            this.plugin = plugin
         },
     },
 }
 </script>
-
-<style lang="scss">
+<style>
 
 </style>
+

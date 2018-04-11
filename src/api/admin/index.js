@@ -36,6 +36,14 @@ const person = {
     delete: config => createAPI('/person/:id', 'delete', config),
 }
 
+const apiDoc = {
+    query: config => createAPI('/api', 'get', config),
+    queryById: config => createAPI('/api/:id', 'get', config),
+    add: config => createAPI('/api', 'post', config),
+    update: config => createAPI('/api/:id', 'put', config),
+    delete: config => createAPI('/api/:id', 'delete', config),
+}
+
 const user = {
     query: config => createAPI('/user', 'get', config),
     add: config => createAPI('/user', 'post', config),
@@ -49,5 +57,4 @@ export default {
     role,
     system,
     person,
-    user,
 }

@@ -249,7 +249,6 @@ export default {
                     id,
                 },
             }).then((response) => {
-                console.log(response)
                 for (let i = 0; i < this.personList.length; i += 1) {
                     if (this.personList[i].id === response.data.id) {
                         this.personList.splice(i, 1)
