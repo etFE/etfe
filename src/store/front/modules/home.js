@@ -1,4 +1,4 @@
-import api from '@/api/front'
+import api, { setNotice } from '@/api/front'
 
 export default {
     namespaced: true,
@@ -21,6 +21,18 @@ export default {
         },
     },
     actions: {
+        async LOG_IN ({ commit, state }, user) {
+            const res = await api.u.login({
+                data: user,
+            })
+            const { data } = res
+
+            if (data.error) {
+                setNotice('error', data.message)
+            } else {
+                setNotice('success', data.message)
+            }
+        },
         async GET_BACKGROUND ({ commit, state }) {
             if (!state.backgroundUrl) {
                 const res = await api.thirdParty.getBackground()

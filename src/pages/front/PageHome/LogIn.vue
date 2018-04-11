@@ -7,9 +7,9 @@
             :rules="ruleInline"
             class="et-login-form"
         >
-            <FormItem prop="user">
+            <FormItem prop="username">
                 <i-input
-                    v-model="formInline.user"
+                    v-model="formInline.username"
                     type="text"
                     placeholder="账号"
                 />
@@ -38,11 +38,11 @@ export default {
     data () {
         return {
             formInline: {
-                user: '',
+                username: '',
                 password: '',
             },
             ruleInline: {
-                user: [
+                username: [
                     { required: true, message: '请输入用户名', trigger: 'blur' },
                 ],
                 password: [
@@ -55,7 +55,7 @@ export default {
         handleLogin (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$router.push('/')
+                    this.$store.dispatch('front/home/LOG_IN', this.formInline)
                 }
             })
         },
