@@ -1,13 +1,14 @@
 <template>
     <i-menu
-        id="et-header-container"
         :theme="theme"
         :active-name="avtiveMenu"
+        class="et-header-container"
         mode="horizontal"
         @on-select="menuSelect"
     >
         <div class="et-header-left">
             <et-logo @logoclick="logoClick"/>
+            <nav-search />
         </div>
         <menu-item name="plugins">
             <Icon type="cube"/>组件
@@ -16,7 +17,7 @@
             <Icon type="radio-waves"/>关于
         </menu-item>
         <div class="et-header-right">
-            <header-nav-avater />
+            <nav-avater />
         </div>
     </i-menu>
 </template>
@@ -24,13 +25,15 @@
 <script>
 
 import EtLogo from '@/components/EtLogo'
-import HeaderNavAvater from './HeaderNavAvater'
+import NavAvater from './HeaderNavAvater'
+import NavSearch from './HeaderNavSearch'
 
 export default {
     name: 'HeaderNav',
     components: {
         EtLogo,
-        HeaderNavAvater,
+        NavAvater,
+        NavSearch,
     },
     data () {
         return {
@@ -55,7 +58,7 @@ export default {
 </script>
 
 <style lang='scss'>
-#et-header-container {
+.et-header-container {
     display: flex;
     height: 60px;
     line-height: 60px;
@@ -63,6 +66,7 @@ export default {
 
     .et-header-left {
         flex: 1;
+        display: flex;
     }
 
     .et-header-right {

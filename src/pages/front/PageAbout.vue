@@ -75,8 +75,7 @@ import SimonAvater from '../../assets/img/team-avaters/simon-avater.jpg'
 
 const repositories = [
     { name: '组件仓库', github: 'https://github.com/etFE/Plugins' },
-    { name: '网站仓库', github: 'https://github.com/etFE/fe-website' },
-    { name: '后台管理仓库', github: 'https://github.com/etFE/fe-admin' },
+    { name: 'etfe仓库', github: 'https://github.com/etFE/etfe' },
     { name: 'node接口管理仓库', github: 'https://github.com/etFE/fe-manage-api' },
 ]
 const teamMsg = [
