@@ -7,20 +7,17 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use((config) => {
-    console.log(config, 'request')
-    // Do something before request is sent
-    return config
-}, (error) => {
-    // Do something with request error
-    console.log(error, 'error') // for debug
-    Promise.reject(error)
-})
+service.interceptors.request.use(
+    config => config,
+    (error) => {
+        // Do something with request error
+        Promise.reject(error)
+    },
+)
 
 // respone interceptor
 service.interceptors.response.use(
     (response) => {
-        console.log(response, 'response')
         Message({
             message: response.data.message,
             type: 'success',
@@ -28,7 +25,6 @@ service.interceptors.response.use(
         return response.data
     },
     (error) => {
-        console.log(`err${error}`, 'error2')// for debug
         Message({
             message: error.message,
             type: 'error',

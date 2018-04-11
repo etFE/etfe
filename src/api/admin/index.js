@@ -35,10 +35,19 @@ const person = {
     update: config => createAPI('/person/:id', 'put', config),
     delete: config => createAPI('/person/:id', 'delete', config),
 }
+
+const user = {
+    query: config => createAPI('/user', 'get', config),
+    add: config => createAPI('/user', 'post', config),
+    update: config => createAPI('/user/:id', 'put', config),
+    delete: config => createAPI('/user/:id', 'delete', config),
+}
+
 export default {
     file,
     menu,
     role,
     system,
     person,
+    user,
 }

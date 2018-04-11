@@ -2,140 +2,93 @@
     <section>
         <div class="L-selects">
             <el-form
-                label-width="100px"
                 :inline="true"
-                :model="formData">
-                <el-row>
-                    <!-- <el-col :span="6"> -->
-                    <el-form-item label="用户信息：">
-                        <el-input
-                            v-model="formData.name"
-                            size="medium"/>
-                    </el-form-item>
-                    <!-- </el-col> -->
-                    <!-- <el-col :span="6"> -->
-                    <el-form-item label="用户类型：">
-                        <el-select
-                            v-model="typeValue"
-                            filterable
-                            default-first-option
-                            remote
-                            placeholder="请输入关键词"
-                            :remote-method="remoteMethod"
-                            :loading="loading"
-                            size="medium">
-                            <el-option
-                                v-for="item in typeOptions"
-                                :key="item.value"
-                                :label="item.text"
-                                :value="item.value"/>
-                        </el-select>
-                    </el-form-item>
-                    <!-- </el-col> -->
-                    <!-- <el-col :span="3"> -->
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-search"
-                            size="small">查询</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="small">添加</el-button>
-                    </el-form-item>
-                    <!-- </el-col> -->
-                </el-row>
+                label-width="100px"
+            >
+                <el-form-item>
+                    <el-button
+                        type="text"
+                        icon="el-icon-search"
+                        size="small"
+                        @click="handleQuery"
+                    >查询</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        type="text"
+                        icon="el-icon-plus"
+                        size="small"
+                        @click="handleAddRow"
+                    >添加</el-button>
+                </el-form-item>
             </el-form>
         </div>
-        <div class="L-grid">
-            <el-table
-                :data="tableData"
-                stripe
-                border
-                style="height: 100%">
-                <el-table-column
-                    prop="date"
-                    label="登录账号"
-                    width="180"/>
-                <el-table-column
-                    prop="name"
-                    label="用户昵称"
-                    width="180"/>
-                <el-table-column
-                    prop="address"
-                    label="用户类型"/>
-                <el-table-column
-                    prop="address"
-                    label="状态"/>
-                <el-table-column
-                    prop="address"
-                    label="IP地址"/>
-            </el-table>
-        </div>
+        <editor-table
+            :columns="tableCol"
+            :data="tableData"
+            @saveRow="handleSaveRow"
+            @deleteRow="handleDeleteRow"
+        />
     </section>
 </template>
 
 <script>
+import EditorTable from '@/components/admin/EditorTable'
+import API from '@/api/admin'
+
 export default {
+    components: {
+        EditorTable,
+    },
     data () {
         return {
-            tableData: [
-                {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄',
-                },
-                {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄',
-                },
-                {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄',
-                },
-                {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄',
-                },
+            tableCol: [
+                { prop: 'username', label: '登录账号' },
+                { prop: 'password', label: '登录密码' },
+                { prop: 'createDate', label: '创建时间', editable: false },
             ],
-            formData: {
-                name: null,
-            },
-            remoteOptions: [
-                {
-                    text: 'HTML',
-                    value: 'HTML',
-                },
-                {
-                    text: 'css',
-                    value: 'css',
-                },
-                {
-                    text: 'JavaScript',
-                    value: 'JavaScript',
-                },
-            ],
-            typeOptions: [],
-            typeValue: [],
-            loading: false,
+            tableData: [],
         }
     },
+    mounted () {
+        this.handleQuery()
+    },
     methods: {
-        remoteMethod (query) {
-            if (query !== '') {
-                this.loading = true
-                setTimeout(() => {
-                    this.loading = false
-                    this.typeOptions = this.remoteOptions.filter(item => item.text.toLowerCase().indexOf(query.toLowerCase()) > -1)
-                }, 200)
-            } else {
-                this.typeOptions = this.remoteOptions
+        handleQuery () {
+            API.user.query().then((res) => {
+                this.tableData = res.data
+            })
+        },
+        handleAddRow () {
+            this.tableData.push({})
+        },
+
+        handleSaveRow (index, row) {
+            if (!row.username) {
+                this.$message({
+                    message: '用户名必填',
+                    type: 'error',
+                })
+                return
             }
+            if (row._id) {
+                API.user.update({
+                    param: { id: row._id },
+                    body: row,
+                }).then(() => {
+                    row.inEditor = false
+                })
+            } else {
+                API.user.add({ data: row }).then(() => {
+                    row.inEditor = false
+                })
+            }
+        },
+        handleDeleteRow (index, row) {
+            API.user.delete({ param: { id: row._id } }).then(() => {
+                row.inEditor = false
+                this.tableData.splice(index, 1)
+            })
         },
     },
 }
