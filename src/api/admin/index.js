@@ -57,4 +57,5 @@ export default {
     role,
     system,
     person,
+    apiDoc,
 }

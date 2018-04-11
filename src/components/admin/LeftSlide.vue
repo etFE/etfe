@@ -122,7 +122,7 @@ export default {
                     unicode: '&#xe7c0;',
                 },
                 {
-                    title: '组建文档管理',
+                    title: '组件文档管理',
                     path: '/admin/apiManage',
                     unicode: '&#xe646;',
                 },
