@@ -2,7 +2,7 @@ import axios from 'axios'
 import iView from 'iview'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
-const devBaseUrl = 'http://192.168.1.113:3000'
+const devBaseUrl = 'http://localhost:3000'
 const prodBaseUrl = 'http://118.178.184.131:3000'
 
 // 实例化axios
@@ -46,7 +46,7 @@ const loading = {
     },
 }
 
-const setNotice = (type, title, desc) => {
+export const setNotice = (type, title, desc) => {
     iView.Notice[type]({
         title,
         desc,
@@ -62,12 +62,12 @@ instance.interceptors.request.use((config) => {
 // 响应拦截器 用于请求失败时，拦截触发错误通知？
 instance.interceptors.response.use((res) => {
     loading.cancle()
-    // setNotice('success', res.status, res.statusText)
     return res
 }, (error) => {
+    loading.cancle()
     const res = error.response
     if (res) {
-        setNotice('error', res.status, res.statusText)
+        setNotice('error', res.status, res.message)
     } else {
         setNotice('error', 'Error', error)
     }
@@ -101,6 +101,11 @@ const createAPI = (url, method, config) => {
 // }
 
 // 组件列表模块
+const u = {
+    login: config => createAPI('/manage/user/login', 'post', config),
+    // register: config => createAPI('/user/register', 'post', config),
+}
+
 const plugin = {
     getList: config => createAPI('/plugin/menu', 'get', config),
 }
@@ -120,7 +125,7 @@ const thirdParty = {
 }
 
 export default {
-    // u,
+    u,
     plugin,
     guide,
     thirdParty,
