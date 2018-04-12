@@ -58,4 +58,5 @@ export default {
     system,
     person,
     apiDoc,
+    user,
 }
