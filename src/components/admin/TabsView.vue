@@ -55,7 +55,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['tabViews']),
+        ...mapGetters('admin/tabsView', ['tabViews']),
     },
     watch: {
         $route () {
@@ -76,7 +76,7 @@ export default {
     },
 
     methods: {
-        ...mapActions([
+        ...mapActions('admin/tabsView', [
             'addVisitedViews',
             'delVisitedViews',
             'delOtherViews',

@@ -72,12 +72,17 @@
 
 <script>
 import EtLogo from '@/components/EtLogo'
-import { mapGetters } from 'vuex'
 
 export default {
     name: 'LeftSlide',
     components: {
         EtLogo,
+    },
+    props: {
+        sideBarShow: {
+            type: Boolean,
+            default: true,
+        },
     },
     data () {
         return {
@@ -138,9 +143,6 @@ export default {
                 },
             ],
         }
-    },
-    computed: {
-        ...mapGetters(['sideBarShow']),
     },
     methods: {
         handleOpen (key, keyPath) {

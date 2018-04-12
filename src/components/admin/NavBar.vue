@@ -54,13 +54,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import screenfull from 'screenfull'
 
 export default {
     name: 'NavBar',
     props: {
-        isShow: { type: Boolean, default: false },
+        sideBarShow: {
+            type: Boolean,
+            default: true,
+        },
     },
     data () {
         return {
@@ -69,9 +71,6 @@ export default {
             user: '测试',
             BreadcrumbList: [],
         }
-    },
-    computed: {
-        ...mapGetters(['sideBarShow']),
     },
     watch: {
         $route () {
@@ -82,15 +81,12 @@ export default {
         this.getBreadcrumb()
     },
     methods: {
-        ...mapActions(['toggleSideBar']),
+        toggleSideBar () {
+            this.$emit('toggleSide', !this.sideBarShow)
+        },
         getBreadcrumb () {
             const BreadcrumbList = this.$route.matched
             this.BreadcrumbList = BreadcrumbList
-
-            // this.BreadcrumbList = this.$route.matched.map((item, index) => {
-            //   return item.meta.title;
-            // });
-            // console.log(this.BreadcrumbList,222)
         },
         toggleFull () {
             if (!screenfull.enabled) {

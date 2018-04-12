@@ -1,4 +1,5 @@
 const tabsView = {
+    namespaced: true,
     state: {
         visitedViews: [],
     },
