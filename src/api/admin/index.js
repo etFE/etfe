@@ -39,6 +39,7 @@ const person = {
 const apiDoc = {
     query: config => createAPI('/api', 'get', config),
     queryById: config => createAPI('/api/:id', 'get', config),
+    queryEmptyMenu: config => createAPI('/api/getEmptyMenu', 'get', config),
     add: config => createAPI('/api', 'post', config),
     update: config => createAPI('/api/:id', 'put', config),
     delete: config => createAPI('/api/:id', 'delete', config),

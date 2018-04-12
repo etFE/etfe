@@ -41,7 +41,7 @@ export default {
         query () {
             api.apiDoc.queryById({
                 param: {
-                    id: this.plugin._id,
+                    id: this.plugin.api,
                 },
             }).then((res) => {
                 this.data = res.data.events
@@ -53,7 +53,7 @@ export default {
         save () {
             api.apiDoc.update({
                 param: {
-                    id: this.plugin._id,
+                    id: this.plugin.api,
                 },
                 data: { events: this.data },
             }).then((res) => {

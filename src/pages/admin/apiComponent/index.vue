@@ -1,5 +1,28 @@
 <template>
     <el-container>
+        <el-form
+            :inline="true"
+            size="mini">
+            <el-form-item>
+                <el-button
+                    type="text"
+                    class="el-icon-plus"
+                    @click="add">添加</el-button>
+            </el-form-item>
+
+            <el-form-item label="选择组件">
+                <el-select
+                    v-model="menuValue"
+                    :clearable="true">
+                    <el-option
+                        v-for="item in menuList"
+                        :key="item._id"
+                        :label="item.name"
+                        :value="item._id"/>
+                </el-select>
+            </el-form-item>
+        </el-form>
+
         <el-table
             :data="apiList"
             border
@@ -70,6 +93,8 @@ export default {
             showMethod: false,
             showEvent: false,
             plugin: {},
+            menuList: [],
+            menuValue: null,
         }
     },
 
@@ -81,6 +106,10 @@ export default {
             api.apiDoc.query()
                 .then((res) => {
                     this.apiList = res.data
+                })
+            api.apiDoc.queryEmptyMenu()
+                .then((res) => {
+                    this.menuList = res.data
                 })
         },
         openProp (plugin) {
@@ -94,6 +123,22 @@ export default {
         openEvent (plugin) {
             this.showEvent = true
             this.plugin = plugin
+        },
+        add () {
+            api.apiDoc.add({
+                data: { menuId: this.menuValue },
+            }).then((res) => {
+                // 添加一条数据
+                this.apiList.push(res.data)
+                // 删除一条菜单
+                for (let i = 0; i < this.menuList.length; i += 1) {
+                    const menu = this.menuList[i]
+                    if (menu._id === res.data._id) {
+                        this.menuList.splice(i, 1)
+                        this.menuValue = null
+                    }
+                }
+            })
         },
     },
 }
