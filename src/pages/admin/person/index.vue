@@ -63,7 +63,7 @@
                 <el-col
                     :span="8"
 
-                    style="min-width: 300px">
+                    style="min-width: 340px">
                     <div class="p-left h-panel">
                         <el-form-item label="登录用户：">
                             <el-input
@@ -117,6 +117,7 @@
 </template>
 
 <script>
+import api from '@/api/admin'
 import userImgs from '@/assets/img/userImg'
 import ElInputPassword from './PasswordInput'
 
@@ -170,7 +171,10 @@ export default {
         }
     },
     mounted () {
-        this.headImg = userImgs[0]
+        api.user.query().then((res) => {
+            console.log(res)
+        })
+        // this.headImg = userImgs[0]
     },
     methods: {
         submit () {
