@@ -80,7 +80,9 @@
                                 label="文件上传日期"
                                 width="180">
                                 <template slot-scope="scope">
-                                    <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
+                                    <span>
+                                        {{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}
+                                    </span>
                                 </template>
                             </el-table-column>
                             <el-table-column

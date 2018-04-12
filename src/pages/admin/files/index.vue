@@ -255,8 +255,8 @@ export default {
             }
             newData = res.data
 
-
             this.tableData.push(newData)
+            return true
             // this.form.path = path;
         },
         filesUnloaded () {

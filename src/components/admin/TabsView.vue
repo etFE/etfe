@@ -89,16 +89,13 @@ export default {
             this.left += eventDelta
             if (this.left > 0) {
                 this.left = 0
-            } else {
-                // 页签总宽度大于外部容器宽度时，left值重新计算
-                if ($tabsListWidth > $containerWidth) {
-                    if ($tabsListWidth + this.left < $containerWidth) {
-                        this.left = $containerWidth - $tabsListWidth
-                    }
-                    // 小于总宽度时 left为0
-                } else {
-                    this.left = 0
+            } else if ($tabsListWidth > $containerWidth) { // 页签总宽度大于外部容器宽度时，left值重新计算
+                if ($tabsListWidth + this.left < $containerWidth) {
+                    this.left = $containerWidth - $tabsListWidth
                 }
+                // 小于总宽度时 left为0
+            } else {
+                this.left = 0
             }
         },
         isActive (tab) {
@@ -108,19 +105,18 @@ export default {
             return route
         },
         closeSelectedTab (tab) {
-            if (tab.path === '/admin') {
-                return false
-            }
-            this.delVisitedViews(tab).then((views) => {
-                if (this.isActive(tab)) {
-                    const latestView = views.slice(-1)[0]
-                    if (latestView) {
-                        this.$router.push(latestView.path)
-                    } else {
-                        this.$router.push('/admin')
+            if (tab.path !== '/admin') {
+                this.delVisitedViews(tab).then((views) => {
+                    if (this.isActive(tab)) {
+                        const latestView = views.slice(-1)[0]
+                        if (latestView) {
+                            this.$router.push(latestView.path)
+                        } else {
+                            this.$router.push('/admin')
+                        }
                     }
-                }
-            })
+                })
+            }
         },
         closeOtherTabs () {
             this.delOtherViews(this.selectTab).then((tab) => {

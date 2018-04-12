@@ -117,7 +117,9 @@
 </template>
 
 <script>
+import userImgs from '@/assets/img/userImg'
 import ElInputPassword from './PasswordInput'
+
 
 export default {
     components: {
@@ -163,12 +165,12 @@ export default {
             },
             isShow: false,
             isShowImgs: false,
-            userImgs: [require('@/assets/img/userimg-2.png'), require('@/assets/img/userimg-3.png'), require('@/assets/img/userimg-4.png'), require('@/assets/img/userimg-5.png'), require('@/assets/img/userimg-6.png'), require('@/assets/img/userimg-7.png'), require('@/assets/img/userimg-8.png'), require('@/assets/img/userimg-9.png')],
+            userImgs,
             headImg: '',
         }
     },
     mounted () {
-        this.headImg = require('@/assets/img/userimg-2.png')
+        this.headImg = userImgs[0]
     },
     methods: {
         submit () {
@@ -179,7 +181,6 @@ export default {
                         // alert('submit!')
                     } else {
                         console.log('error submit!!')
-                        return false
                     }
                 })
             } else {
