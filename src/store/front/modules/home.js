@@ -9,6 +9,7 @@ export default {
             avater: '',
             link: '',
         },
+        isShowLogin: false,
     },
     mutations: {
         SET_BGMSG (state, data) {
@@ -19,20 +20,11 @@ export default {
             state.imgMsg.link = user.links.html
             state.imgMsg.avater = user.profile_image.medium
         },
+        SHOW_LOGIN (state) {
+            state.isShowLogin = true
+        },
     },
     actions: {
-        async LOG_IN ({ commit, state }, user) {
-            const res = await api.u.login({
-                data: user,
-            })
-            const { data } = res
-
-            if (data.error) {
-                setNotice('error', data.message)
-            } else {
-                setNotice('success', data.message)
-            }
-        },
         async GET_BACKGROUND ({ commit, state }) {
             if (!state.backgroundUrl) {
                 const res = await api.thirdParty.getBackground()

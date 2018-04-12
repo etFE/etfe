@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import front from './front'
 import admin from './admin'
+import global from './global'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ const createStore = () => (
         modules: {
             front,
             admin,
+            global,
         },
     })
 )

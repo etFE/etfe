@@ -9,18 +9,21 @@
                 size="large"
             />
         </Badge>
-        <DropdownMenu
-            v-if="isLogin"
-            slot="list"
-        >
-            <DropdownItem name="mine">我的</DropdownItem>
-            <DropdownItem
-                v-if="isAdmin"
-                name="admin"
-            >管理员系统</DropdownItem>
-            <DropdownItem
-                name="logout"
-            >退出</DropdownItem>
+        <DropdownMenu slot="list">
+            <div v-if="isLogin">
+                <DropdownItem
+                    v-if="isAdmin"
+                    name="admin"
+                >管理员系统</DropdownItem>
+                <DropdownItem
+                    name="logout"
+                >退出</DropdownItem>
+            </div>
+            <div v-else>
+                <DropdownItem
+                    name="login"
+                >登录</DropdownItem>
+            </div>
         </DropdownMenu>
     </Dropdown>
 </template>
@@ -30,14 +33,18 @@ export default {
     name: 'NavAvater',
     data () {
         return {
-            isLogin: false,
-            isAdmin: false,
+            isAdmin: true,
         }
+    },
+    computed: {
+        isLogin () {
+            return this.$store.state.global.isLogin
+        },
     },
     methods: {
         handleClickItem (name) {
             if (name === 'login') {
-                this.$router.push('/login')
+                this.$store.commit('front/home/SHOW_LOGIN')
             }
         },
     },
