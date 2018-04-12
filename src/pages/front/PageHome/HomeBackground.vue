@@ -7,11 +7,11 @@
         <div class="et-home-background-msg">
             Photo by
             <a
-                :src="imgMsg.link"
+                :href="imgMsg.link"
                 target="_blank"
             >{{ imgMsg.name }}</a> /
             <a
-                src="https://unsplash.com"
+                href="https://unsplash.com"
                 target="_blank"
             >Unsplash</a>
             <Avatar
