@@ -14,9 +14,9 @@ const app = {
             commit('TOGGLE_SIDEBAR')
         },
     },
-    // getters: {
-    //     sideBarShow: state => state.app.sideBarShow,
-    // },
+    getters: {
+        sideBarShow: state => state.sideBarShow,
+    },
 }
 
 export default app

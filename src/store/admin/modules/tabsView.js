@@ -60,18 +60,17 @@ const tabsView = {
             })
         },
     },
-    // getters: {
-    //     tabViews: (state) => {
-    //         console.log(state, 'tabviews')
-    //         if (!state.tabsView.visitedViews.length) {
-    //             state.tabsView.visitedViews.push({
-    //                 path: '/admin',
-    //                 title: '首页',
-    //             })
-    //         }
-    //         return state.tabsView.visitedViews
-    //     },
-    // },
+    getters: {
+        tabViews: (state) => {
+            if (!state.visitedViews.length) {
+                state.visitedViews.push({
+                    path: '/admin',
+                    title: '首页',
+                })
+            }
+            return state.visitedViews
+        },
+    },
 }
 
 export default tabsView

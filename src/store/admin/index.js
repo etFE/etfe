@@ -1,11 +1,10 @@
 import app from './modules/app'
 import tabsView from './modules/tabsView'
-import getters from './getters'
 
 export default {
+    // namespaced: true,
     modules: {
         app,
         tabsView,
     },
-    getters,
 }
