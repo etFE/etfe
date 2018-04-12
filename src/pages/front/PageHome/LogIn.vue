@@ -65,7 +65,10 @@ export default {
         handleLogin (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$store.dispatch('global/LOG_IN', this.formInline)
+                    this.$store.dispatch('global/LOG_IN', this.formInline).then(() => {
+                        this.formInline.username = ''
+                        this.formInline.password = ''
+                    })
                 }
             })
         },

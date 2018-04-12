@@ -43,8 +43,16 @@ export default {
     },
     methods: {
         handleClickItem (name) {
-            if (name === 'login') {
+            switch (name) {
+            case 'login':
                 this.$store.commit('front/home/SHOW_LOGIN')
+                break
+            case 'logout':
+                this.$store.commit('global/LOG_OUT')
+                this.$store.commit('front/home/SHOW_LOGIN')
+                break
+            default:
+                break
             }
         },
     },

@@ -62,6 +62,9 @@ instance.interceptors.request.use((config) => {
 // 响应拦截器 用于请求失败时，拦截触发错误通知？
 instance.interceptors.response.use((res) => {
     loading.cancle()
+    if (res.data.error) {
+        setNotice('error', res.data.error)
+    }
     return res
 }, (error) => {
     loading.cancle()
@@ -107,11 +110,11 @@ const u = {
 }
 
 const plugin = {
-    getList: config => createAPI('/plugin/menu', 'get', config),
+    getList: config => createAPI('/front/menu', 'get', config),
 }
 
 const guide = {
-    getList: config => createAPI('/plugin/demo/:name', 'get', config),
+    getList: config => createAPI('/front/demo/:name', 'get', config),
 }
 
 // 第三方api接口

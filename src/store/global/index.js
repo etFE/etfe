@@ -19,6 +19,10 @@ export default {
 
             localStorage.setItem('token', data.token)
         },
+        LOG_OUT (state) {
+            state.isLogin = false
+            localStorage.removeItem('token')
+        },
     },
     actions: {
         async LOG_IN ({ commit, state }, user) {
@@ -27,9 +31,7 @@ export default {
             })
             const { data } = res
 
-            if (data.error) {
-                setNotice('error', data.message)
-            } else {
+            if (!data.error) {
                 setNotice('success', data.message)
                 commit('SET_LOGIN_MSG', data)
             }

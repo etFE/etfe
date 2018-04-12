@@ -7,21 +7,32 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use(
-    config => config,
-    (error) => {
-        // Do something with request error
-        Promise.reject(error)
-    },
-)
+service.interceptors.request.use((config) => {
+    // 请求头Authorization设置token
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers.authorization = `Bearer ${token}`
+    }
+    return config
+}, (error) => {
+    // Do something with request error
+    Promise.reject(error)
+})
 
 // respone interceptor
 service.interceptors.response.use(
     (response) => {
-        Message({
-            message: response.data.message,
-            type: 'success',
-        })
+        if (response.data.error) {
+            Message({
+                message: response.data.error,
+                type: 'error',
+            })
+        } else {
+            Message({
+                message: response.data.message,
+                type: 'success',
+            })
+        }
         return response.data
     },
     (error) => {
