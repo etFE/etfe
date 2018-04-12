@@ -173,7 +173,7 @@ export default {
     padding: 10px 35px;
     box-sizing: border-box;
     &.collageLogo {
-      padding: 10px 7px;
+      padding: 10px;
       .et-header-logo {
         width: 36px;
       }
