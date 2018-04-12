@@ -1,11 +1,13 @@
 <template>
     <div class="container">
-        <left-slide />
+        <left-slide :side-bar-show="sideBarShow"/>
         <div
             :class="{ 'hideSidebar': !sideBarShow }"
             class="right-container"
         >
-            <navbar/>
+            <navbar
+                :side-bar-show="sideBarShow"
+                @toggleSide="toggleSide"/>
             <tabs-view/>
             <app-main/>
         </div>
@@ -17,7 +19,6 @@ import Navbar from '@/components/admin/NavBar'
 import LeftSlide from '@/components/admin/LeftSlide'
 import TabsView from '@/components/admin/TabsView'
 import AppMain from '@/components/admin/AppMain'
-import { mapGetters } from 'vuex'
 
 export default {
     name: 'Home',
@@ -29,18 +30,13 @@ export default {
     },
     data () {
         return {
-            isShow: true,
+            sideBarShow: true,
         }
     },
-    computed: {
-        ...mapGetters(['sideBarShow']),
-    },
-    mounted () {
-        console.log(this)
-    },
     methods: {
-        showSide (isShow) { // 侧边栏展开函数
-            this.isShow = isShow
+        // 侧边栏展开函数
+        toggleSide (val) {
+            this.sideBarShow = val
         },
     },
 }

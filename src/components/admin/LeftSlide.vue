@@ -72,12 +72,17 @@
 
 <script>
 import EtLogo from '@/components/EtLogo'
-import { mapGetters } from 'vuex'
 
 export default {
     name: 'LeftSlide',
     components: {
         EtLogo,
+    },
+    props: {
+        sideBarShow: {
+            type: Boolean,
+            default: true,
+        },
     },
     data () {
         return {
@@ -139,9 +144,6 @@ export default {
             ],
         }
     },
-    computed: {
-        ...mapGetters(['sideBarShow']),
-    },
     methods: {
         handleOpen (key, keyPath) {
             console.log(key, keyPath)
@@ -173,7 +175,7 @@ export default {
     padding: 10px 35px;
     box-sizing: border-box;
     &.collageLogo {
-      padding: 10px 7px;
+      padding: 10px;
       .et-header-logo {
         width: 36px;
       }
