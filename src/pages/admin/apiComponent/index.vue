@@ -30,7 +30,8 @@
 
             <el-table-column
                 :resizable="false"
-                type="index"/>
+                type="index"
+                width="36"/>
 
             <el-table-column
                 :resizable="false"

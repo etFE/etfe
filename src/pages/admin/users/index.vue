@@ -1,35 +1,31 @@
 <template>
-    <section>
-        <div class="L-selects">
-            <el-form
-                :inline="true"
-                label-width="100px"
-            >
-                <el-form-item>
-                    <el-button
-                        type="text"
-                        icon="el-icon-search"
-                        size="small"
-                        @click="handleQuery"
-                    >查询</el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button
-                        type="text"
-                        icon="el-icon-plus"
-                        size="small"
-                        @click="handleAddRow"
-                    >添加</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+    <el-container>
+        <el-form
+            :inline="true"
+            size="mini"
+            label-width="100px">
+            <el-form-item>
+                <el-button
+                    type="text"
+                    icon="el-icon-search"
+                    @click="handleQuery"
+                >查询</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                    type="text"
+                    icon="el-icon-plus"
+                    @click="handleAddRow"
+                >添加</el-button>
+            </el-form-item>
+        </el-form>
         <editor-table
             :columns="tableCol"
             :data="tableData"
             @saveRow="handleSaveRow"
             @deleteRow="handleDeleteRow"
         />
-    </section>
+    </el-container>
 </template>
 
 <script>

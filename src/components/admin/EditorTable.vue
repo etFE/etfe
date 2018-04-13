@@ -5,17 +5,16 @@
         border
         size="mini"
         style="height: 100%; width:100%;"
-        class="et-editortable-container"
-    >
+        class="et-editortable-container">
         <el-table-column
+            width="36"
             type="index"
         />
         <el-table-column
             v-for="col in columns"
             :key="col.prop"
             :label="col.label"
-            :width="col.width"
-        >
+            :width="col.width">
             <template slot-scope="scope">
                 <input
                     v-if="scope.row.inEditor && col.editable !== false"
