@@ -56,8 +56,8 @@ export default {
     file,
     menu,
     role,
+    user,
     system,
     person,
     apiDoc,
-    user,
 }

@@ -1,65 +1,56 @@
 <template>
-    <section>
-        <div class="L-selects">
-            <el-form
-                :inline="true"
-                :model="listQuery"
-                label-width="85px"
-            >
-                <el-row>
-                    <el-form-item label="菜单名称：">
-                        <el-input
-                            v-model="listQuery.name"
-                            size="medium"/>
-                    </el-form-item>
-                    <el-form-item label="所属模块：">
-                        <el-select
-                            v-model="typeValue"
-                            :remote-method="selectGetData"
-                            :loading="inputLoading"
-                            filterable
-                            default-first-option
-                            remote
-                            placeholder="请输入关键词"
-                            size="medium"
-                        >
-                            <el-option
-                                v-for="item in typeOptions"
-                                :key="item.value"
-                                :label="item.text"
-                                :value="item.value"/>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-search"
-                            size="small"
-                            @click="queryList">查询</el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="small"
-                            @click="openDialog()">添加</el-button>
-                    </el-form-item>
-                </el-row>
-            </el-form>
-        </div>
-        <div class="L-grid">
-            <el-table
-                v-loading="tabLoading"
-                :header-cell-style="{textAlign: 'center'}"
-                :data="tableData"
-                stripe
-                border
-                height="100%"
-            >
-                <el-table-column
-                    type="index"
-                    width="50"/>
-                <el-table-column type="expand">
+    <el-containter>
+        <el-form
+            :inline="true"
+            :model="listQuery"
+            label-width="85px"
+            size="mini">
+            <el-form-item label="菜单名称">
+                <el-input v-model="listQuery.name"/>
+            </el-form-item>
+            <el-form-item label="所属模块">
+                <el-select
+                    v-model="typeValue"
+                    :remote-method="selectGetData"
+                    :loading="true"
+                    filterable
+                    default-first-option
+                    remote
+                    placeholder="请输入关键词">
+                    <el-option
+                        v-for="item in typeOptions"
+                        :key="item.value"
+                        :label="item.text"
+                        :value="item.value"/>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                    type="text"
+                    icon="el-icon-search"
+                    size="mini"
+                    @click="queryList">查询</el-button>
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                    type="text"
+                    icon="el-icon-plus"
+                    size="mini"
+                    @click="openDialog()">添加</el-button>
+            </el-form-item>
+        </el-form>
+        <el-table
+            v-loading="tabLoading"
+            :data="tableData"
+            size="mini"
+            stripe
+            border
+            height="100%"
+        >
+            <el-table-column
+                type="index"
+                width="36"/>
+            <!-- <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-table
                             :data="props.row.file"
@@ -90,45 +81,41 @@
                                 label="是否可用" />
                         </el-table>
                     </template>
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="菜单名称"
-                    width="180"/>
-                <el-table-column
-                    prop="descript"
-                    label="菜单描述"
-                    width="180"/>
-                <el-table-column
-                    prop="createDate"
-                    label="菜单创建日期"
-                    width="180">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="system.descript"
-                    label="系统模块"
-                    width="180"/>
-                <el-table-column
-                    label="操作"
-                    align="center"
-                    width="280">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="openDialog(scope)">编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteData(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </div>
-        <el-pagination
+                </el-table-column> -->
+            <el-table-column
+                prop="name"
+                label="菜单名称"
+                width="180"/>
+            <el-table-column
+                prop="descript"
+                label="菜单描述"/>
+            <el-table-column
+                prop="createDate"
+                label="菜单创建日期"
+                width="180">
+                <template slot-scope="scope">
+                    <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="system.descript"
+                label="系统模块"
+                width="180"/>
+            <el-table-column
+                label="操作"
+                align="center"
+                width="80">
+                <template slot-scope="scope">
+                    <a
+                        href="javascript:;"
+                        @click="openDialog(scope)">编辑</a>
+                    <a
+                        href="javascript:;"
+                        @click="deleteData(scope.$index, scope.row)">删除</a>
+                </template>
+            </el-table-column>
+        </el-table>
+        <!-- <el-pagination
             :page-sizes="[100, 200, 300, 400]"
             :page-size="100"
             :total="1000"
@@ -137,11 +124,11 @@
             background
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-        />
+        /> -->
         <update-add-dailog
             v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
         />
-    </section>
+    </el-containter>
 </template>
 
 <script>
@@ -155,66 +142,7 @@ export default {
     },
     data () {
         return {
-            tableData: [{
-                name: 'select',
-                descript: '范德萨发三',
-                system: 'sys',
-                file: [{
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }],
-            }, {
-                name: 'select',
-                descript: '范德萨发三',
-                system: 'sys',
-                file: [{
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }],
-            }, {
-                name: 'select',
-                descript: '范德萨发三',
-                system: 'sys',
-                file: [{
-                    name: 'etSelect',
-                    descript: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    filedesc: '下拉框组件',
-                    enable: '0',
-                }, {
-                    name: 'etSelect',
-                    filedesc: '下拉框组件',
-                    enable: '0',
-                }],
-            }],
+            tableData: [],
             tabParam: {},
             listQuery: {
                 name: '',
@@ -246,6 +174,10 @@ export default {
             operate: '', // 决定弹出窗口是添加也还是修改页的变量
             rowData: null, // 切换修改页时传过来的行数据
         }
+    },
+
+    mounted () {
+        this.queryList()
     },
     methods: {
         selectGetData (query) {
