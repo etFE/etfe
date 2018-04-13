@@ -70,7 +70,7 @@ export default {
     }
 
     .et-header-right {
-        margin-left: 60px;
+        margin: 0 60px;
     }
 }
 

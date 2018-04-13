@@ -55,6 +55,10 @@ export const setNotice = (type, title, desc) => {
 
 // 请求拦截器 可以用于token
 instance.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+        config.headers.authorization = `Bearer ${token}`
+    }
     loading.start()
     return config
 }, error => Promise.reject(error))
@@ -105,6 +109,7 @@ const createAPI = (url, method, config) => {
 
 // 组件列表模块
 const u = {
+    getUserInfo: config => createAPI('/manage/user/info', 'get', config),
     login: config => createAPI('/manage/user/login', 'post', config),
     // register: config => createAPI('/user/register', 'post', config),
 }

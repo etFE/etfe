@@ -13,6 +13,9 @@ export default {
     components: {
         IconSvgSprite,
     },
+    mounted () {
+        this.$store.dispatch('global/GET_USER_INFO')
+    },
 }
 </script>
 
