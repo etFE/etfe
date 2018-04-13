@@ -46,6 +46,7 @@ const apiDoc = {
 }
 
 const user = {
+    queryInfo: config => createAPI('/user/info', 'get', config),
     query: config => createAPI('/user', 'get', config),
     add: config => createAPI('/user', 'post', config),
     update: config => createAPI('/user/:id', 'put', config),
