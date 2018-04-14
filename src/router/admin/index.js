@@ -19,7 +19,7 @@ import logsManageComponent from '@/pages/admin/logs'
 
 import sysManageComponent from '@/pages/admin/sys'
 
-import personComponent from '@/pages/admin/person'
+import personInfoComponent from '@/pages/admin/personInfo'
 
 import apiManageComponent from '@/pages/admin/apiComponent'
 
@@ -92,7 +92,7 @@ const adminRoutes = [
             {
                 path: 'person',
                 name: 'person',
-                component: personComponent,
+                component: personInfoComponent,
                 meta: { title: '个人信息' },
             },
             {

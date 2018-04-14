@@ -76,8 +76,6 @@
                         <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
                     </template>
                 </el-table-column>
-                <!-- <el-table-column prop="system" label="相关管理菜单" width="180">
-        </el-table-column> -->
                 <el-table-column
                     prop="system.descript"
                     label="相关管理系统"
@@ -110,7 +108,7 @@
             @current-change="handleCurrentChange" />
         <update-add-dailog
             v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
-            @toggleShow="changeDialogState" />
+            @toggleShow="setDialogShow" />
     </section>
 </template>
 
@@ -163,7 +161,7 @@ export default {
         }
     },
     methods: {
-        selectGetData (query) {
+        getSelectData (query) {
             if (query !== '') {
                 this.inputLoading = true
             } else {
@@ -201,8 +199,8 @@ export default {
                     this.tabLoading = false
                 })
         },
+        // 查询表格数据
         queryList () {
-            // 查询表格数据
             this.tabLoading = true
             api.role.query()
                 .then((response) => {
@@ -214,13 +212,10 @@ export default {
                     this.tabLoading = false
                 })
         },
-        changeDialogState () {
+        setDialogShow () {
             this.showDialog = false
         },
     },
 }
 </script>
 
-<style lang="scss">
-
-</style>

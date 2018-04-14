@@ -11,7 +11,7 @@
             <el-form-item label="所属模块">
                 <el-select
                     v-model="typeValue"
-                    :remote-method="selectGetData"
+                    :remote-method="getSelectData"
                     :loading="true"
                     filterable
                     default-first-option
@@ -180,7 +180,7 @@ export default {
         this.queryList()
     },
     methods: {
-        selectGetData (query) {
+        getSelectData (query) {
             if (query !== '') {
                 this.inputLoading = true
             } else {
@@ -217,7 +217,8 @@ export default {
                     this.tabLoading = false
                 })
         },
-        queryList () { // 查询表格数据
+        // 查询表格数据
+        queryList () {
             this.tabLoading = true
             api.menu.query({ params: this.listQuery }).then((response) => {
                 this.tableData = response.data
@@ -227,13 +228,7 @@ export default {
                 this.tabLoading = false
             })
         },
-        // changeDialogState () {
-        //     this.showDialog = false
-        // },
     },
 }
 </script>
 
-<style lang="scss">
-
-</style>
