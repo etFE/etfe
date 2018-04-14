@@ -24,15 +24,16 @@ const tabsView = {
             }
         },
         DEL_OTHER_VIEWS: (state, view) => {
-            if (view.title !== '首页') {
-                state.visitedViews = [{
-                    path: '/admin',
-                    title: '首页',
-                }]
-            } else {
-                state.visitedViews = []
-            }
-            state.visitedViews.push(view)
+            /* 之前的代码 若几天后无bug可删除 */
+            // if (view.title !== '首页') {
+            //     state.visitedViews = [{
+            //         path: '/admin',
+            //         title: '首页',
+            //     }]
+            // } else {
+            //     state.visitedViews = []
+            // }
+            state.visitedViews = [view]
         },
         DEL_ALL_VIEWS: (state) => {
             state.visitedViews = []
@@ -63,12 +64,21 @@ const tabsView = {
     },
     getters: {
         tabViews: (state) => {
-            if (!state.visitedViews.length) {
-                state.visitedViews.push({
+            // 修改过的代码
+            const firstTab = state.visitedViews[0]
+            if (!firstTab || firstTab.title !== '首页') {
+                state.visitedViews.unshift({
                     path: '/admin',
                     title: '首页',
                 })
             }
+            /* 之前的代码 若几天后无bug可删除 */
+            // if (!state.visitedViews.length) {
+            //     state.visitedViews.push({
+            //         path: '/admin',
+            //         title: '首页',
+            //     })
+            // }
             return state.visitedViews
         },
     },
