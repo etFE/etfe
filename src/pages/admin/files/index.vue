@@ -188,7 +188,7 @@ export default {
             this.$set(row, 'edit', true)
             this.tabBtnDisabled = true
         },
-        selectGetData (query) {
+        getSelectData (query) {
             if (query !== '') {
                 this.inputLoading = true
             } else {
@@ -237,7 +237,7 @@ export default {
                     this.tabLoading = false
                 })
         },
-        changeDialogState () {
+        setDialogShow () {
             this.showDialog = false
         },
         beforeUpload () {
@@ -266,6 +266,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
-</style>

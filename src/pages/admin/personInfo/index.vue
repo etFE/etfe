@@ -18,23 +18,23 @@
                             justify="center">
                             <el-col
                                 :span="12"
-                                class="avatar-col">
+                                class="per-avatar-col">
                                 <el-upload
                                     :show-file-list="false"
                                     :on-success="handleAvatarSuccess"
                                     :before-upload="beforeAvatarUpload"
-                                    class="avatar-img"
+                                    class="per-avatar-upload"
                                     action="https://jsonplaceholder.typicode.com/posts/">
                                     <div
                                         @mouseout="showMask = false"
                                         @mouseover="showMask = true">
                                         <img
                                             v-show="!showMask"
-                                            :src="form.avatar">
+                                            :src="form.avatar"
+                                            class="avatar">
                                         <i
                                             v-show="showMask"
                                             class="el-icon-plus avatar-uploader-icon" />
-
 
                                     </div>
                                 </el-upload>
@@ -42,7 +42,7 @@
                             </el-col>
                             <el-col
                                 :span="3"
-                                class="avatar-btn-wrap">
+                                class="per-avatar-btn-wrap">
                                 <el-button
                                     size="mini"
                                     @click="isShowImgs = true ">
@@ -57,7 +57,7 @@
                                         <li
                                             v-for="img in userImgs"
                                             :key="img"
-                                            class="per-img"
+                                            class="per-img-wrap"
                                             @click="setAvatar(img)">
                                             <img
                                                 :src="img"
@@ -225,7 +225,6 @@ export default {
         },
         // 头像上传成功
         handleAvatarSuccess () {
-            console.log(arguments)
         },
         // 上传之前的钩子
         beforeAvatarUpload () {
@@ -240,27 +239,32 @@ export default {
   padding-top: 40px !important;
   min-width: 500px;
 }
-.per-img {
-  float: left;
-  margin: 10px;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  font-size: 34px;
-  .img-item {
-    width: 100%;
+
+.per-imgList {
+  overflow: hidden;
+  .per-img-wrap {
+    float: left;
+    margin: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    font-size: 34px;
+    .img-item {
+      width: 100%;
+    }
   }
 }
-.avatar-col {
+
+.per-avatar-col {
   text-align: center;
   height: 103px;
 }
-.avatar-btn-wrap {
+.per-avatar-btn-wrap {
   display: flex;
   align-items: flex-end;
 }
-.avatar-img {
-  img {
+.per-avatar-upload {
+  .avatar {
     height: 103px;
     position: relative;
   }
@@ -274,8 +278,5 @@ export default {
     background: #dadadafa;
     text-align: center;
   }
-}
-.per-imgList {
-  overflow: hidden;
 }
 </style>
