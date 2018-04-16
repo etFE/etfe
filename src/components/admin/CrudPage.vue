@@ -6,24 +6,43 @@
 
             <slot name="queryItem"/>
 
-            <el-form-item
-                v-for="item in actionButton"
-                :key="item.$index">
+            <el-form-item>
                 <el-button
-                    :icon="btn[item].icon"
+                    v-if="actionButton.Retrieve"
+                    icon="el-icon-search"
                     type="text"
-                    @click="btn[item]['event:click']">{{ btn[item].label }}</el-button>
+                    @click="Retrieve">查询</el-button>
+                <el-button
+                    v-if="actionButton.Create"
+                    icon="el-icon-plus"
+                    type="text"
+                    @click="Create">添加</el-button>
+                <el-button
+                    v-if="actionButton.Update"
+                    :disabled="!currentRow"
+                    icon="el-icon-edit"
+                    type="text"
+                    @click="Update">修改</el-button>
+                <el-button
+                    v-if="actionButton.Delete"
+                    :disabled="!currentRow"
+                    icon="el-icon-delete"
+                    type="text"
+                    @click="Delete">删除</el-button>
             </el-form-item>
 
         </el-form>
         <el-table
             v-loading="loading"
+            ref="table"
             :data="data"
             :resizable="false"
             size="mini"
+            highlight-current-row
             stripe
             fixed
-            border>
+            border
+            @current-change="changeRow">
 
             <el-table-column
                 type="index"
@@ -41,6 +60,17 @@
             :title="title"
             @close="close">
             <slot name="editItem"/>
+            <span
+                slot="footer"
+                class="dialog-footer">
+                <el-button
+                    size="mini"
+                    @click="close">关闭</el-button>
+                <el-button
+                    size="mini"
+                    type="primary"
+                    @click="save">保存</el-button>
+            </span>
         </el-dialog>
     </el-container>
 </template>
@@ -50,9 +80,14 @@ export default {
     name: 'EditorTableDialog',
     props: {
         actionButton: {
-            type: Array,
+            type: Object,
             default () {
-                return ['Retrieve', 'Create', 'Update', 'Delete']
+                return {
+                    Retrieve: true,
+                    Create: true,
+                    Update: true,
+                    Delete: true,
+                }
             },
         },
         columns: {
@@ -80,6 +115,8 @@ export default {
                 Delete: { label: '删除', icon: 'el-icon-search', 'event:click': del },
             },
             title: '编辑',
+            currentRow: null,
+            model: {},
         }
     },
     methods: {
@@ -89,21 +126,36 @@ export default {
         close () {
             this.show = false
         },
+        changeRow (val) {
+            this.currentRow = val
+        },
         Retrieve () {
             console.log(this.queryItem)
             this.$emit('query')
         },
+        save () {
+            this.$emit('save')
+            this.close()
+        },
         Create () {
             this.open()
+            this.model = {}
+            this.currentRow = null
+            this.$refs.table.setCurrentRow()
+            this.title = '添加'
+            this.$emit('open', this.model)
         },
         Update () {
             this.open()
+            this.model = Object.assign({}, this.currentRow)
+            this.dialogTitle = '编辑'
+            this.$emit('open', this.model)
         },
         Delete () {
-            this.$confirm('确认该条删除？', '提示', {
+            this.$confirm('确认删除该条数据？', '提示', {
                 type: 'warning',
             }).then(() => {
-
+                this.$emit('remove', this.currentRow)
             }).catch(() => {
 
             })
