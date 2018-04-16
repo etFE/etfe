@@ -25,6 +25,7 @@
             <el-form
                 :inline="true"
                 :model="model"
+                label-width="70px"
                 size="mini">
                 <el-form-item label="系统名称">
                     <el-input
@@ -48,7 +49,6 @@
 <script>
 import api from '@/api/admin'
 import CrudPage from '@/components/admin/CrudPage'
-import UpdateAddDailog from './UpdateAdd'
 
 export default {
     components: {
@@ -58,16 +58,16 @@ export default {
         return {
             columns: [
                 { name: 'name', label: '系统名称', width: 200 },
-                { name: 'descript', label: '系统描述' },
-                { name: 'createDate', label: '创建日期', width: 500 },
+                { name: 'descript', label: '系统描述', minWidth: 400 },
+                { name: 'createDate', label: '创建日期', width: 300 },
             ],
             data: [],
-            queryItem: {
-                name: '',
-                createDate: '',
-            },
             loading: false,
             model: {},
+            queryItem: {
+                name: null,
+                createDate: null,
+            },
         }
     },
     mounted () {
@@ -76,7 +76,7 @@ export default {
     methods: {
         query () {
             this.loading = true
-            api.system.query({ params: this.listQuery })
+            api.system.query({ params: this.queryItem })
                 .then((response) => {
                     this.data = response.data
                     this.loading = false
@@ -119,7 +119,7 @@ export default {
                     id: _id,
                 },
             }).then((response) => {
-                console.log(response.data.id)
+                console.log(response.data)
                 for (let i = 0; i < this.data.length; i += 1) {
                     if (this.data[i]._id === response.data._id) {
                         this.data.splice(i, 1)

@@ -1,121 +1,41 @@
 <template>
-    <el-container>
-        <el-form
-            :inline="true"
-            label-width="60px"
-            size="mini">
-            <el-form-item label="部门">
-                <el-input/>
+    <crud-page
+        :columns="columns"
+        :data="data"
+        :query-item="queryItem"
+        :loading="loading"
+        @query="query"
+        @open="open"
+        @save="save"
+        @remove="remove">
+
+        <template slot="queryItem">
+            <el-form-item
+                label="部门">
+                <el-input v-model="queryItem.department"/>
             </el-form-item>
-            <el-form-item>
-                <el-button
-                    type="text"
-                    icon="el-icon-search"
-                    @click="queryList">查询</el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button
-                    type="text"
-                    icon="el-icon-plus"
-                    @click="add">添加</el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button
-                    :disabled="!currentRow"
-                    type="text"
-                    icon="el-icon-edit"
-                    @click="edit">编辑</el-button>
-            </el-form-item>
-            <el-form-item>
-                <el-button
-                    :disabled="!currentRow"
-                    type="text"
-                    icon="el-icon-delete"
-                    @click="deleteConfirm">删除</el-button>
-            </el-form-item>
-        </el-form>
-        <el-table
-            v-loading="tableLoading"
-            ref="table"
-            :data="personList"
-            :row-style="{cursor:'pointer'}"
-            stripe
-            size="mini"
-            height="500px"
-            highlight-current-row
-            border
-            @current-change="handleCurrentChange">
-            <el-table-column
-                :resizable="false"
-                fixed
-                width="36"
-                type="index"/>
-            <el-table-column
-                :resizable="false"
-                prop="name"
-                width="80"
-                label="姓名"/>
-            <el-table-column
-                :resizable="false"
-                prop="nick"
-                width="80"
-                label="昵称"/>
-            <el-table-column
-                :resizable="false"
-                prop="sexStr"
-                width="60"
-                label="性别"/>
-            <el-table-column
-                :resizable="false"
-                prop="age"
-                width="60"
-                label="年龄" />
-            <el-table-column
-                :resizable="false"
-                prop="phone"
-                width="100"
-                label="电话"/>
-            <el-table-column
-                :resizable="false"
-                prop="email"
-                width="150"
-                label="电子邮箱"/>
-            <el-table-column
-                :resizable="false"
-                min-width="200"
-                prop="address"
-                label="现住址"/>
-            <el-table-column
-                :resizable="false"
-                min-width="200"
-                prop="place"
-                label="籍贯"/>
-        </el-table>
-        <el-dialog
-            :visible.sync="showDialog"
-            :close-on-click-modal="false"
-            :title="dialogTitle"
-            width="660px">
+        </template>
+
+        <template slot="editItem">
             <el-form
-                ref="person"
-                :model="person"
                 :inline="true"
+                :model="model"
                 size="mini"
                 label-width="70px">
                 <el-col :span="12">
                     <el-form-item label="姓名">
-                        <el-input v-model="person.name"/>
+                        <el-input v-model="model.name"/>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="昵称">
-                        <el-input v-model="person.nick"/>
+                        <el-input v-model="model.nick"/>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="性别">
                         <el-select
-                            v-model="person.sex"
+                            v-model="model.sex"
                             style="width:185px;"
                             placeholder="请选择">
                             <el-option
@@ -130,7 +50,7 @@
                 <el-col :span="12">
                     <el-form-item label="出生日期">
                         <el-date-picker
-                            v-model="person.birthday"
+                            v-model="model.birthday"
                             type="date"
                             size="mini"
                             style="width:185px;"
@@ -139,130 +59,114 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="电话">
-                        <el-input v-model="person.phone"/>
+                        <el-input v-model="model.phone"/>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="电子邮箱">
-                        <el-input v-model="person.email"/>
+                        <el-input v-model="model.email"/>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="现住址">
-                        <el-input v-model="person.address"/>
+                        <el-input v-model="model.address"/>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="籍贯">
-                        <el-input v-model="person.place"/>
+                        <el-input v-model="model.place"/>
                     </el-form-item>
                 </el-col>
             </el-form>
-            <span
-                slot="footer"
-                class="dialog-footer">
-                <el-button
-                    size="mini"
-                    @click="showDialog=false">关闭</el-button>
-                <el-button
-                    size="mini"
-                    type="primary"
-                    @click="save">保存</el-button>
-            </span>
-        </el-dialog>
-    </el-container>
+        </template>
+
+    </crud-page>
 </template>
 
 <script>
 import api from '@/api/admin'
+import CrudPage from '@/components/admin/CrudPage'
 
 export default {
+    components: {
+        CrudPage,
+    },
     data () {
         return {
-            personList: [],
-            currentRow: null,
-            tableLoading: false,
-            showDialog: false,
-            dialogTitle: '提示',
-            person: {},
+            columns: [
+                { name: 'name', label: '姓名', width: 80 },
+                { name: 'nick', label: '昵称', width: 80 },
+                { name: 'sexStr', label: '性别', width: 60 },
+                { name: 'age', label: '年龄', width: 60 },
+                { name: 'phone', label: '电话', width: 100 },
+                { name: 'email', label: '电子邮件', width: 150 },
+                { name: 'addres', label: '现住址', minWidth: 200 },
+                { name: 'place', label: '籍贯', minWidth: 200 },
+            ],
+            data: [],
+            loading: false,
+            model: {},
+            queryItem: {
+                department: null,
+            },
         }
     },
     mounted () {
-        this.queryList()
+        this.query()
     },
     methods: {
-        handleCurrentChange (val) {
-            this.currentRow = val
-        },
-        queryList () {
-            this.tableLoading = true
-            api.person.query()
+        query () {
+            this.loading = true
+            api.person.query({ params: this.queryItem })
                 .then((response) => {
-                    this.personList = response.data
-                    this.tableLoading = false
+                    this.data = response.data
+                    this.loading = false
                 })
                 .catch(() => {
-                    this.tableLoading = false
+                    this.loading = false
                 })
         },
-        add () {
-            this.person = {}
-            this.currentRow = null
-            this.$refs.table.setCurrentRow()
-            this.dialogTitle = '添加'
-            this.showDialog = true
-        },
-        edit () {
-            this.person = Object.assign({}, this.currentRow)
-            this.dialogTitle = '编辑'
-            this.showDialog = true
+        open (model) {
+            this.model = model
         },
         save () {
-            if (this.currentRow) {
+            const _id = this.model._id
+            if (_id) {
                 api.person.update({
                     param: {
-                        id: this.person.id,
+                        id: _id,
                     },
-                    data: this.person,
+                    data: this.model,
                 }).then((response) => {
-                    for (let i = 0; i < this.personList.length; i += 1) {
-                        if (this.personList[i].id === this.person.id) {
-                            this.personList.splice(i, 1, response.data)
+                    for (let i = 0; i < this.data.length; i += 1) {
+                        if (this.data[i]._id === _id) {
+                            this.data.splice(i, 1, response.data)
                             break
                         }
                     }
-                    this.showDialog = false
                 })
             } else {
                 api.person.add({
-                    data: this.person,
+                    data: this.model,
                 }).then((response) => {
-                    this.personList.push(response.data)
+                    this.data.push(response.data)
                 })
             }
-            this.showDialog = false
         },
-        remove () {
-            const { id } = this.currentRow
+        remove (row) {
+            const { _id } = row
             api.person.delete({
                 param: {
-                    id,
+                    id: _id,
                 },
             }).then((response) => {
-                for (let i = 0; i < this.personList.length; i += 1) {
-                    if (this.personList[i].id === response.data.id) {
-                        this.personList.splice(i, 1)
+                for (let i = 0; i < this.data.length; i += 1) {
+                    if (this.data[i]._id === response.data._id) {
+                        this.data.splice(i, 1)
                         break
                     }
                 }
             })
-        },
-        deleteConfirm () {
-            if (this.currentRow) {
-                this.$confirm('确认删除当前选择数据？')
-                    .then(this.remove)
-                    .catch()
-            }
         },
     },
 }
