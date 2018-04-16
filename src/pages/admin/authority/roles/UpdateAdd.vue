@@ -17,7 +17,7 @@
                 <el-form-item
                     :label-width="formLabelWidth"
                     label="角色名称："
-                    class="form-item"
+                    class="update-form-item"
                     prop="name">
                     <el-input
                         v-model="form.name"
@@ -28,7 +28,7 @@
                 <el-form-item
                     :label-width="formLabelWidth"
                     label="系统模块："
-                    class="form-item"
+                    class="update-form-item"
                     prop="system">
                     <el-select
                         v-model="form.system"
@@ -48,7 +48,7 @@
                     :label-width="formLabelWidth"
                     label="角色描述："
                     style="height: 48px"
-                    class="form-item"
+                    class="update-form-item"
                     prop="descript">
                     <el-input
                         v-model="form.descript"
@@ -141,7 +141,6 @@ export default {
     },
     watch: {
         system () {
-            // console.log(this.form.system, 11112222)
             if (this.form.system) {
                 this.queryMenu(this.form.system)
             }
@@ -176,7 +175,6 @@ export default {
             this.submitForm()
 
             const newData = { ...this.form }
-            // console.log(newData, 'submit')
 
             if (this.formDataloading) {
                 if (this.operation === 'add') {
@@ -254,7 +252,7 @@ export default {
 </script>
 
 <style scoped>
-.form-item {
+.update-form-item {
   width: 320px;
 }
 </style>

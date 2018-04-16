@@ -50,7 +50,7 @@
         </el-table>
         <update-add-dailog
             v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
-            @toggleShow="changeDialogState" />
+            @toggleShow="setDialogShow" />
 
     </el-container> -->
     <crud-page
@@ -165,7 +165,7 @@ export default {
                     this.tabLoading = false
                 })
         },
-        changeDialogState () {
+        setDialogShow () {
             this.showDialog = false
         },
     },

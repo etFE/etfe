@@ -17,7 +17,7 @@
                     <el-form-item
                         :label-width="formLabelWidth"
                         label="菜单名称："
-                        class="form-item"
+                        class="update-form-item"
                         prop="name">
                         <el-input
                             v-model="form.name"
@@ -28,7 +28,7 @@
                     <el-form-item
                         :label-width="formLabelWidth"
                         label="系统模块："
-                        class="form-item"
+                        class="update-form-item"
                         prop="system">
                         <el-select
                             v-model="form.system"
@@ -162,7 +162,6 @@ export default {
                     api.menu.add({ data: newData })
                         .then((res) => {
                             this.formDataloading = false
-                            console.log('res', res)
                             this.$parent.tableData.push(res.data)
                             this.dialogClosed()
                         })
@@ -211,7 +210,7 @@ export default {
 </script>
 
 <style>
-.form-item {
+.update-form-item {
   width: 300px;
 }
 </style>

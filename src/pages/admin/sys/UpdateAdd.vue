@@ -15,7 +15,7 @@
             <el-form-item
                 :label-width="formLabelWidth"
                 label="系统名称："
-                class="form-item"
+                class="update-form-item"
                 prop="name">
                 <el-input
                     v-model="form.name"
@@ -141,7 +141,7 @@ export default {
 </script>
 
 <style>
-.form-item {
-  width: 300px;
+.update-form-item {
+  width: 320px;
 }
 </style>

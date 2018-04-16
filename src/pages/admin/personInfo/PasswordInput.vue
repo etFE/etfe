@@ -1,6 +1,6 @@
 <template>
     <el-input
-        v-model="valuem"
+        v-model="valueM"
         :disabled= "disabled"
         :type="type"
         auto-complete="off"
@@ -21,14 +21,23 @@
 <script>
 export default {
     props: {
-        value: { type: String, default: '' },
+        value: { type: String, default: undefined },
         disabled: { type: Boolean, default: false },
     },
     data () {
         return {
-            valuem: this.value,
             type: 'password',
         }
+    },
+    computed: {
+        valueM: {
+            get () {
+                return this.value
+            },
+            set (val) {
+                return val
+            },
+        },
     },
     methods: {
         handlePassword (value) {
