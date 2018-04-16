@@ -158,7 +158,7 @@ export default {
         Update () {
             this.open()
             this.model = Object.assign({}, this.currentRow)
-            this.dialogTitle = '编辑'
+            this.title = '编辑'
             this.$emit('open', this.model)
         },
         Delete () {
