@@ -26,27 +26,34 @@
                 content="全屏">
                 <a
                     class="screenfull"
-                    @click="toggleFull"
-                >
+                    @click="toggleFull">
                     <i class="iconfont">&#xe600;</i>
                 </a>
             </el-tooltip>
-            <a class="user">{{ user }}</a>
+            <a class="user">{{ username }}</a>
 
-            <el-dropdown trigger="click">
+            <el-dropdown
+                @command="loginOut">
                 <span class="el-dropdown-link ">
-                    <div class="userimg" />
+                    <img
+                        :src="avatar"
+                        class="userimg">
                 </span>
                 <el-dropdown-menu
                     slot="dropdown"
-                    class="dropdown-menu">
+                    class="dropdown-menu"
+                >
                     <router-link to="/admin/person">
                         <el-dropdown-item>
                             个人信息
                         </el-dropdown-item>
                     </router-link>
-                    <el-dropdown-item>设置</el-dropdown-item>
-                    <el-dropdown-item>安全退出</el-dropdown-item>
+                    <!-- <el-dropdown-item>设置</el-dropdown-item> -->
+                    <router-link to="/">
+                        <el-dropdown-item command="out">
+                            安全退出
+                        </el-dropdown-item>
+                    </router-link>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -54,7 +61,9 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import screenfull from 'screenfull'
+import defaultImg from '@/assets/img/avater-male.jpg'
 
 export default {
     name: 'NavBar',
@@ -68,9 +77,20 @@ export default {
         return {
             hamActive: true,
             title: '后台管理系统',
-            user: '测试',
+            // user: '测试',
             BreadcrumbList: [],
         }
+    },
+    computed: {
+        ...mapState('global', {
+            username: state => state.user.username,
+            avatar: (state) => {
+                if (!state.user.avatar) {
+                    state.user.avatar = defaultImg
+                }
+                return state.user.avatar
+            },
+        }),
     },
     watch: {
         $route () {
@@ -81,6 +101,12 @@ export default {
         this.getBreadcrumb()
     },
     methods: {
+        loginOut (command) {
+            if (command === 'out') {
+                this.$store.commit('global/LOG_OUT')
+                this.$store.commit('front/home/SHOW_LOGIN')
+            }
+        },
         toggleSideBar () {
             this.$emit('toggleSide', !this.sideBarShow)
         },
@@ -104,11 +130,17 @@ export default {
 </script>
 
 <style lang="scss">
+$navColor: #6f6f6f;
+$navFontSize: 16px;
+
 .header {
   position: relative;
   display: flex;
-  color: #6f6f6f;
+  color: $navColor;
+  font-size: $navFontSize;
   .header-middle {
+    flex: 1;
+    display: inline-block;
     padding: 0 20px;
     height: 100%;
     line-height: 50px;
@@ -118,61 +150,51 @@ export default {
       font-family: "Hiragino Sans GB";
     }
   }
-}
-.navicon-con {
-  margin-left: 10px;
-  height: 100%;
-  line-height: 50px;
-
-  .hamburger {
-    display: inline-block;
-    cursor: pointer;
-    transform: rotate(90deg);
-    transition: 0.38s;
-    transform-origin: 50% 50%;
-  }
-  .is-active {
-    transform: rotate(0deg);
-  }
-}
-
-.header-middle {
-  flex: 1;
-  display: inline-block;
-}
-
-.header-right {
-  margin-right: 20px;
-  height: 100%;
-  .screenfull {
-      display: inline-block;
-    // width: 20px;
-    padding: 0 10px;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  .user {
-    padding: 10px;
+  .navicon-con {
+    margin-left: 10px;
     height: 100%;
     line-height: 50px;
+    .hamburger {
+      display: inline-block;
+      cursor: pointer;
+      color: $navColor;
+      transform: rotate(90deg);
+      transition: 0.38s;
+      transform-origin: 50% 50%;
+    }
+    .is-active {
+      transform: rotate(0deg);
+    }
   }
-  .userimg {
-    display: inline-block;
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-    border-radius: 50%;
-    vertical-align: middle;
-    border: 1px solid #ddd;
+  .header-right {
+    margin-right: 20px;
+    height: 100%;
+    .dropdown-menu {
+      top: 40px !important;
+      width: 200px;
+    }
+    .screenfull {
+      display: inline-block;
+      padding: 0 10px;
+      vertical-align: middle;
+      cursor: pointer;
+      color: $navColor;
+    }
+    .user {
+      padding: 10px;
+      height: 100%;
+      line-height: 50px;
+      color: $navColor;
+    }
+    .userimg {
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+      border-radius: 50%;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+    }
   }
-}
-
-.dropdown-menu {
-  top: 40px !important;
-  width: 200px;
-
-  // .popper__arrow {
-  //   display: none;
-  // }
 }
 </style>
