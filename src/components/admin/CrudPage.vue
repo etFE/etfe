@@ -2,35 +2,38 @@
     <el-container>
         <el-form
             :inline="true"
-            size="mini">
+            size="mini"
+            label-width="100px">
 
             <slot name="queryItem"/>
-
-            <el-form-item>
+            <div>
                 <el-button
                     v-if="actionButton.Retrieve"
                     icon="el-icon-search"
+                    size="mini"
                     type="text"
                     @click="Retrieve">查询</el-button>
                 <el-button
                     v-if="actionButton.Create"
                     icon="el-icon-plus"
+                    size="mini"
                     type="text"
                     @click="Create">添加</el-button>
                 <el-button
                     v-if="actionButton.Update"
                     :disabled="!currentRow"
                     icon="el-icon-edit"
+                    size="mini"
                     type="text"
                     @click="Update">修改</el-button>
                 <el-button
                     v-if="actionButton.Delete"
                     :disabled="!currentRow"
                     icon="el-icon-delete"
+                    size="mini"
                     type="text"
                     @click="Delete">删除</el-button>
-            </el-form-item>
-
+            </div>
         </el-form>
         <el-table
             v-loading="loading"
