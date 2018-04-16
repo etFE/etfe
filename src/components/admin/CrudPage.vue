@@ -48,19 +48,26 @@
             @current-change="changeRow">
 
             <el-table-column
+                :resizable="false"
+                fixed
                 type="index"
                 width="36"/>
 
             <el-table-column
                 v-for="item in columns"
+                :resizable="false"
                 :key="item.$index"
                 :prop="item.name"
-                :label="item.label"/>
+                :label="item.label"
+                :width="item.width"
+                :min-width="item.minWidth"/>
         </el-table>
         <el-dialog
             v-if="show"
             :visible="true"
             :title="title"
+            :close-on-click-modal="false"
+            width="660px"
             @close="close">
             <slot name="editItem"/>
             <span
@@ -101,8 +108,8 @@ export default {
             type: Array,
             required: true,
         },
-        queryItem: { type: Object, default: null },
         loading: { type: Boolean, default () { return false } },
+        queryItem: { type: Object, default () { return {} } },
     },
     data () {
         const create = this.Create
