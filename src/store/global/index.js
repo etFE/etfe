@@ -49,7 +49,9 @@ export default {
                 if (!res.data.error) {
                     commit('SET_LOGIN_MSG', res.data)
                 }
+                return res
             }
+            return undefined
         },
     },
 }

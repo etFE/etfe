@@ -1,6 +1,7 @@
 <template>
     <section>
         <el-form
+            v-loading="loading"
             ref="form"
             :rules="rules"
             :model="form"
@@ -20,11 +21,12 @@
                                 :span="12"
                                 class="per-avatar-col">
                                 <el-upload
+                                    :action="upLoadSrc"
                                     :show-file-list="false"
                                     :on-success="handleAvatarSuccess"
                                     :before-upload="beforeAvatarUpload"
                                     class="per-avatar-upload"
-                                    action="https://jsonplaceholder.typicode.com/posts/">
+                                >
                                     <div
                                         @mouseout="showMask = false"
                                         @mouseover="showMask = true">
@@ -44,6 +46,7 @@
                                 :span="3"
                                 class="per-avatar-btn-wrap">
                                 <el-button
+                                    :disabled="isShowImgs"
                                     size="mini"
                                     @click="isShowImgs = true ">
                                     修改头像
@@ -86,9 +89,11 @@
                                 disabled/>
                         </el-form-item>
                         <el-form-item label="用户角色：">
-                            <el-input
-                                v-model="form.role"
-                                disabled/>
+                            <el-select
+                                v-model="form.roles"
+                                multiple
+                                disabled
+                                placeholder="请选择"/>
                         </el-form-item>
                         <el-collapse-transition>
                             <div v-show="isShow">
@@ -129,10 +134,11 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 import api from '@/api/admin'
+import defaultImg from '@/assets/img/avater-male.jpg'
 import userImgs from '@/assets/img/userImg'
 import ElInputPassword from './PasswordInput'
-
 
 export default {
     components: {
@@ -167,9 +173,9 @@ export default {
             form: {
                 nick: '',
                 username: '',
-                role: '',
+                roles: [],
                 password: '',
-                newPass: undefined,
+                newPass: '',
                 checkPass: '',
                 avatar: '',
             },
@@ -185,26 +191,27 @@ export default {
             isShowImgs: false,
             userImgs,
             showMask: false,
+            loading: false,
+            upLoadSrc: 'http:localhost:3000/manage/file/upload',
         }
     },
     mounted () {
-        this.loadData()
-        if (!this.form.avatar) {
-            this.form.avatar = userImgs[0]
-        }
+        this.loading = true
+        this.$store.dispatch('global/GET_USER_INFO').then((res) => {
+            this.loading = false
+            this.form = { ...this.form, ...res.data.data }
+            // 没头像时默认第一个
+            if (!this.form.avatar) {
+                this.form.avatar = defaultImg
+            }
+        })
     },
     methods: {
-        // 初始化数据
-        loadData () {
-            api.user.queryInfo().then((res) => {
-                const { data } = res
-                this.form = { ...this.form, ...data }
-            })
-        },
         // 上传数据
         postData () {
-            api.user.update({ param: { id: this.form._id }, data: this.form }).then((res) => {
-
+            this.loading = true
+            api.user.update({ param: { id: this.form._id }, data: this.form }).then(() => {
+                this.loading = false
             })
         },
         submit () {
@@ -212,11 +219,14 @@ export default {
             if (this.isShow) {
                 this.$refs.form.validate((valid) => {
                     if (valid) {
+                        this.$set(this.form, 'password', this.form.newPass)
+                        this.$delete(this.form, 'newPass')
+                        this.$delete(this.form, 'checkPass')
                         this.postData()
                     }
                 })
             } else {
-                // 提交图片路径
+                this.postData()
             }
         },
         // 设置头像
@@ -264,10 +274,12 @@ export default {
   align-items: flex-end;
 }
 .per-avatar-upload {
-  .avatar {
-    height: 103px;
-    position: relative;
-  }
+      .avatar {
+        border-radius: 50%;
+        height: 103px;
+        position: relative;
+      }
+
   .avatar-uploader-icon {
     width: 103px;
     height: 103px;

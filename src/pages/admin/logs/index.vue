@@ -13,7 +13,6 @@
 export default {
     methods: {
         submit () {
-            console.log(787878)
             return false
         },
     },

@@ -27,7 +27,8 @@ service.interceptors.response.use(
                 message: response.data.error,
                 type: 'error',
             })
-        } else {
+        // get请求时不弹出提示框
+        } else if (response.config.method !== 'get') {
             Message({
                 message: response.data.message,
                 type: 'success',

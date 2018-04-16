@@ -2,6 +2,7 @@ const tabsView = {
     namespaced: true,
     state: {
         visitedViews: [],
+        cachedViews: [], // 所缓存的页面集合  通过它实现关闭页面不缓存
     },
     mutations: {
         ADD_VISITED_VIEWS: (state, view) => {
@@ -12,13 +13,22 @@ const tabsView = {
                     path: view.path,
                     name: view.name,
                 })
+                state.cachedViews.push(view.name)
             }
         },
         DEL_VISITED_VIEWS: (state, view) => {
             const arr = state.visitedViews
+            const arr2 = state.cachedViews
             for (let i = 0, l = arr.length; i < l; i += 1) {
                 if (arr[i].path === view.path) {
                     arr.splice(i, 1)
+                    break
+                }
+            }
+
+            for (let n = 0, lg = arr2.length; n < lg; n += 1) {
+                if (arr2[n] === view.name) {
+                    state.cachedViews.splice(n, 1)
                     break
                 }
             }
@@ -34,9 +44,11 @@ const tabsView = {
             //     state.visitedViews = []
             // }
             state.visitedViews = [view]
+            state.cachedViews = [view.name]
         },
         DEL_ALL_VIEWS: (state) => {
             state.visitedViews = []
+            state.cachedViews = []
         },
     },
     actions: {
@@ -81,6 +93,7 @@ const tabsView = {
             // }
             return state.visitedViews
         },
+        cachedViews: state => state.cachedViews,
     },
 }
 
