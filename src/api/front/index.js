@@ -56,7 +56,8 @@ export const setNotice = (type, title, desc) => {
 // 请求拦截器 可以用于token
 instance.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
-    if (token) {
+
+    if (token && !config.headers.authorization) {
         config.headers.authorization = `Bearer ${token}`
     }
     loading.start()
@@ -127,7 +128,7 @@ const thirdParty = {
     getBackground: () => createAPI('/photos/random', 'get', {
         baseURL: 'https://api.unsplash.com',
         headers: {
-            Authorization: 'Client-ID bf61a02bc1dc338778d85863be7be225a2cd3a44233be5eb81f4fa051793c10c',
+            authorization: 'Client-ID bf61a02bc1dc338778d85863be7be225a2cd3a44233be5eb81f4fa051793c10c',
         },
     }),
 }

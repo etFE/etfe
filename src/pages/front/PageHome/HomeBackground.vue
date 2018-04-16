@@ -7,11 +7,11 @@
         <div class="et-home-background-msg">
             Photo by
             <a
-                :href="imgMsg.link"
+                :href="`${imgMsg.link}?utm_source=etfe&utm_medium=referral`"
                 target="_blank"
             >{{ imgMsg.name }}</a> /
             <a
-                href="https://unsplash.com"
+                href="https://unsplash.com?utm_source=etfe&utm_medium=referral"
                 target="_blank"
             >Unsplash</a>
             <Avatar
