@@ -1,17 +1,17 @@
 <template>
-    <section class="header">
-        <div class="navicon-con">
+    <section class="ad-header">
+        <div class="ad-header-left">
             <a
-                :class="{'is-active':sideBarShow}"
+                :class="{'actived':sideBarShow}"
                 class="hamburger"
                 @click="toggleSideBar">
                 <i class="iconfont">&#xe604;</i>
             </a>
         </div>
-        <div class="header-middle">
+        <div class="ad-header-middle">
             <el-breadcrumb
                 separator-class="el-icon-arrow-right"
-                class="admin-breadcrumb">
+                class="breadcrumb">
                 <transition-group name="breadcrumb">
                     <el-breadcrumb-item
                         v-for="breItem in BreadcrumbList"
@@ -20,7 +20,7 @@
                 </transition-group>
             </el-breadcrumb>
         </div>
-        <div class="header-right">
+        <div class="ad-header-right">
             <el-tooltip
                 effect="dark"
                 content="全屏">
@@ -30,11 +30,12 @@
                     <i class="iconfont">&#xe600;</i>
                 </a>
             </el-tooltip>
-            <a class="user">{{ username }}</a>
+            <a class="username">{{ username }}</a>
 
             <el-dropdown
+                trigger="click"
                 @command="loginOut">
-                <span class="el-dropdown-link ">
+                <span>
                     <img
                         :src="avatar"
                         class="userimg">
@@ -66,7 +67,7 @@ import screenfull from 'screenfull'
 import defaultImg from '@/assets/img/avater-male.jpg'
 
 export default {
-    name: 'NavBar',
+    name: 'Header',
     props: {
         sideBarShow: {
             type: Boolean,
@@ -130,61 +131,56 @@ export default {
 </script>
 
 <style lang="scss">
-$navColor: #6f6f6f;
 $navFontSize: 16px;
 
-.header {
+.ad-header {
   position: relative;
   display: flex;
-  color: $navColor;
+  height: 50px;
   font-size: $navFontSize;
-  .header-middle {
+  &-middle {
     flex: 1;
     display: inline-block;
     padding: 0 20px;
     height: 100%;
     line-height: 50px;
-    .admin-breadcrumb {
+    .breadcrumb {
       height: 100%;
       line-height: 50px;
       font-family: "Hiragino Sans GB";
     }
   }
-  .navicon-con {
+  &-left {
     margin-left: 10px;
     height: 100%;
     line-height: 50px;
     .hamburger {
       display: inline-block;
       cursor: pointer;
-      color: $navColor;
       transform: rotate(90deg);
       transition: 0.38s;
       transform-origin: 50% 50%;
     }
-    .is-active {
+    .actived {
       transform: rotate(0deg);
     }
   }
-  .header-right {
+  &-right {
     margin-right: 20px;
     height: 100%;
     .dropdown-menu {
-      top: 40px !important;
-      width: 200px;
+      width: 200px !important;
     }
     .screenfull {
       display: inline-block;
       padding: 0 10px;
       vertical-align: middle;
       cursor: pointer;
-      color: $navColor;
     }
-    .user {
+    .username {
       padding: 10px;
       height: 100%;
       line-height: 50px;
-      color: $navColor;
     }
     .userimg {
       display: inline-block;

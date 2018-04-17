@@ -1,13 +1,13 @@
 <template>
-    <section class="tabs-container">
+    <section class="ad-tabs">
         <div
             ref="tabsWrapper"
-            class="tabs-wrapper"
+            class="ad-tabs-wrapper"
             @wheel.prevent="handleScroll">
             <ul
-                ref="tabsList"
+                ref="tabList"
                 :style="{left: left + 'px'}"
-                class="tabsList">
+                class="tabList">
                 <router-link
                     v-for=" tab in tabViews"
                     :key="tab.path"
@@ -26,15 +26,15 @@
         <ul
             v-show="visible"
             :style="{left: menuLeft + 'px', top: top + 'px'}"
-            class="tabs-menu">
+            class="ad-tabs-menu">
             <li
-                class="menu-item"
+                class="ad-tabs-menu-item"
                 @click="closeSelectedTab(selectTab)">关闭自己</li>
             <li
-                class="menu-item"
+                class="ad-tabs-menu-item"
                 @click="closeOtherTabs()">关闭其他</li>
             <li
-                class="menu-item"
+                class="ad-tabs-menu-item"
                 @click="closeAllTabs()">关闭所有</li>
         </ul>
     </section>
@@ -44,7 +44,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    name: 'TabsView',
+    name: 'Tabs',
     data () {
         return {
             left: 0,
@@ -85,13 +85,13 @@ export default {
         handleScroll (evt) {
             const eventDelta = evt.wheelDelta
             const $containerWidth = this.$refs.tabsWrapper.offsetWidth
-            const $tabsListWidth = this.$refs.tabsList.offsetWidth
+            const $tabListWidth = this.$refs.tabList.offsetWidth
             this.left += eventDelta
             if (this.left > 0) {
                 this.left = 0
-            } else if ($tabsListWidth > $containerWidth) { // 页签总宽度大于外部容器宽度时，left值重新计算
-                if ($tabsListWidth + this.left < $containerWidth) {
-                    this.left = $containerWidth - $tabsListWidth
+            } else if ($tabListWidth > $containerWidth) { // 页签总宽度大于外部容器宽度时，left值重新计算
+                if ($tabListWidth + this.left < $containerWidth) {
+                    this.left = $containerWidth - $tabListWidth
                 }
                 // 小于总宽度时 left为0
             } else {
@@ -143,16 +143,16 @@ export default {
 </script>
 
 <style lang="scss">
-.tabs-container {
+.ad-tabs {
   height: 38px;
   background: #fff;
-  .tabs-wrapper {
+  &-wrapper {
     position: relative;
     height: 34px;
     line-height: 34px;
     overflow: hidden;
     box-shadow: 1px 2px 7px -1px #e4e3e3;
-    .tabsList {
+    .tabList {
       position: absolute;
       height: 100%;
       white-space: nowrap;
@@ -167,9 +167,6 @@ export default {
         letter-spacing: 2px;
         cursor: pointer;
         border: 1px solid #e0e0e0;
-        // &:first-child {
-        //   margin-left: 15px;
-        // }
         .el-icon-close:hover {
           border-radius: 100%;
           display: inline-block;
@@ -189,7 +186,7 @@ export default {
     }
   }
 
-  .tabs-menu {
+  &-menu {
     position: absolute;
     z-index: 22222;
     padding: 5px 0;
@@ -197,7 +194,7 @@ export default {
     background: #fff;
     border-radius: 2px;
     box-shadow: 1px 2px 5px #909399;
-    .menu-item {
+    &-item {
       padding: 5px 10px;
       font-size: 14px;
       color: #606266;

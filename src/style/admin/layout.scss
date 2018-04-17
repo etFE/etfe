@@ -1,45 +1,62 @@
-.container {
-  height: 100%;
-  // 侧边栏样式
-  .left-slide {
-    position: fixed;   /* 为absolute时，body出现滚动条时很难看 */
-    left: 0;
-    top: 0;
-    height: 100%;
-    background-color: #39435C;
-  }
-  // 右边容器样式
-  .right-container {
-    position: absolute;
-    left: 220px;
-    top: 0;
-    right: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.5s;
-    &.hideSidebar {
-      left: 64px;
+$navColor: #6f6f6f;
+$navFontSize: 16px;
+$hdbg: #fff;
+$hdBordBottomColor: #d6d6d6;
+.ad-container {
+    height: 100%; // 侧边栏样式
+    .ad-aside {
+        position: fixed;
+        /* 为absolute时，body出现滚动条时很难看 */
+        left: 0;
+        top: 0;
+        height: 100%;
+        color: #fff;
+        background-color: #39435C;
+    } // 右边容器样式
+    &-right {
+        position: absolute;
+        left: 220px;
+        top: 0;
+        right: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.5s;
+        &.hideSidebar {
+            left: 64px;
+        }
+        .ad-header {
+            height: 50px;
+            background: $hdbg;
+            border-bottom: 1px solid $hdBordBottomColor;
+            color: $navColor;
+            &-left {
+                .hamburger {
+                    color: $navColor;
+                }
+            }
+            &-right {
+                .screenfull {
+                    color: $navColor;
+                }
+                .username {
+                    color: $navColor;
+                }
+            }
+        }
+        .content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 10px;
+            background: $hdbg;
+            .L-grid {
+                flex: 1;
+                margin-top: 10px;
+            }
+            .L-pag {
+                margin-top: 10px;
+            }
+        }
     }
-    .header {
-      height: 50px;
-      background: #fff;
-      border-bottom: 1px solid #d6d6d6;
-
-    }
-    .content {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      padding: 10px;
-      background: #fff;
-      .L-grid {
-        flex: 1;
-        margin-top: 10px;
-      }
-      .L-pag {
-        margin-top: 10px;
-      }
-    }
-  }
 }

@@ -30,16 +30,7 @@ const router = new Router({
     },
 })
 
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('token')
-    // 检测是否登录 若未登录则跳转登录页
-    if (to.matched[0].path === '/admin' && !token) {
-        Message({
-            message: '请先登录用户',
-            type: 'error',
-        })
-        next('/')
-    }
+router.beforeResolve((to, from, next) => {
     // 动态设置title
     if (to.meta.title) {
         document.title = to.meta.title
