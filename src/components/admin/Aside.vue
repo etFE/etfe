@@ -76,9 +76,14 @@ export default {
         return {
             nav_menu_data: [
                 {
-                    title: '用户管理',
-                    path: '/admin/user',
-                    unicode: '&#xe66c;',
+                    title: '系统管理',
+                    path: '/admin/sysManage',
+                    unicode: '&#xe672;',
+                },
+                {
+                    title: '菜单管理',
+                    path: '/admin/menuManage',
+                    unicode: '&#xe7c0;',
                 },
                 {
                     title: '权限配置',
@@ -90,45 +95,45 @@ export default {
                             path: '/admin/authority/role',
                         },
                         {
-                            title: '角色权限分配',
-                            path: '/admin/authority/test2',
+                            title: '角色管理新',
+                            path: '/admin/authority/roleRE',
                         },
-                        {
-                            title: '用户角色分配',
-                            path: '/admin/authority/test3',
-                        },
+                        // {
+                        //     title: '角色权限分配',
+                        //     path: '/admin/authority/test2',
+                        // },
+                        // {
+                        //     title: '用户角色分配',
+                        //     path: '/admin/authority/test3',
+                        // },
                     ],
                 },
-                {
-                    title: '人员管理',
-                    path: '/admin/peopleManage',
-                    unicode: '&#xe66c;',
-                },
-                {
-                    title: '文件管理',
-                    path: '/admin/filesManage',
-                    unicode: '&#xe615;',
-                },
-                {
-                    title: '菜单管理',
-                    path: '/admin/menuManage',
-                    unicode: '&#xe7c0;',
-                },
-                {
-                    title: '组件文档管理',
-                    path: '/admin/apiManage',
-                    unicode: '&#xe646;',
-                },
-                {
-                    title: '日志管理',
-                    path: '/admin/logsManage',
-                    unicode: '&#xe62f;',
-                },
-                {
-                    title: '系统管理',
-                    path: '/admin/sysManage',
-                    unicode: '&#xe672;',
-                },
+                // {
+                //     title: '用户管理',
+                //     path: '/admin/user',
+                //     unicode: '&#xe66c;',
+                // },
+                // {
+                //     title: '人员管理',
+                //     path: '/admin/peopleManage',
+                //     unicode: '&#xe66c;',
+                // },
+                // {
+                //     title: '文件管理',
+                //     path: '/admin/filesManage',
+                //     unicode: '&#xe615;',
+                // },
+                // {
+                //     title: '组件文档管理',
+                //     path: '/admin/apiManage',
+                //     unicode: '&#xe646;',
+                // },
+                // {
+                //     title: '日志管理',
+                //     path: '/admin/logsManage',
+                //     unicode: '&#xe62f;',
+                // },
+
             ],
         }
     },
