@@ -19,6 +19,7 @@ import Navbar from '@/components/admin/NavBar'
 import LeftSlide from '@/components/admin/LeftSlide'
 import TabsView from '@/components/admin/TabsView'
 import AppMain from '@/components/admin/AppMain'
+import { mapState } from 'vuex'
 
 export default {
     name: 'Home',
@@ -31,6 +32,21 @@ export default {
     data () {
         return {
             sideBarShow: true,
+        }
+    },
+    computed: {
+        ...mapState('global', ['isLogin']),
+    },
+    mounted () {
+        const isLogin = this.isLogin
+        const cRouterPath = this.$router.currentRoute.matched[0].path
+
+        if (cRouterPath === '/admin' && !isLogin) {
+            this.$message({
+                message: '请先登录用户',
+                type: 'error',
+            })
+            this.$router.push({ path: '/' })
         }
     },
     methods: {
