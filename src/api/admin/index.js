@@ -20,6 +20,7 @@ const role = {
     add: config => createAPI('/role', 'post', config),
     update: config => createAPI('/role/:id', 'put', config),
     delete: config => createAPI('/role/:id', 'delete', config),
+    setMenu: config => createAPI('/role/:id/setMenu', 'put', config),
 }
 
 const system = {
