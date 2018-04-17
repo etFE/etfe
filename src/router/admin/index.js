@@ -8,7 +8,6 @@ import userComponent from '@/pages/admin/users'
 import authorComponent from '@/pages/admin/authority'
 
 import roleComponent from '@/pages/admin/authority/roles'
-import roleREComponent from '@/pages/admin/authority/roles/indexNew'
 
 import peopleMangeComponent from '@/pages/admin/peoples'
 
@@ -60,11 +59,6 @@ const adminRoutes = [
                     {
                         path: 'role',
                         component: roleComponent,
-                        meta: { title: '角色管理' },
-                    },
-                    {
-                        path: 'roleRE',
-                        component: roleREComponent,
                         meta: { title: '角色管理' },
                     },
                     { path: 'test2', meta: { title: 'test2管理' } },
