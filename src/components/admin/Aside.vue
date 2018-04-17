@@ -1,12 +1,11 @@
 <template>
-    <div class="left-slide">
+    <div class="ad-aside">
         <div
             :class="{'collageLogo': !sideBarShow}"
-            class="logo"
-        >
+            class="ad-aside-logo">
             <et-logo />
         </div>
-        <div class="side-menu">
+        <div class="ad-aside-nav">
             <el-menu
                 :collapse="!sideBarShow"
                 :default-active="$route.path"
@@ -14,53 +13,42 @@
                 class="nav-menu"
                 background-color="#39435c"
                 text-color="#fff"
-                active-text-color="#ff0"
-            >
+                active-text-color="#ff0">
                 <div
                     v-for="(item, index) in nav_menu_data"
-                    :key="index"
-                >
+                    :key="index">
                     <el-menu-item
                         v-if="typeof item.child === 'undefined' "
                         :index="item.path"
-                        class="menu-list"
-                    >
+                        class="menu-list">
                         <i
                             class="iconfont"
-                            v-html="item.unicode"
-                        />
+                            v-html="item.unicode" />
                         <span
                             slot="title"
-                            class="nav-text"
-                        >{{ item.title }}</span>
+                            class="nav-text">{{ item.title }}</span>
                     </el-menu-item>
                     <el-submenu
                         v-else
-                        :index="item.path"
-                    >
+                        :index="item.path">
                         <template
                             slot="title"
-                            class="menu-list"
-                        >
+                            class="menu-list">
                             <i
                                 class="iconfont"
-                                v-html="item.unicode"
-                            />
+                                v-html="item.unicode" />
                             <span
                                 slot="title"
-                                class="nav-text"
-                            >{{ item.title }}</span>
+                                class="nav-text">{{ item.title }}</span>
                         </template>
                         <el-menu-item
                             v-for="(sub_item, sub_index) in item.child"
                             :index="sub_item.path"
                             :key="sub_index"
-                            class="menu-list"
-                        >
+                            class="menu-list">
                             <span
                                 class="nav-text"
-                                v-text="sub_item.title"
-                            />
+                                v-text="sub_item.title" />
                         </el-menu-item>
                     </el-submenu>
                 </div>
@@ -74,7 +62,7 @@
 import EtLogo from '@/components/EtLogo'
 
 export default {
-    name: 'LeftSlide',
+    name: 'Aside',
     components: {
         EtLogo,
     },
@@ -88,9 +76,14 @@ export default {
         return {
             nav_menu_data: [
                 {
-                    title: '用户管理',
-                    path: '/admin/user',
-                    unicode: '&#xe66c;',
+                    title: '系统管理',
+                    path: '/admin/sysManage',
+                    unicode: '&#xe672;',
+                },
+                {
+                    title: '菜单管理',
+                    path: '/admin/menuManage',
+                    unicode: '&#xe7c0;',
                 },
                 {
                     title: '权限配置',
@@ -102,45 +95,45 @@ export default {
                             path: '/admin/authority/role',
                         },
                         {
-                            title: '角色权限分配',
-                            path: '/admin/authority/test2',
+                            title: '角色管理新',
+                            path: '/admin/authority/roleRE',
                         },
-                        {
-                            title: '用户角色分配',
-                            path: '/admin/authority/test3',
-                        },
+                        // {
+                        //     title: '角色权限分配',
+                        //     path: '/admin/authority/test2',
+                        // },
+                        // {
+                        //     title: '用户角色分配',
+                        //     path: '/admin/authority/test3',
+                        // },
                     ],
                 },
-                {
-                    title: '人员管理',
-                    path: '/admin/peopleManage',
-                    unicode: '&#xe66c;',
-                },
-                {
-                    title: '文件管理',
-                    path: '/admin/filesManage',
-                    unicode: '&#xe615;',
-                },
-                {
-                    title: '菜单管理',
-                    path: '/admin/menuManage',
-                    unicode: '&#xe7c0;',
-                },
-                {
-                    title: '组件文档管理',
-                    path: '/admin/apiManage',
-                    unicode: '&#xe646;',
-                },
-                {
-                    title: '日志管理',
-                    path: '/admin/logsManage',
-                    unicode: '&#xe62f;',
-                },
-                {
-                    title: '系统管理',
-                    path: '/admin/sysManage',
-                    unicode: '&#xe672;',
-                },
+                // {
+                //     title: '用户管理',
+                //     path: '/admin/user',
+                //     unicode: '&#xe66c;',
+                // },
+                // {
+                //     title: '人员管理',
+                //     path: '/admin/peopleManage',
+                //     unicode: '&#xe66c;',
+                // },
+                // {
+                //     title: '文件管理',
+                //     path: '/admin/filesManage',
+                //     unicode: '&#xe615;',
+                // },
+                // {
+                //     title: '组件文档管理',
+                //     path: '/admin/apiManage',
+                //     unicode: '&#xe646;',
+                // },
+                // {
+                //     title: '日志管理',
+                //     path: '/admin/logsManage',
+                //     unicode: '&#xe62f;',
+                // },
+
             ],
         }
     },
@@ -148,21 +141,10 @@ export default {
 </script>
 
 <style lang="scss">
-.nav-menu {
-  height: 100%;
-  border: none;
-  .nav-text {
-    margin-left: 15px;
-  }
-  &:not(.el-menu--collapse) {
-    width: 220px;
-  }
-}
-.left-slide {
+.ad-aside {
   display: flex;
   flex-direction: column;
-  color: #fff;
-  .logo {
+  &-logo {
     height: 50px;
     padding: 10px 35px;
     box-sizing: border-box;
@@ -173,12 +155,22 @@ export default {
       }
     }
   }
-  .side-menu {
+  &-nav {
     flex: 1;
     width: auto;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
+    }
+    .nav-menu {
+      height: 100%;
+      border: none;
+      .nav-text {
+        margin-left: 15px;
+      }
+      &:not(.el-menu--collapse) {
+        width: 220px;
+      }
     }
   }
 }

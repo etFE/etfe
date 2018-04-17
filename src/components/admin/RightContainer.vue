@@ -13,7 +13,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    name: 'AppMain',
+    name: 'RightContainer',
     computed: {
         ...mapGetters('admin/tabsView', ['cachedViews']),
     },
