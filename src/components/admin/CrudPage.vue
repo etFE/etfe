@@ -41,6 +41,7 @@
             :data="data"
             :resizable="false"
             size="mini"
+            max-height="500"
             highlight-current-row
             stripe
             fixed
