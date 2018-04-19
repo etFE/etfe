@@ -8,7 +8,7 @@
             <Header
                 :side-bar-show="sideBarShow"
                 @toggleSide="toggleSide"/>
-            <Tabs/>
+            <!-- <Tabs/> -->
             <right-container/>
         </div>
     </div>

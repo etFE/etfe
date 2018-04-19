@@ -21,6 +21,7 @@ const role = {
     update: config => createAPI('/role/:id', 'put', config),
     delete: config => createAPI('/role/:id', 'delete', config),
     setMenu: config => createAPI('/role/:id/setMenu', 'put', config),
+
 }
 
 const system = {
@@ -52,6 +53,7 @@ const user = {
     add: config => createAPI('/user', 'post', config),
     update: config => createAPI('/user/:id', 'put', config),
     delete: config => createAPI('/user/:id', 'delete', config),
+    setRole: config => createAPI('user/:id/setRole', 'put', config),
 }
 
 export default {
