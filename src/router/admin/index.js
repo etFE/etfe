@@ -8,7 +8,10 @@ import userComponent from '@/pages/admin/users'
 import authorComponent from '@/pages/admin/authority'
 
 import roleComponent from '@/pages/admin/authority/roles'
-import roleREComponent from '@/pages/admin/authority/roles/indexNew'
+
+import roleMenuComponent from '@/pages/admin/authority/roleMenu'
+
+import userRoleComponent from '@/pages/admin/authority/userRole'
 
 import peopleMangeComponent from '@/pages/admin/peoples'
 
@@ -53,7 +56,7 @@ const adminRoutes = [
             {
                 path: 'authority',
                 name: 'authority',
-                redirect: '/authority/role',
+                redirect: 'authority/role',
                 component: authorComponent,
                 meta: { title: '权限管理' },
                 children: [
@@ -63,12 +66,15 @@ const adminRoutes = [
                         meta: { title: '角色管理' },
                     },
                     {
-                        path: 'roleRE',
-                        component: roleREComponent,
-                        meta: { title: '角色管理' },
+                        path: 'roleMenu',
+                        component: roleMenuComponent,
+                        meta: { title: '角色权限分配' },
                     },
-                    { path: 'test2', meta: { title: 'test2管理' } },
-                    { path: 'test3', meta: { title: 'test3管理' } },
+                    {
+                        path: 'userRole',
+                        component: userRoleComponent,
+                        meta: { title: '用户角色分配' },
+                    },
                 ],
             },
             {

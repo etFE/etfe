@@ -100,7 +100,7 @@ export default {
                 { name: 'age', label: '年龄', width: 60 },
                 { name: 'phone', label: '电话', width: 100 },
                 { name: 'email', label: '电子邮件', width: 150 },
-                { name: 'addres', label: '现住址', minWidth: 200 },
+                { name: 'address', label: '现住址', minWidth: 200 },
                 { name: 'place', label: '籍贯', minWidth: 200 },
             ],
             data: [],
