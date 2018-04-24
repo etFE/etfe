@@ -21,9 +21,7 @@
                         v-if="typeof item.child === 'undefined' "
                         :index="item.path"
                         class="menu-list">
-                        <i
-                            class="iconfont"
-                            v-html="item.unicode" />
+                        <svg-icon :icon-class="item.iClass" />
                         <span
                             slot="title"
                             class="nav-text">{{ item.title }}</span>
@@ -34,9 +32,7 @@
                         <template
                             slot="title"
                             class="menu-list">
-                            <i
-                                class="iconfont"
-                                v-html="item.unicode" />
+                            <svg-icon :icon-class="item.iClass" />
                             <span
                                 slot="title"
                                 class="nav-text">{{ item.title }}</span>
@@ -78,12 +74,12 @@ export default {
                 {
                     title: '用户管理',
                     path: '/admin/user',
-                    unicode: '&#xe66c;',
+                    iClass: 'user',
                 },
                 {
                     title: '权限配置',
                     path: '/admin/authority',
-                    unicode: '&#xe61a;',
+                    iClass: 'permissions',
                     child: [
                         {
                             title: '角色管理',
@@ -102,32 +98,32 @@ export default {
                 {
                     title: '人员管理',
                     path: '/admin/peopleManage',
-                    unicode: '&#xe66c;',
+                    iClass: 'roles',
                 },
                 {
                     title: '文件管理',
                     path: '/admin/filesManage',
-                    unicode: '&#xe615;',
+                    iClass: 'files',
                 },
                 {
                     title: '菜单管理',
                     path: '/admin/menuManage',
-                    unicode: '&#xe7c0;',
+                    iClass: 'menu',
                 },
                 {
                     title: '组件文档管理',
                     path: '/admin/apiManage',
-                    unicode: '&#xe646;',
+                    iClass: 'web-api',
                 },
                 {
                     title: '日志管理',
                     path: '/admin/logsManage',
-                    unicode: '&#xe62f;',
+                    iClass: 'logs',
                 },
                 {
                     title: '系统管理',
                     path: '/admin/sysManage',
-                    unicode: '&#xe672;',
+                    iClass: 'systems',
                 },
             ],
         }

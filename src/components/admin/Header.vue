@@ -2,10 +2,11 @@
     <section class="ad-header">
         <div class="ad-header-left">
             <a
-                :class="{'actived':sideBarShow}"
-                class="hamburger"
                 @click="toggleSideBar">
-                <i class="iconfont">&#xe604;</i>
+                <svg-icon
+                    :class="{'actived':sideBarShow}"
+                    class="hamburger"
+                    icon-class="hamburger" />
             </a>
         </div>
         <div class="ad-header-middle">
@@ -25,9 +26,11 @@
                 effect="dark"
                 content="全屏">
                 <a
-                    class="screenfull"
                     @click="toggleFull">
-                    <i class="iconfont">&#xe600;</i>
+                    <svg-icon
+                        icon-class="screenfull"
+                        class="screenfull"/>
+                        <!-- <i class="iconfont">&#xe600;</i> -->
                 </a>
             </el-tooltip>
             <a class="username">{{ username }}</a>

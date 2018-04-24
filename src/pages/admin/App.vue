@@ -20,6 +20,7 @@ import Aside from '@/components/admin/Aside'
 import Tabs from '@/components/admin/Tabs'
 import RightContainer from '@/components/admin/RightContainer'
 import { mapState } from 'vuex'
+import '@/icons' // icon 加载图床
 
 export default {
     name: 'Home',
