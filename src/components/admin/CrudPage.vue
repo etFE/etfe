@@ -41,6 +41,7 @@
             :data="data"
             :resizable="false"
             size="mini"
+            max-height="500"
             highlight-current-row
             stripe
             fixed
@@ -60,7 +61,8 @@
                 :prop="item.name"
                 :label="item.label"
                 :width="item.width"
-                :min-width="item.minWidth"/>
+                :min-width="item.minWidth"
+                :formatter="item.formatter"/>
         </el-table>
         <el-dialog
             v-if="show"
@@ -140,12 +142,10 @@ export default {
             this.currentRow = val
         },
         Retrieve () {
-            console.log(this.queryItem)
             this.$emit('query')
         },
         save () {
-            this.$emit('save')
-            this.close()
+            this.$emit('save', this.close)
         },
         Create () {
             this.open()
@@ -158,7 +158,7 @@ export default {
         Update () {
             this.open()
             this.model = Object.assign({}, this.currentRow)
-            this.dialogTitle = '编辑'
+            this.title = '编辑'
             this.$emit('open', this.model)
         },
         Delete () {
