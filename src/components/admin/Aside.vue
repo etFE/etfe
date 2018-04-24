@@ -72,6 +72,16 @@ export default {
         return {
             nav_menu_data: [
                 {
+                    title: '系统管理',
+                    path: '/admin/sysManage',
+                    unicode: '&#xe672;',
+                },
+                {
+                    title: '菜单管理',
+                    path: '/admin/menuManage',
+                    unicode: '&#xe7c0;',
+                },
+                {
                     title: '用户管理',
                     path: '/admin/user',
                     iClass: 'user',
@@ -87,14 +97,15 @@ export default {
                         },
                         {
                             title: '角色权限分配',
-                            path: '/admin/authority/test2',
+                            path: '/admin/authority/roleMenu',
                         },
                         {
                             title: '用户角色分配',
-                            path: '/admin/authority/test3',
+                            path: '/admin/authority/userRole',
                         },
                     ],
                 },
+
                 {
                     title: '人员管理',
                     path: '/admin/peopleManage',

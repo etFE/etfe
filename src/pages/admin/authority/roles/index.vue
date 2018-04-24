@@ -1,219 +1,191 @@
 <template>
-    <section>
-        <div class="L-selects">
+    <crud-page
+        :columns="columns"
+        :data="data"
+        :query-item="queryItem"
+        :loading="loading"
+        @query="query"
+        @open="open"
+        @save="save"
+        @remove="remove">
+
+        <template slot="queryItem">
+            <el-form-item
+                label="角色名称">
+                <el-input v-model="queryItem.name"/>
+            </el-form-item>
+
+            <el-form-item
+                label="系统模块">
+                <el-select
+                    v-model="queryItem.system"
+                    clearable
+                    placeholder="请选择系统">
+                    <el-option
+                        v-for="item in systemList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"/>
+                </el-select>
+            </el-form-item>
+        </template>
+
+        <template slot="editItem">
             <el-form
+                ref="editForm"
                 :inline="true"
-                :model="listQuery"
-                label-width="85px">
+                :model="model"
+                :rules="rules"
+                label-width="100px"
+                size="mini">
                 <el-row>
-                    <el-form-item label="角色名称：">
+                    <el-form-item
+                        prop="name"
+                        label="菜单名称">
                         <el-input
-                            v-model="listQuery.name"
-                            size="medium" />
+                            v-model="model.name"
+                            style="width:220px" />
                     </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-search"
-                            size="small"
-                            @click="queryList">查询</el-button>
+                </el-row>
+                <el-row>
+                    <el-form-item
+                        prop="systemId"
+                        label="系统模块">
+                        <el-select
+                            v-model="model.systemId"
+                            clearable
+                            style="width:220px"
+                            placeholder="请选择系统">
+                            <el-option
+                                v-for="item in systemList"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"/>
+                        </el-select>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button
-                            type="primary"
-                            icon="el-icon-plus"
-                            size="small"
-                            @click="openDialog()">添加</el-button>
+                </el-row>
+                <el-row>
+                    <el-form-item label="菜单描述">
+                        <el-input
+                            v-model="model.descript"
+                            type="textarea"
+                            style="width:220px"
+                            resize="none"/>
                     </el-form-item>
                 </el-row>
             </el-form>
-        </div>
-        <div class="L-grid">
-            <el-table
-                v-loading="tabLoading"
-                :data="tableData"
-                :header-cell-style="{textAlign: 'center'}"
-                stripe
-                border
-                height="100%">
-                <el-table-column
-                    type="index"
-                    width="50" />
-                <el-table-column type="expand">
-                    <template slot-scope="props">
-                        <el-table
-                            :data="props.row.menus"
-                            :header-cell-style="{textAlign: 'center'}"
-                            stripe
-                            border>
-                            <el-table-column
-                                prop="name"
-                                label="菜单名称"
-                                width="140" />
-                            <el-table-column
-                                prop="descript"
-                                label="菜单描述"
-                                width="120" />
-                            <el-table-column
-                                prop="system.descript"
-                                label="菜单所属系统" />
-                        </el-table>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="角色名称"
-                    width="180" />
-                <el-table-column
-                    prop="descript"
-                    label="角色描述"
-                    width="180" />
-                <el-table-column
-                    prop="createDate"
-                    label="角色创建日期"
-                    width="180">
-                    <template slot-scope="scope">
-                        <span>{{ scope.row.createDate| moment("YYYY-MM-DD HH:mm:ss") }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="system.descript"
-                    label="相关管理系统"
-                    width="180" />
-                <el-table-column
-                    label="操作"
-                    align="center"
-                    width="280">
-                    <template slot-scope="scope">
-                        <el-button
-                            size="mini"
-                            type="primary"
-                            @click="openDialog(scope)">编辑</el-button>
-                        <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteData(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </div>
-        <el-pagination
-            :page-sizes="[100, 200, 300, 400]"
-            :page-size="100"
-            :total="1000"
-            layout="sizes, prev, pager, next"
-            class="L-pag"
-            background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange" />
-        <update-add-dailog
-            v-bind="{isShow: showDialog, operation: operate, rowData: rowData}"
-            @toggleShow="setDialogShow" />
-    </section>
+        </template>
+
+    </crud-page>
 </template>
 
 <script>
-
-import api from '@/api/admin/'
-
-import UpdateAddDailog from './UpdateAdd'
-
+import api from '@/api/admin'
+import CrudPage from '@/components/admin/CrudPage'
 
 export default {
-    name: 'Role',
     components: {
-        UpdateAddDailog,
+        CrudPage,
     },
     data () {
         return {
-            tableData: [
+            columns: [
+                { name: 'name', label: '角色名称', width: 150 },
+                { name: 'descript', label: '角色描述', minWidth: 400 },
+                { name: 'system', label: '所属系统', width: 100, formatter: this.formatterSystem },
+                { name: 'createDate', label: '创建日期', width: 300 },
             ],
-            tabParam: {},
-            listQuery: {
-                name: '',
-                // curPage: 1,
-                // pageSize: 20,
-                // importance: undefined,
-                // title: undefined,
-                // type: undefined,
+            data: [],
+            loading: false,
+            queryItem: {
+                name: null,
+                system: null,
             },
-            remoteOptions: [
-                {
-                    text: 'HTML',
-                    value: 'HTML',
-                },
-                {
-                    text: 'css',
-                    value: 'css',
-                },
-                {
-                    text: 'JavaScript',
-                    value: 'JavaScript',
-                },
-            ],
-            typeOptions: [],
-            typeValue: [],
-            tabLoading: false,
-            inputLoading: false,
-            showDialog: false,
-            operate: '', // 决定弹出窗口是添加也还是修改页的变量
-            rowData: null, // 切换修改页时传过来的行数据
+            model: {},
+            systemList: [],
+            system: null,
+            rules: {
+                systemId: { required: true, message: '请选择系统模块', trigger: 'change' },
+                name: { required: true, message: '请输入菜单名称', trigger: 'blur' },
+            },
+
         }
     },
+    mounted () {
+        // table 数据
+        this.query()
+        // 下拉框数据
+        this.querySystem()
+    },
     methods: {
-        getSelectData (query) {
-            if (query !== '') {
-                this.inputLoading = true
-            } else {
-                this.typeOptions = this.remoteOptions
-            }
-        },
-        openDialog (scope) {
-            if (!scope) {
-                this.operate = 'add'
-            } else {
-                this.operate = 'update'
-                console.log('score', scope)
-                this.rowData = scope
-            }
-            this.showDialog = true
-        },
-        //  分页器 设置每页发送多少数据的方法
-        handleSizeChange (val) {
-            this.listQuery.pageSize = val
-            this.queryList()
-        },
-        // 分页器 设置当前第几页刷新
-        handleCurrentChange (val) {
-            this.listQuery.curPage = val
-            this.queryList()
-        },
-        deleteData (index, data) {
-            this.tabLoading = true
-            api.role.delete({ param: { id: data._id }, data })
-                .then(() => {
-                    this.tableData.splice(index, 1)
-                    this.tabLoading = false
-                })
-                .catch(() => {
-                    this.tabLoading = false
-                })
-        },
-        // 查询表格数据
-        queryList () {
-            this.tabLoading = true
-            api.role.query()
+        query () {
+            this.loading = true
+            api.role.query({ params: this.queryItem })
                 .then((response) => {
-                    this.tableData = response.data
-                    // this.total = response.data.total;
-                    this.tabLoading = false
+                    this.data = response.data
+                    this.loading = false
                 })
                 .catch(() => {
-                    this.tabLoading = false
+                    this.loading = false
                 })
         },
-        setDialogShow () {
-            this.showDialog = false
+        querySystem () {
+            api.system.query()
+                .then((response) => {
+                    this.systemList = response.data
+                })
+                .catch(() => {
+
+                })
+        },
+        open (model) {
+            this.model = model || {}
+        },
+        save (close) {
+            const { id } = this.model
+            this.$refs.editForm.validate((valid) => {
+                if (valid) {
+                    if (id) {
+                        api.role.update({
+                            param: { id },
+                            data: { ...this.model, system: this.model.systemId },
+                        }).then((response) => {
+                            for (let i = 0; i < this.data.length; i += 1) {
+                                if (this.data[i].id === id) {
+                                    this.data.splice(i, 1, response.data)
+                                    break
+                                }
+                            }
+                            close()
+                        })
+                    } else {
+                        api.role.add({
+                            data: { ...this.model, system: this.model.systemId },
+                        }).then((response) => {
+                            this.data.push(response.data)
+                            close()
+                        })
+                    }
+                }
+            })
+        },
+        remove (row) {
+            const { _id } = row
+            api.role.delete({
+                param: {
+                    id: _id,
+                },
+            }).then((response) => {
+                for (let i = 0; i < this.data.length; i += 1) {
+                    if (this.data[i]._id === response.data._id) {
+                        this.data.splice(i, 1)
+                        break
+                    }
+                }
+            })
+        },
+        formatterSystem (row, col, cellValue, index) {
+            return cellValue.name || row.systemId
         },
     },
 }

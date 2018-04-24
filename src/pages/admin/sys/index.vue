@@ -88,27 +88,27 @@ export default {
         open (model) {
             this.model = model
         },
-        save () {
-            const _id = this.model._id
-            if (_id) {
+        save (close) {
+            const { id } = this.model
+            if (id) {
                 api.system.update({
-                    param: {
-                        id: _id,
-                    },
+                    param: { id },
                     data: this.model,
                 }).then((response) => {
                     for (let i = 0; i < this.data.length; i += 1) {
-                        if (this.data[i]._id === _id) {
+                        if (this.data[i]._id === id) {
                             this.data.splice(i, 1, response.data)
                             break
                         }
                     }
+                    close()
                 })
             } else {
                 api.system.add({
                     data: this.model,
                 }).then((response) => {
                     this.data.push(response.data)
+                    close()
                 })
             }
         },
@@ -119,7 +119,6 @@ export default {
                     id: _id,
                 },
             }).then((response) => {
-                console.log(response.data)
                 for (let i = 0; i < this.data.length; i += 1) {
                     if (this.data[i]._id === response.data._id) {
                         this.data.splice(i, 1)
