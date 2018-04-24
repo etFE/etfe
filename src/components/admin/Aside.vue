@@ -74,12 +74,12 @@ export default {
                 {
                     title: '系统管理',
                     path: '/admin/sysManage',
-                    unicode: '&#xe672;',
+                    iClass: 'systems',
                 },
                 {
                     title: '菜单管理',
                     path: '/admin/menuManage',
-                    unicode: '&#xe7c0;',
+                    iClass: 'menu',
                 },
                 {
                     title: '用户管理',
@@ -116,11 +116,7 @@ export default {
                     path: '/admin/filesManage',
                     iClass: 'files',
                 },
-                {
-                    title: '菜单管理',
-                    path: '/admin/menuManage',
-                    iClass: 'menu',
-                },
+
                 {
                     title: '组件文档管理',
                     path: '/admin/apiManage',
@@ -130,11 +126,6 @@ export default {
                     title: '日志管理',
                     path: '/admin/logsManage',
                     iClass: 'logs',
-                },
-                {
-                    title: '系统管理',
-                    path: '/admin/sysManage',
-                    iClass: 'systems',
                 },
             ],
         }
