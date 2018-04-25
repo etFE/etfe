@@ -12,8 +12,8 @@
                 router
                 class="nav-menu"
                 background-color="#39435c"
-                text-color="#fff"
-                active-text-color="#ff0">
+                text-color="#dcdcdc"
+                active-text-color="#ffeb3b">
                 <div
                     v-for="(item, index) in nav_menu_data"
                     :key="index">
