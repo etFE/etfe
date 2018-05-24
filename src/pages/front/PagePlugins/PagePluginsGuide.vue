@@ -29,28 +29,9 @@
                     :name="catalogues[2].name"
                 >#</a>
             </h2>
-            <guide-api :api="pluginsGuide.api"/>
-            <!-- <h3 class="et-anchor">
-                {{ catalogues[2].second[0].title }}
-                <a
-                    :href="`#${catalogues[2].second[0].name}`"
-                    :name="catalogues[2].second[0].name"
-                >#</a>
-            </h3>
-            <h3 class="et-anchor">
-                {{ catalogues[2].second[1].title }}
-                <a
-                    :href="`#${catalogues[2].second[1].name}`"
-                    :name="catalogues[2].second[1].name"
-                >#</a>
-            </h3>
-            <h3 class="et-anchor">
-                {{ catalogues[2].second[2].title }}
-                <a
-                    :href="`#${catalogues[2].second[2].name}`"
-                    :name="catalogues[2].second[2].name"
-                >#</a>
-            </h3> -->
+            <guide-api
+                :api="pluginsGuide.api"
+                :catalogues="catalogues[2].second"/>
         </article>
         <div class="et-plugin-article-side">
             <guide-catalogue :catalogues="catalogues"/>
@@ -70,11 +51,11 @@ const catalogues = [
     {
         title: 'API',
         name: 'api',
-        // second: [
-        //     { title: 'props', name: 'props' },
-        //     { title: 'event', name: 'event' },
-        //     { title: 'methods', name: 'methods' },
-        // ],
+        second: [
+            { title: '参数', name: 'props' },
+            { title: '事件', name: 'event' },
+            { title: '方法', name: 'methods' },
+        ],
     },
 ]
 

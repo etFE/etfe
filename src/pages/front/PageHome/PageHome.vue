@@ -2,7 +2,6 @@
     <div class="et-home-container">
         <home-background />
         <log-in />
-        <!-- <h1>霸气</h1> -->
     </div>
 </template>
 

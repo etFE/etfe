@@ -29,7 +29,8 @@ export default {
             cols: [
                 { name: 'name', label: '名称', width: 120 },
                 { name: 'descript', label: '说明' },
-                { name: 'param', label: '参数', width: 120 },
+                { name: 'params', label: '参数', width: 120 },
+                { name: 'back', label: '返回值', width: 120 },
             ],
             data: [],
         }

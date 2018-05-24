@@ -5,7 +5,12 @@ export default {
     namespaced: true,
     state: {
         pluginsList: [],
-        pluginsGuide: {},
+        pluginsGuide: {
+            title: '',
+            description: '',
+            demo: [],
+            api: {},
+        },
         isRouterShow: false,
     },
     mutations: {

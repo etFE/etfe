@@ -2,7 +2,8 @@ import axios from 'axios'
 import iView from 'iview'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
-const devBaseUrl = 'http://localhost:3000'
+// const devBaseUrl = 'http://localhost:3000'
+const devBaseUrl = 'http://118.178.184.131:3000'
 const prodBaseUrl = 'http://118.178.184.131:3000'
 
 // 实例化axios
