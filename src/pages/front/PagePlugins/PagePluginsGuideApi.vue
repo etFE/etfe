@@ -11,6 +11,7 @@
             <Table
                 :columns="propsColumns"
                 :data="api.props"
+                border
             />
             <h3 class="et-anchor">
                 {{ catalogues[1].title }}
@@ -22,6 +23,7 @@
             <Table
                 :columns="eventsColumns"
                 :data="api.events"
+                border
             />
             <h3 class="et-anchor">
                 {{ catalogues[2].title }}
@@ -33,6 +35,7 @@
             <Table
                 :columns="methodsColumns"
                 :data="api.methods"
+                border
             />
         </div>
         <div
@@ -61,21 +64,22 @@ export default {
     data () {
         return {
             propsColumns: [
-                { title: '属性', key: 'name' },
+                { title: '属性', key: 'name', width: 120 },
                 { title: '说明', key: 'descript' },
-                { title: '类型', key: 'type' },
-                { title: '默认值', key: 'default' },
+                { title: '类型', key: 'type', width: 120 },
+                { title: '默认值', key: 'default', width: 120 },
             ],
             eventsColumns: [
-                { title: '事件名', key: 'name' },
+                { title: '事件名', key: 'name', width: 120 },
                 { title: '说明', key: 'descript' },
-                { title: '参数', key: 'params' },
+                { title: '参数', key: 'params', width: 150 },
+                { title: '返回值', key: 'back', width: 120 },
             ],
             methodsColumns: [
-                { title: '方法名', key: 'name' },
+                { title: '方法名', key: 'name', width: 120 },
                 { title: '说明', key: 'descript' },
-                { title: '参数', key: 'params' },
-                { title: '返回值', key: 'back' },
+                { title: '参数', key: 'params', width: 120 },
+                { title: '返回值', key: 'back', width: 120 },
             ],
         }
     },
